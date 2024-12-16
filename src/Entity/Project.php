@@ -7,8 +7,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
+#[Vich\Uploadable]
 class Project
 {
     #[ORM\Id]
@@ -23,13 +26,22 @@ class Project
     private ?string $description = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?\DateTimeImmutable $startedAt = null;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $endAt = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $url = null;
+
+    #[Vich\UploadableField(mapping: 'projects', fileNameProperty: 'imageName',)]
+    private ?File $imageFile = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?string $imageName = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     /**
      * @var Collection<int, Technology>
@@ -71,14 +83,14 @@ class Project
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getStartedAt(): ?\DateTimeImmutable
     {
-        return $this->createdAt;
+        return $this->startedAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    public function setStartedAt(\DateTimeImmutable $startedAt): static
     {
-        $this->createdAt = $createdAt;
+        $this->startedAt = $startedAt;
 
         return $this;
     }
@@ -129,5 +141,48 @@ class Project
         $this->technologies->removeElement($technology);
 
         return $this;
+    }
+
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageName(?string $imageName): void
+    {
+        $this->imageName = $imageName;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }

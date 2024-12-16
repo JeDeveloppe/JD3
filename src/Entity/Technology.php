@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\TechnologyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TechnologyRepository::class)]
@@ -18,9 +19,6 @@ class Technology
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $image = null;
-
     #[ORM\Column]
     private ?int $knowledgeRate = null;
 
@@ -29,6 +27,12 @@ class Technology
      */
     #[ORM\ManyToMany(targetEntity: Project::class, mappedBy: 'technologies')]
     private Collection $projects;
+
+    #[ORM\Column(length: 255)]
+    private ?string $commandLineInTerminal = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $renderIconStringWithoutParentheses = null;
 
     public function __construct()
     {
@@ -48,18 +52,6 @@ class Technology
     public function setName(string $name): static
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setImage(string $image): static
-    {
-        $this->image = $image;
 
         return $this;
     }
@@ -101,5 +93,34 @@ class Technology
         }
 
         return $this;
+    }
+
+    public function getCommandLineInTerminal(): ?string
+    {
+        return $this->commandLineInTerminal;
+    }
+
+    public function setCommandLineInTerminal(string $commandLineInTerminal): static
+    {
+        $this->commandLineInTerminal = $commandLineInTerminal;
+
+        return $this;
+    }
+
+    public function getRenderIconStringWithoutParentheses(): ?string
+    {
+        return $this->renderIconStringWithoutParentheses;
+    }
+
+    public function setRenderIconStringWithoutParentheses(string $renderIconStringWithoutParentheses): static
+    {
+        $this->renderIconStringWithoutParentheses = $renderIconStringWithoutParentheses;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }
