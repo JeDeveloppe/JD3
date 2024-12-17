@@ -20,7 +20,7 @@ class SitemapController extends AbstractController
     {
     }
 
-    #[Route('/sitemap.xml', name: 'site_sitemap')]
+    #[Route('/sitemap.xml', name: 'sitemap')]
     public function index(Request $request): Response
     {
 
@@ -33,8 +33,8 @@ class SitemapController extends AbstractController
         $allRoutes = $collection->all();
 
         foreach($allRoutes as $key => $route){
-            //! important toutes les routes pour le sitemap doivent commencer par mapped_ sauf les catalogues traités après
-            if(substr($key,0,7) == 'mapped_'){
+            //! important toutes les routes pour le sitemap doivent commencer par site_ sauf les catalogues traités après
+            if(substr($key,0,5) == 'site_'){
                 //? on met dans le tableau les différentes route
                 $urls[] = [
                     'loc'        => $this->generateUrl($key),

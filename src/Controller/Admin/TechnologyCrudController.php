@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Technology;
+use App\Service\TerminalService;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -17,6 +18,7 @@ class TechnologyCrudController extends AbstractCrudController
     }
 
     public function __construct(
+        private TerminalService $terminalService
     )
     {}
 

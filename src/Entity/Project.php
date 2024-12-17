@@ -49,6 +49,9 @@ class Project
     #[ORM\ManyToMany(targetEntity: Technology::class, inversedBy: 'projects')]
     private Collection $technologies;
 
+    #[ORM\Column]
+    private ?bool $isOnline = null;
+
     public function __construct()
     {
         $this->technologies = new ArrayCollection();
@@ -184,5 +187,17 @@ class Project
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function getIsOnline(): ?bool
+    {
+        return $this->isOnline;
+    }
+
+    public function setIsOnline(bool $isOnline): static
+    {
+        $this->isOnline = $isOnline;
+
+        return $this;
     }
 }

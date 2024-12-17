@@ -13,6 +13,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class ProjectCrudController extends AbstractCrudController
 {
@@ -24,6 +26,7 @@ class ProjectCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
+            BooleanField::new('isOnline', 'En ligne:'),
             TextField::new('name'),
             TextEditorField::new('description'),
             ImageField::new('imageName', 'Image:')
