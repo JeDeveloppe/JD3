@@ -30,12 +30,14 @@ class TechnologyCrudController extends AbstractCrudController
             TextField::new('commandLineInTerminal', 'Commande:'),
             TextField::new('renderIconStringWithoutParentheses', 'Icone:'),
             IntegerField::new('knowledgeRate', 'Niveau de maîtrise:')->setFormTypeOptions(['attr' => ['min' => 0, 'max' => 100]]),
+            IntegerField::new('orderOfAppearance', 'Ordre d\'affichage:')->setFormTypeOptions(['attr' => ['min' => 0, 'max' => 100]]),
         ];
     }
     
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
+            ->setDefaultSort(['orderOfAppearance' => 'ASC'])
             ->showEntityActionsInlined();
     }
 
@@ -45,7 +47,7 @@ class TechnologyCrudController extends AbstractCrudController
 
             //execute command
             $command = $entityInstance->getCommandLineInTerminal();
-            // $this->terminalService->importSymfonyUxIcone($command);
+            $this->terminalService->importSymfonyUxIcon($command);
 
             $entityManager->persist($entityInstance);
             $entityManager->flush();
@@ -59,7 +61,7 @@ class TechnologyCrudController extends AbstractCrudController
 
             //execute command
             $command = $entityInstance->getCommandLineInTerminal();
-            // $this->terminalService->importSymfonyUxIcone($command);
+            $this->terminalService->importSymfonyUxIcon($command);
 
             $entityManager->persist($entityInstance);
             $entityManager->flush();

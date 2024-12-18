@@ -34,6 +34,9 @@ class Technology
     #[ORM\Column(length: 255)]
     private ?string $renderIconStringWithoutParentheses = null;
 
+    #[ORM\Column]
+    private ?int $orderOfAppearance = null;
+
     public function __construct()
     {
         $this->projects = new ArrayCollection();
@@ -122,5 +125,17 @@ class Technology
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function getOrderOfAppearance(): ?int
+    {
+        return $this->orderOfAppearance;
+    }
+
+    public function setOrderOfAppearance(int $orderOfAppearance): static
+    {
+        $this->orderOfAppearance = $orderOfAppearance;
+
+        return $this;
     }
 }

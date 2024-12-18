@@ -3,7 +3,17 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{% block title %}Je Développe {% endblock %}</title>
+        {#block meta description par page #}
+        {% if metas is defined %}
+            <meta name="description" content="{{ metas.description }}">
+        {% else %}
+            <meta name="description" content="Je Développe, le petit site qui regroupe toutes mes diverses connaissances !">
+        {% endif %}
+        {#endblock meta description par page #}
+        <title>Je Développe | {% block title %}{% endblock %}</title>
+        {#balise googleAnalytics #}
+        {% include "site/components/_googleAnalytics.html.twig" %}
+        {#endbalise googleAnalytics #}
         <link rel="icon" type="image/png" href="{{ asset('favicon/favicon-96x96.png') }}" sizes="96x96" />
         <link rel="icon" type="image/svg+xml" href="{{ asset('favicon/favicon.svg') }}" />
         <link rel="shortcut icon" href="{{ asset('favicon/favicon.ico') }}" />
@@ -17,8 +27,9 @@
             {% block importmap %}{{ importmap('site') }}{% endblock %}
         {% endblock %}
     </head>
-    <body>
-        {% include "./site/_nav.html.twig" %}
+    <body class="d-flex flex-column min-vh-100">
+        {% include "./site/components/_nav.html.twig" %}
         {% block body %}{% endblock %}
+        {% include "./site/components/_footer.html.twig" %}
     </body>
 </html>
