@@ -1,0 +1,13 @@
+{% extends "site/components/_base.html.twig" %}
+{% block title %}{{ h1 }}{% endblock %}
+{% block body %}
+
+    <h1 class="col-12 text-center mt-5">{{ h1 }}</h1>
+
+    <div class="row g-0 justify-content-center my-5">
+        {% for trick in category.tricks %}
+            //TODO
+        {% endfor %}
+    </div>
+
+{% endblock %}

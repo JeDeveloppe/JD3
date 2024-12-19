@@ -1,0 +1,32 @@
+{% extends "site/components/_base.html.twig" %}
+{% block title %}Mes astuces pour ne plus chercher sur Google !{% endblock %}
+{% block body %}
+
+    <h1 class="col-12 text-center mt-5">{{ h1 }}</h1>
+    <p class="lead col-12 text-center small fst-italic">{{ lead | raw}}</p>
+
+    <div class="row g-0 justify-content-center my-5">
+        {% for category in categories %}
+            {# some variables #}
+            {% set astuces = 'astuce' %}
+            {% if category.tricks | length > 1 %}
+            {% set astuces = 'astuces' %}
+            {% endif %}
+
+                <article class="col-11 col-md-4">
+                    <div class="card" style="width: 18rem;">
+                    <a href="{{ path('site_my_tricks', {id: category.id, slug: category.slug }) }}" class="_card_full_button"></a>
+                    <div class="card-header text-center fw-bold">{{ category.tricks | length }} {{ astuces }}</div>
+                    <twig:ux:icon name="{{ category.renderIconStringWithoutParentheses }}" class="card-img-top p-5"/></twig:ux:icon>
+                        <div class="card-footer small text-end fst-italic">
+                            Mise à jour le: {{ category.updatedAt ? category.updatedAt | date("d/m/Y") : "Bientôt..." }}<br/>
+                            Mise en ligne le: {{ category.createdAt | date("d/m/Y") }}
+                        </div>
+                    </div>
+                </article>
+        {% endfor %}
+    </div>
+
+    {{ knp_pagination_render(categories, 'site/components/_pagination.html.twig') }}
+
+{% endblock %}

@@ -1,6 +1,5 @@
 <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
 	<div class="container-fluid">
-		<a class="navbar-brand" href="#">Navbar</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -13,7 +12,7 @@
 					<a class="nav-link" href="#">Features</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">Pricing</a>
+					<a class="nav-link" href="{{ path('site_my_categories') }}">Mes astuces</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="{{ path('site_my_projects') }}">Mes réalisations</a>
@@ -30,8 +29,8 @@
 				</li>
 			</ul>
 			<ul class="navbar-nav ms-auto">
-				<li class="nav-item">
-					<a class="nav-link" href="{{ path('site_contact') }}">Contactez-moi !</a>
+				<li class="nav-item border border-2 rounded-5">
+					<a class="nav-link" href="{{ path('site_contact') }}"><i class="fa-solid fa-envelope"></i> Contactez-moi !</a>
 				</li>
 			</ul>
 		</div>

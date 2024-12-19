@@ -8,4 +8,4 @@ import 'bootstrap';
  */
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/bootstrap_theme.min.css';
-import './styles/app.css';
+import './styles/site.css';

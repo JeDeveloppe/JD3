@@ -3,6 +3,7 @@
 namespace App\Controller\Site;
 
 use App\Form\ContactType;
+use App\Repository\CategoryRepository;
 use App\Repository\ProjectRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +15,7 @@ class SiteController extends AbstractController
 {
     public function __construct(
         private ProjectRepository $projectRepository,
+        private CategoryRepository $categoryRepository,
         private PaginatorInterface $paginator
     )
     {}
@@ -79,6 +81,45 @@ class SiteController extends AbstractController
         return $this->render('site/pages/projects/projects.html.twig', [
             'projects' => $projects,
             'h1' => 'Mes Realisations',
+            'metas' => $metas
+        ]);
+    }
+
+    #[Route('/mes-astuces-par-categorie', name: 'site_my_categories')]
+    public function myCategories(Request $request): Response
+    {
+        $donneesFromDatabases = $this->categoryRepository->findAll();
+
+        $categories = $this->paginator->paginate(
+            $donneesFromDatabases, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            12 /*limit per page*/
+        );
+
+        $metas['description'] = 'Mon petit google à moi des actuces, programmes, conseils trouvez sur le web pour mes réalisations.';
+
+        return $this->render('site/pages/categories/categories.html.twig', [
+            'categories' => $categories,
+            'h1' => 'Mes astuces par catégorie',
+            'lead' => 'Pour ne plus chercher sur google ! <i class="fa-regular fa-face-laugh-wink"></i>',
+            'metas' => $metas
+        ]);
+    }
+
+    #[Route('/mes-astuces-pour-la-categorie/{id}/{slug}', name: 'site_my_tricks')]
+    public function myTricks($id, $slug): Response
+    {
+        $category = $this->categoryRepository->findOneBy(['id' => $id, 'slug' => $slug]);
+
+        if (!$category) {
+            throw $this->createNotFoundException('La catégorie n\'existe pas.');
+        }
+
+        $metas['description'] = 'Mon petit google à moi des actuces, programmes, conseils trouvez sur le web pour mes réalisations concernant la catégorie '.$category->getName();
+
+        return $this->render('site/pages/tricks/tricks.html.twig', [
+            'category' => $category,
+            'h1' => 'Mes astuces pour '.$category->getName(),
             'metas' => $metas
         ]);
     }

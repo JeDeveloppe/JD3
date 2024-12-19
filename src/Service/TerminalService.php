@@ -18,18 +18,6 @@ class TerminalService
 
     public function importSymfonyUxIcon(string $commande)
     {
-        $application = new Application($this->kernel);
-        $application->setAutoExit(false);
-
-        $input = new ArrayInput([
-            'command' => $commande
-        ]);
-        
-        // Use the NullOutput class instead of BufferedOutput.
-        $output = new NullOutput();
-
-        $application->run($input, $output);
-
-        return new Response("Command succesfully executed from the controller");
+        exec($commande);
     }
 }
