@@ -4,7 +4,9 @@ namespace App\Controller\Site;
 
 use App\Form\ContactType;
 use App\Repository\CategoryRepository;
+use App\Repository\LegalInformationRepository;
 use App\Repository\ProjectRepository;
+use App\Service\MentionsLegalesService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +18,9 @@ class SiteController extends AbstractController
     public function __construct(
         private ProjectRepository $projectRepository,
         private CategoryRepository $categoryRepository,
-        private PaginatorInterface $paginator
+        private PaginatorInterface $paginator,
+        private LegalInformationRepository $legalInformationRepository,
+        private MentionsLegalesService $mentionsLegalesService,
     )
     {}
 
@@ -121,6 +125,21 @@ class SiteController extends AbstractController
             'category' => $category,
             'h1' => 'Mes astuces pour '.$category->getName(),
             'metas' => $metas
+        ]);
+    }
+
+
+    #[Route('/mentions-legales', name: 'site_mentions_legales')]
+    public function mentionsLegales(): Response
+    {
+        $legales = $this->legalInformationRepository->findOneBy([]);
+        $paragraphs = $this->mentionsLegalesService->mentionsParagraphs($legales);
+        $metas['description'] = 'Mentions légales du site.';
+
+        return $this->render('site/pages/legale/mentions_legales.html.twig', [
+            'legales' => $legales,
+            'metas' => $metas,
+            'paragraphs' => $paragraphs
         ]);
     }
 }

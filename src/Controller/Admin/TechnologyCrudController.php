@@ -38,6 +38,9 @@ class TechnologyCrudController extends AbstractCrudController
     {
         return $crud
             ->setDefaultSort(['orderOfAppearance' => 'ASC'])
+            ->setPageTitle('index', 'Liste des technologies')
+            ->setPageTitle('new', 'Nouvelle technologie')
+            ->setPageTitle('edit', 'Gestion d\'une technologie')
             ->showEntityActionsInlined();
     }
 
@@ -46,8 +49,7 @@ class TechnologyCrudController extends AbstractCrudController
         if ($entityInstance instanceof Technology) {
 
             //execute command
-            $command = $entityInstance->getCommandLineInTerminal();
-            $this->terminalService->importSymfonyUxIcon($command);
+            $this->terminalService->importSymfonyUxIcon($entityInstance->getCommandLineInTerminal());
 
             $entityManager->persist($entityInstance);
             $entityManager->flush();
@@ -60,8 +62,7 @@ class TechnologyCrudController extends AbstractCrudController
         if ($entityInstance instanceof Technology) {
 
             //execute command
-            $command = $entityInstance->getCommandLineInTerminal();
-            $this->terminalService->importSymfonyUxIcon($command);
+            $this->terminalService->importSymfonyUxIcon($entityInstance->getCommandLineInTerminal());
 
             $entityManager->persist($entityInstance);
             $entityManager->flush();

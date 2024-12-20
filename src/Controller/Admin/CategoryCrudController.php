@@ -40,6 +40,9 @@ class CategoryCrudController extends AbstractCrudController
     {
         return $crud
             ->setDefaultSort(['id' => 'DESC'])
+            ->setPageTitle('index', 'Liste des catégories')
+            ->setPageTitle('new', 'Nouvelle catégorie')
+            ->setPageTitle('edit', 'Gestion d\'une catégorie')
             ->showEntityActionsInlined();
     }
 

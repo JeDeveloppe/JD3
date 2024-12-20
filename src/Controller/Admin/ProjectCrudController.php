@@ -61,6 +61,9 @@ class ProjectCrudController extends AbstractCrudController
     {
         return $crud
             ->showEntityActionsInlined()
+            ->setPageTitle('index', 'Liste des projets')
+            ->setPageTitle('new', 'Nouveau projet')
+            ->setPageTitle('edit', 'Gestion d\'un projet')
             ->setDefaultSort(['startedAt' => 'DESC']);
     }
 
