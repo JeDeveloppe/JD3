@@ -11,6 +11,8 @@ use App\Service\MentionsLegalesService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\LegalInformationRepository;
+use App\Repository\TechnologyFamilyRepository;
+use App\Repository\TechnologyRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,6 +26,7 @@ class SiteController extends AbstractController
         private LegalInformationRepository $legalInformationRepository,
         private MentionsLegalesService $mentionsLegalesService,
         private TrickRepository $trickRepository,
+        private TechnologyFamilyRepository $technologyFamilyRepository,
     )
     {}
 
@@ -50,7 +53,7 @@ class SiteController extends AbstractController
             $this->mailService->sendMail(
                 true,
                 $legales->getEmailCompany(),
-                "Message du site en date du ".(new DateTimeImmutable('now'))->format('d-m-Y').": ".$form->get('sujet')->getData(),
+                "Message du site concernant: ".$form->get('sujet')->getData(),
                 'contact',
                 [
                     'mail' => $form->get('email')->getData(),
@@ -75,7 +78,7 @@ class SiteController extends AbstractController
     #[Route('/mes-realisations', name: 'site_my_projects')]
     public function myProjects(Request $request): Response
     {
-        $donneesFromDatabases = $this->projectRepository->findAll();
+        $donneesFromDatabases = $this->projectRepository->findBy(['isOnline' => true]);
 
         $projects = $this->paginator->paginate(
             $donneesFromDatabases, /* query NOT result */
@@ -172,7 +175,6 @@ class SiteController extends AbstractController
         ]);
     }
 
-
     #[Route('/mentions-legales', name: 'site_mentions_legales')]
     public function mentionsLegales(): Response
     {
@@ -184,6 +186,20 @@ class SiteController extends AbstractController
             'legales' => $legales,
             'metas' => $metas,
             'paragraphs' => $paragraphs
+        ]);
+    }
+
+    #[Route('/mes-connaissances', name: 'site_my_knowledges')]
+    public function myKnowledges(Request $request): Response
+    {
+        $technologiesFamilies = $this->technologyFamilyRepository->findBy([], ['orderOfAppearance' => 'ASC']);
+
+        $metas['description'] = '';   //TODO
+
+        return $this->render('site/pages/knowledges/knowledges.html.twig', [
+            'technologiesFamilies' => $technologiesFamilies,
+            'h1' => 'Mes connaissances',
+            'metas' => $metas
         ]);
     }
 }

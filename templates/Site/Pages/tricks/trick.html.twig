@@ -6,14 +6,37 @@
 
 	<h1 class="col-12 text-center mt-5">{{ h1 }}</h1>
 
-    {% include "site/components/_breadcrumb.html.twig" with {category: category, trick: trick} %}
+	{% include "site/components/_breadcrumb.html.twig" with {category: category, trick: trick} %}
 
 	<div class="row g-0 justify-content-center mb-5">
-        <article class="col-11 p-3 border rounded-2 mb-1">
-            <div class="card-header">Copier</div>
-            {{ trick.description | raw }}
-        </article>
-        <div class="col-11 text-end small">Mise à jour le: {{ trick.updatedAt | date("d/m/Y") }}</div>
+		<article class="card p-0 col-11 border rounded-2 mb-1">
+			<div class="card-body">{{ trick.description | raw }}</div>
+			<div class="card-footer d-flex justify-content-between align-items-center">
+		        <div class="small">Mise à jour le: {{ trick.updatedAt | date("d/m/Y") }}</div>
+                <button id="copyButton" class="btn btn-outline-dark"><i class="fa-solid fa-copy"></i></button>
+            </div>
+		</article>
 	</div>
+
+	<script>
+        let button = document.querySelector('#copyButton');
+        let pre = document.querySelector('pre');
+
+        if(pre){
+
+            button.addEventListener('click', () => {
+                button.textContent = 'C\'est copié!';
+                button.classList.remove('btn-outline-dark');
+                button.classList.add('btn-success');
+                navigator.clipboard.writeText(pre.textContent);
+            });
+
+        }else{
+
+            button.style.display = 'none';
+
+        }
+        
+	</script>
 
 {% endblock %}

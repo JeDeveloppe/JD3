@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 class TechnologyCrudController extends AbstractCrudController
 {
@@ -27,6 +28,8 @@ class TechnologyCrudController extends AbstractCrudController
     {
         return [
             TextField::new('name', 'Nom:'),
+            AssociationField::new('family', 'Famille:')->setRequired(true),
+            TextField::new('description', 'Description:'),
             TextField::new('commandLineInTerminal', 'Commande:'),
             TextField::new('renderIconStringWithoutParentheses', 'Icone:'),
             IntegerField::new('knowledgeRate', 'Niveau de maîtrise:')->setFormTypeOptions(['attr' => ['min' => 0, 'max' => 100]]),

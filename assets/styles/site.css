@@ -25,6 +25,8 @@ pre{
     width: 98%;
     margin: auto;
     border-radius: 5px;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 .custom_shadow{

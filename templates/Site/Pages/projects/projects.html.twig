@@ -7,7 +7,7 @@
     <div class="row g-0 justify-content-center mb-5">
         {% for project in projects %}
             <div class="jumbotron my-5 col-10 col-sm-9 col-md-7 shadow rounded p-4">
-                <h2 class="display-4">{{ project.name }}</h2>
+                <h2 class="display-5">{{ project.name }}</h2>
                 <div class="col-12 d-flex flex-wrap justify-content-around align-item-center">
                     <img class="col-12 col-sm-6 col-md-2" src="{{ vich_uploader_asset(project, 'imageFile') | imagine_filter('projectImage') }}" alt="Logo du site {{ project.name }}" />
                     <div class="col-12 col-sm-6 col-md-8 d-flex justify-content-start align-items-center p-1">
@@ -15,17 +15,17 @@
                     </div>
                     <div class="col-12 col-md-2 d-flex justify-content-center align-items-center mt-4 mt-md-0">
                         {# some variable for the page #}
-                        {% set disabled = "disabled" %}
-                        {% set textButtonToUrl = "En travaux..." %}
-                        {% if project.url is not null %}
-                            {% set disabled = "" %}
-                            {% set textButtonToUrl = "Voir le site" %}
+                        {% set disabled = "" %}
+                        {% set textButtonToUrl = "Voir le site" %}
+                        {% if project.url is null or project.endAt is null %}
+                            {% set disabled = "disabled" %}
+                            {% set textButtonToUrl = "En travaux..." %}
                         {% endif %}
                         <a class="btn btn-primary {{ disabled }} btn-sm" href="{{ project.url }}" target="_blank" role="button">{{ textButtonToUrl }}</a>
 
                     </div>
                 </div>
-                <hr class="my-4">
+                <hr class="mt-4">
                 <div class="row justify-content-center">
                     {% for technology in project.technologies|sort((a, b) => a.orderOfAppearance <=> b.orderOfAppearance) %}
                         <twig:ux:icon name="{{ technology.renderIconStringWithoutParentheses }}" class="technologyIconeSize"/></twig:ux:icon>

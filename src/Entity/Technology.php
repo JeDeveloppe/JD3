@@ -37,6 +37,12 @@ class Technology
     #[ORM\Column]
     private ?int $orderOfAppearance = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $description = null;
+
+    #[ORM\ManyToOne(inversedBy: 'technologies')]
+    private ?TechnologyFamily $family = null;
+
     public function __construct()
     {
         $this->projects = new ArrayCollection();
@@ -135,6 +141,30 @@ class Technology
     public function setOrderOfAppearance(int $orderOfAppearance): static
     {
         $this->orderOfAppearance = $orderOfAppearance;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): static
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getFamily(): ?TechnologyFamily
+    {
+        return $this->family;
+    }
+
+    public function setFamily(?TechnologyFamily $family): static
+    {
+        $this->family = $family;
 
         return $this;
     }

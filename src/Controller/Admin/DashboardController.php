@@ -6,6 +6,7 @@ use App\Entity\Category;
 use App\Entity\LegalInformation;
 use App\Entity\Project;
 use App\Entity\Technology;
+use App\Entity\TechnologyFamily;
 use App\Entity\Trick;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -42,6 +43,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Les technologies', 'fas fa-list', Technology::class);
 
         yield MenuItem::section('Paramètres du site');
+        yield MenuItem::linkToCrud('Les familles technologiques', 'fas fa-list', TechnologyFamily::class);
         yield MenuItem::linkToCrud('Les infos légales', 'fas fa-list', LegalInformation::class);
     }
 }
