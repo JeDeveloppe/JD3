@@ -1,8 +1,8 @@
-<footer class="row g-0 align-items-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-	<div class="col-4">
+<footer class="row g-0 align-items-center p-4 mt-auto" style="background-color: rgba(0, 0, 0, 0.05);">
+	<div class="col-12 col-md-4 text-center text-md-start mb-3 mb-md-0">
 		2020 - {{ 'now'|date('Y') }}
 	</div>
-	<div class="col-4 text-center">
+	<div class="col-12 col-md-4 text-center mb-3 mb-md-0">
 					<!-- Linkedin -->
 		<a href="http://www.linkedin.com/in/wetta-rene-jd" class="mx-2" target="_blank" role="button">
 			<twig:ux:icon name="skill-icons:linkedin" class="footerIconeSize" />
@@ -16,10 +16,7 @@
 			<twig:ux:icon name="devicon:facebook" class="footerIconeSize" />
 		</a>
 	</div>
-	<ul class="col-4 nav justify-content-end">
-		<li class="nav-item">
-			<a class="nav-link" href="{{ path('site_contact') }}">Contactez-moi !</a>
-		</li>
+	<ul class="col-12 col-md-4 nav justify-content-center justify-content-md-end">
 		<li class="nav-item">
 			<a class="nav-link" href="{{ path('site_mentions_legales') }}">Mentions légales</a>
 		</li>

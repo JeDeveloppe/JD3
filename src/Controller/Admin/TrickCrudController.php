@@ -2,10 +2,10 @@
 
 namespace App\Controller\Admin;
 
+use DateTimeZone;
 use App\Entity\Trick;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -39,4 +39,21 @@ class TrickCrudController extends AbstractCrudController
             ->showEntityActionsInlined();
     }
 
+    public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        if($entityInstance instanceof Trick) {
+
+            //get current date
+            $now = new \DateTimeImmutable('now', new DateTimeZone('Europe/Paris'));
+
+            $entityInstance->setUpdatedAt($now);
+            $entityManager->persist($entityInstance);
+            $entityManager->flush();
+        }
+    }
+
+    public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        $this->persistEntity($entityManager, $entityInstance);
+    }
 }

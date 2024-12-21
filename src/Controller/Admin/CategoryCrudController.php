@@ -68,16 +68,7 @@ class CategoryCrudController extends AbstractCrudController
     {
         if ($entityInstance instanceof Category) {
 
-            //get current date
-            $now = new \DateTimeImmutable('now', new DateTimeZone('Europe/Paris'));
-
-            $entityInstance->setUpdatedAt($now);
-            $entityManager->persist($entityInstance);
-            $entityManager->flush();
-
-            //execute command
-            $command = $entityInstance->getCommandLineInTerminal();
-            $this->terminalService->importSymfonyUxIcon($command);
+            $this->persistEntity($entityManager, $entityInstance);
 
         }   
     }

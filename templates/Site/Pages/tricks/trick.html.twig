@@ -1,0 +1,19 @@
+{% extends "site/components/_base.html.twig" %}
+{% block title %}
+	{{ h1 }}
+{% endblock %}
+{% block body %}
+
+	<h1 class="col-12 text-center mt-5">{{ h1 }}</h1>
+
+    {% include "site/components/_breadcrumb.html.twig" with {category: category, trick: trick} %}
+
+	<div class="row g-0 justify-content-center mb-5">
+        <article class="col-11 p-3 border rounded-2 mb-1">
+            <div class="card-header">Copier</div>
+            {{ trick.description | raw }}
+        </article>
+        <div class="col-11 text-end small">Mise à jour le: {{ trick.updatedAt | date("d/m/Y") }}</div>
+	</div>
+
+{% endblock %}

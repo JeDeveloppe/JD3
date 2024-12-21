@@ -2,13 +2,15 @@
 
 namespace App\Controller\Site;
 
+use App\Form\TrickType;
 use App\Form\ContactType;
-use App\Repository\CategoryRepository;
-use App\Repository\LegalInformationRepository;
+use App\Repository\TrickRepository;
 use App\Repository\ProjectRepository;
+use App\Repository\CategoryRepository;
 use App\Service\MentionsLegalesService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
+use App\Repository\LegalInformationRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,6 +23,7 @@ class SiteController extends AbstractController
         private PaginatorInterface $paginator,
         private LegalInformationRepository $legalInformationRepository,
         private MentionsLegalesService $mentionsLegalesService,
+        private TrickRepository $trickRepository,
     )
     {}
 
@@ -111,7 +114,7 @@ class SiteController extends AbstractController
     }
 
     #[Route('/mes-astuces-pour-la-categorie/{id}/{slug}', name: 'site_my_tricks')]
-    public function myTricks($id, $slug): Response
+    public function myTricks(Request $request,$id, $slug): Response
     {
         $category = $this->categoryRepository->findOneBy(['id' => $id, 'slug' => $slug]);
 
@@ -119,11 +122,52 @@ class SiteController extends AbstractController
             throw $this->createNotFoundException('La catégorie n\'existe pas.');
         }
 
+        $tricks = $this->trickRepository->findBy(['category' => $category], ['name' => 'ASC']);
+
         $metas['description'] = 'Mon petit google à moi des actuces, programmes, conseils trouvez sur le web pour mes réalisations concernant la catégorie '.$category->getName();
+
+        $form = $this->createForm(TrickType::class);
+        $form->handleRequest($request);
+
+
+        if($form->isSubmitted() && $form->isValid()) {
+
+            $search = str_replace(" ","%", $form->get('search')->getData());
+
+            $tricks = $this->trickRepository->findTrickByName($search, $category);
+
+        }
 
         return $this->render('site/pages/tricks/tricks.html.twig', [
             'category' => $category,
-            'h1' => 'Mes astuces pour '.$category->getName(),
+            'tricks' => $tricks,
+            'h1' => 'Mes astuces '.$category->getName(),
+            'metas' => $metas,
+            'form' => $form
+        ]);
+    }
+
+    #[Route('/mes-astuces-pour-la-categorie/{categoryId}/{categorySlug}/{trickId}/{trickSlug}', name: 'site_trick_details')]
+    public function trickDetails($categoryId, $categorySlug, $trickId, $trickSlug): Response
+    {
+        $category = $this->categoryRepository->findOneBy(['id' => $categoryId, 'slug' => $categorySlug]);
+
+        if (!$category) {
+            throw $this->createNotFoundException('La catégorie n\'existe pas.');
+        }
+
+        $trick = $this->trickRepository->findOneBy(['id' => $trickId, 'slug' => $trickSlug]);
+
+        if (!$trick) {
+            throw $this->createNotFoundException('Cette astuce n\'existe pas.');
+        }
+
+        $metas['description'] = ''; //TODO
+
+        return $this->render('site/pages/tricks/trick.html.twig', [
+            'category' => $category,
+            'h1' => $trick->getName(),
+            'trick' => $trick,
             'metas' => $metas
         ]);
     }

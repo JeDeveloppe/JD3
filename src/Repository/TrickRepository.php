@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Category;
 use App\Entity\Trick;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -16,6 +17,22 @@ class TrickRepository extends ServiceEntityRepository
         parent::__construct($registry, Trick::class);
     }
 
+    public function findTrickByName(string $search, Category $category)
+    {
+
+        $query = $this->createQueryBuilder('t')
+            ->where('t.name LIKE :search')
+            ->andWhere('t.category = :category')
+            ->setParameter('search', '%'.$search.'%')
+            ->setParameter('category', $category )
+            ->getQuery()
+            ->getResult()
+            ;
+
+        return $query;
+
+    }
+    
     //    /**
     //     * @return Trick[] Returns an array of Trick objects
     //     */
