@@ -2,7 +2,12 @@
 
 namespace App\Command;
 
+use App\Service\CategoryService;
 use App\Service\LegalInformationService;
+use App\Service\ProjectService;
+use App\Service\TechnologyFamilyService;
+use App\Service\TechnologyService;
+use App\Service\TrainingService;
 use App\Service\UserService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -16,7 +21,12 @@ class InitDataBase1 extends Command
 {
     public function __construct(
             private LegalInformationService $legalInformationService,
-            private UserService $userService
+            private UserService $userService,
+            private CategoryService $categoryService,
+            private TechnologyFamilyService $technologyFamilyService,
+            private TechnologyService $technologyService,
+            private TrainingService $trainingService,
+            private ProjectService $projectService
         )
     {
         parent::__construct();
@@ -30,9 +40,22 @@ class InitDataBase1 extends Command
 
         $io = new SymfonyStyle($input,$output);
 
-        //on crer les information legale et la tax
-        $this->legalInformationService->creationLegalInformation($io);
+        //on créer l'admin
         $this->userService->initForProd_adminUser($io);
+        //on crer les information legale
+        $this->legalInformationService->creationLegalInformation($io);
+        //on crer les categories
+        $this->categoryService->importTable($io);
+        //on crer les familles technologiques
+        $this->technologyFamilyService->importTable($io);
+        //on crer les technologies
+        $this->technologyService->importTable($io);
+        //on crer les formations
+        $this->trainingService->importTable($io);
+        //on crer les projets
+        // $this->projectService->importTable($io); //TODO DateTimeImmutable problems
+        //on met les technologies dans les projets
+        // $this->projectService->addTechnologiesInProject($io);
 
         return Command::SUCCESS;
     }

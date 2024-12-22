@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Repository\LegalInformationRepository;
 use App\Repository\TechnologyFamilyRepository;
 use App\Repository\TrainingRepository;
+use App\Service\MailerService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,7 +28,8 @@ class SiteController extends AbstractController
         private MentionsLegalesService $mentionsLegalesService,
         private TrickRepository $trickRepository,
         private TechnologyFamilyRepository $technologyFamilyRepository,
-        private TrainingRepository $trainingRepository
+        private TrainingRepository $trainingRepository,
+        private MailerService $mailerService
     )
     {}
 
@@ -50,23 +52,16 @@ class SiteController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()) {
     
-
-            $this->mailService->sendMail(
-                true,
-                $legales->getEmailCompany(),
+            $this->mailerService->sendMailFromContactPage(
                 "Message du site concernant: ".$form->get('sujet')->getData(),
-                'contact',
                 [
                     'mail' => $form->get('email')->getData(),
-                    'question' => $form->get('message')->getData(),
-                    'legales' => $legales
-                ],
-                $form->get('email')->getData(),
-                false
+                    'question' => $form->get('message')->getData()
+                ]
             );
     
             $this->addFlash('success', 'Message bien envoyé!');
-            return $this->redirectToRoute('app_contact');
+            return $this->redirectToRoute('site_contact');
         }
 
         return $this->render('site/pages/contact/contact.html.twig', [
