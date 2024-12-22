@@ -7,6 +7,7 @@ use App\Entity\LegalInformation;
 use App\Entity\Project;
 use App\Entity\Technology;
 use App\Entity\TechnologyFamily;
+use App\Entity\Training;
 use App\Entity\Trick;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -41,6 +42,9 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Projets');
         yield MenuItem::linkToCrud('Les projets', 'fas fa-list', Project::class);
         yield MenuItem::linkToCrud('Les technologies', 'fas fa-list', Technology::class);
+
+        yield MenuItem::section('Formations');
+        yield MenuItem::linkToCrud('Les formations', 'fas fa-list', Training::class);
 
         yield MenuItem::section('Paramètres du site');
         yield MenuItem::linkToCrud('Les familles technologiques', 'fas fa-list', TechnologyFamily::class);

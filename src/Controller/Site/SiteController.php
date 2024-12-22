@@ -12,6 +12,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\LegalInformationRepository;
 use App\Repository\TechnologyFamilyRepository;
+use App\Repository\TrainingRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,6 +27,7 @@ class SiteController extends AbstractController
         private MentionsLegalesService $mentionsLegalesService,
         private TrickRepository $trickRepository,
         private TechnologyFamilyRepository $technologyFamilyRepository,
+        private TrainingRepository $trainingRepository
     )
     {}
 
@@ -89,7 +91,27 @@ class SiteController extends AbstractController
 
         return $this->render('site/pages/projects/projects.html.twig', [
             'projects' => $projects,
-            'h1' => 'Mes Realisations',
+            'h1' => 'Mes réalisations',
+            'metas' => $metas
+        ]);
+    }
+
+    #[Route('/mes-formations', name: 'site_my_trainings')]
+    public function myTrainings(Request $request): Response
+    {
+        $donneesFromDatabases = $this->trainingRepository->findBy(['isOnline' => true], ['startedAt' => 'DESC']);
+
+        $trainings = $this->paginator->paginate(
+            $donneesFromDatabases, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            8 /*limit per page*/
+        );
+
+        $metas['description'] = ''; //TODO
+
+        return $this->render('site/pages/trainings/trainings.html.twig', [
+            'trainings' => $trainings,
+            'h1' => 'Mes formations',
             'metas' => $metas
         ]);
     }
