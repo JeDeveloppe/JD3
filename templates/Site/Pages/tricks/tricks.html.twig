@@ -22,7 +22,7 @@
                     {% for trick in tricks %}
                         <tr>
                             <td>{{ trick.name }}</td>
-                            <td class="text-end"><a class="btn btn-primary" href="{{ path('site_trick_details', {categoryId: category.id, categorySlug: category.slug, trickId: trick.id, trickSlug: trick.slug }) }}">Voir</a></td>
+                            <td class="text-end"><a class="btn btn-primary" href="{{ path('mapped_trick_details', {categoryId: category.id, categorySlug: category.slug, trickId: trick.id, trickSlug: trick.slug }) }}">Voir</a></td>
                         </tr>
                     {% else %}
                         <tr>

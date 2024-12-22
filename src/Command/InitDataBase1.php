@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Service\LegalInformationService;
+use App\Service\UserService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -15,6 +16,7 @@ class InitDataBase1 extends Command
 {
     public function __construct(
             private LegalInformationService $legalInformationService,
+            private UserService $userService
         )
     {
         parent::__construct();
@@ -30,6 +32,7 @@ class InitDataBase1 extends Command
 
         //on crer les information legale et la tax
         $this->legalInformationService->creationLegalInformation($io);
+        $this->userService->initForProd_adminUser($io);
 
         return Command::SUCCESS;
     }

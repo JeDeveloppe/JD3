@@ -2,6 +2,9 @@
 
 namespace App\Controller\Site;
 
+use App\Entity\Trick;
+use App\Repository\CategoryRepository;
+use App\Repository\TrickRepository;
 use DateTimeImmutable;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +18,9 @@ class SitemapController extends AbstractController
 {
     public function __construct(
         private SluggerInterface $slugger,
-        private RouterInterface $routerInterface
+        private RouterInterface $routerInterface,
+        private CategoryRepository $categoryRepository,
+        private TrickRepository $trickRepository
         )
     {
     }
@@ -33,7 +38,7 @@ class SitemapController extends AbstractController
         $allRoutes = $collection->all();
 
         foreach($allRoutes as $key => $route){
-            //! important toutes les routes pour le sitemap doivent commencer par site_ sauf les catalogues traités après
+            //! les routes sans argument commencent par site_
             if(substr($key,0,5) == 'site_'){
                 //? on met dans le tableau les différentes route
                 $urls[] = [
@@ -43,8 +48,31 @@ class SitemapController extends AbstractController
                     'priority'   => 0.8
                     ];
             }
-        }      
-        //! traitement des catalogues
+        }     
+
+        //?on traite les pages complexe
+        $categories = $this->categoryRepository->findAll();
+        foreach($categories as $category){
+            $urls[] = [                
+                'loc'        => $this->generateUrl('mapped_my_tricks', ['categoryId' => $category->getId(), 'categorySlug' => $category->getSlug()]),
+                'lastmod'    => $category->getUpdatedAt()->format('Y-m-d'),
+                'changefreq' => "monthly",
+                'priority'   => 0.8
+            ];
+        }
+
+        // #[Route('/mes-astuces/{categoryId}/{categorySlug}/{trickId}/{trickSlug}', name: 'mapped_trick_details')]
+        $tricks = $this->trickRepository->findAll();
+        foreach($tricks as $trick){
+            $urls[] = [
+                'loc'        => $this->generateUrl('mapped_trick_details', ['categoryId' => $trick->getCategory()->getId(), 'categorySlug' => $trick->getCategory()->getSlug(), 'trickId' => $trick->getId(), 'trickSlug' => $trick->getSlug()]),
+                'lastmod'    => $category->getUpdatedAt()->format('Y-m-d'),
+                'changefreq' => "monthly",
+                'priority'   => 0.8
+            ];
+        }
+
+
         //?exemple a garder
         // $occasions = $this->occasionRepository->findBy(['isOnline' => true]);
 

@@ -13,14 +13,14 @@
             {% set astuces = 'astuces' %}
             {% endif %}
 
-                <article class="col-6 col-sm-4 col-md-3 col-lg-2">
-                    <div class="card col-11 mx-auto">
-                    <a href="{{ path('site_my_tricks', {id: category.id, slug: category.slug }) }}" class="_card_full_button"></a>
+                <article class="col-6 col-md-4 col-lg-3 col-xxl-2">
+                    <div class="card col-11 col-sm-10 col-xxl-11 mx-auto">
+                    <a href="{{ path('mapped_my_tricks', {categoryId: category.id, categorySlug: category.slug }) }}" class="_card_full_button"></a>
                     <div class="card-header text-center fw-bold">{{ category.tricks | length }} {{ astuces }}</div>
                     <twig:ux:icon name="{{ category.renderIconStringWithoutParentheses }}" class="card-img-top p-5 p-md-4"/></twig:ux:icon>
-                        <div class="card-footer small text-end fst-italic">
-                            Mise à jour le: {{ category.updatedAt ? category.updatedAt | date("d/m/Y") : "Bientôt..." }}<br/>
-                            Mise en ligne le: {{ category.createdAt | date("d/m/Y") }}
+                        <div class="card-footer small text-end fst-italic d-flex flex-wrap">
+                            <div class="col-12">Mise à jour le: {{ category.updatedAt ? category.updatedAt | date("d/m/Y") : "Bientôt..." }}</div>
+                            <div class="col-12">Mise en ligne le: {{ category.createdAt | date("d/m/Y") }}</div>
                         </div>
                     </div>
                 </article>

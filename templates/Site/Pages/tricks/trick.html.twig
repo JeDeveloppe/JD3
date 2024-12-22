@@ -11,30 +11,35 @@
 	<div class="row g-0 justify-content-center mb-5">
 		<article class="card p-0 col-11 border rounded-2 mb-1">
 			<div class="card-body">{{ trick.description | raw }}</div>
-			<div class="card-footer d-flex justify-content-between align-items-center">
+			<div class="card-footer d-flex justify-content-end align-items-center">
 		        <div class="small">Mise à jour le: {{ trick.updatedAt | date("d/m/Y") }}</div>
-                <button id="copyButton" class="btn btn-outline-dark"><i class="fa-solid fa-copy"></i></button>
+                {# <button id="copyButton" class="btn btn-outline-dark"><i class="fa-solid fa-copy"></i></button> #}
             </div>
 		</article>
 	</div>
 
 	<script>
-        let button = document.querySelector('#copyButton');
-        let pre = document.querySelector('pre');
+        let presentations = document.querySelectorAll('pre');
 
-        if(pre){
+        if(presentations){
 
-            button.addEventListener('click', () => {
-                button.textContent = 'C\'est copié!';
-                button.classList.remove('btn-outline-dark');
-                button.classList.add('btn-success');
-                navigator.clipboard.writeText(pre.textContent);
+            presentations.forEach(presentation => {
+                presentation.style.cursor = 'copy';
+                presentation.addEventListener('click', () => {
+                    let textPre = presentation.textContent;
+                    let height = presentation.offsetHeight;
+                    console.log(textPre);
+                    navigator.clipboard.writeText(presentation.textContent);
+                    presentation.style.height = height + 'px';
+                    presentation.classList.add('d-flex', 'justify-content-center', 'align-items-center');
+                    presentation.innerHTML = 'C\'est copié!';
+
+                    setTimeout(() => {
+                        presentation.innerHTML = textPre;
+                        presentation.classList.remove('d-flex', 'justify-content-center', 'align-items-center');
+                    }, 2000);
+                });
             });
-
-        }else{
-
-            button.style.display = 'none';
-
         }
         
 	</script>

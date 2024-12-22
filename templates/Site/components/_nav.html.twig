@@ -9,28 +9,30 @@
 					<a class="nav-link" href="{{ path('site_home') }}">Accueil</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="{{ path('site_my_categories') }}">Mes astuces</a>
+					<a class="nav-link" href="{{ path('site_my_knowledges') }}">Mes connaissances</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="{{ path('site_my_projects') }}">Mes réalisations</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="{{ path('site_my_knowledges') }}">Mes connaissances</a>
-				</li>
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-					<div class="dropdown-menu">
-						<a class="dropdown-item" href="#">Action</a>
-						<a class="dropdown-item" href="#">Another action</a>
-						<a class="dropdown-item" href="#">Something else here</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#">Separated link</a>
-					</div>
+					<a class="nav-link" href="{{ path('site_my_categories') }}">Mes astuces</a>
 				</li>
 			</ul>
 			<ul class="navbar-nav ms-auto">
-				<li class="nav-item border border-2 rounded-5">
-					<a class="nav-link" href="{{ path('site_contact') }}"><i class="fa-solid fa-envelope"></i> Contactez-moi !</a>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-user"></i></a>
+					<div class="dropdown-menu">
+						{% if is_granted('ROLE_SUPER_ADMIN') %}
+							<a class="dropdown-item" href="{{ path('admin') }}"><i class="fa-solid fa-gear"></i> ADMIN</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="{{ path('app_logout')}}"><i class="fa-solid fa-lock-open text-warning"></i> Déconnexion</a>
+						{% else %}
+							<a class="dropdown-item" href="{{ path('app_login')}}"><i class="fa-solid fa-lock text-warning"></i> Se connecter</a>
+						{% endif %}
+					</div>
+				</li>
+				<li class="nav-item d-flex">
+					<a class="nav-link border border-2 rounded-5 px-2" href="{{ path('site_contact') }}"><i class="fa-solid fa-envelope"></i> Contactez-moi !</a>
 				</li>
 			</ul>
 		</div>

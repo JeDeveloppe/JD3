@@ -12,7 +12,6 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\LegalInformationRepository;
 use App\Repository\TechnologyFamilyRepository;
-use App\Repository\TechnologyRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,7 +35,7 @@ class SiteController extends AbstractController
         $metas['description'] = ''; //TODO
 
         return $this->render('site/pages/home/index.html.twig', [
-            'controller_name' => 'SiteController',
+            'h1' => 'Bienvenue !',
         ]);
     }
 
@@ -116,10 +115,10 @@ class SiteController extends AbstractController
         ]);
     }
 
-    #[Route('/mes-astuces-pour-la-categorie/{id}/{slug}', name: 'site_my_tricks')]
-    public function myTricks(Request $request,$id, $slug): Response
+    #[Route('/mes-astuces/{categoryId}/{categorySlug}', name: 'mapped_my_tricks')]
+    public function myTricks(Request $request,$categoryId, $categorySlug): Response
     {
-        $category = $this->categoryRepository->findOneBy(['id' => $id, 'slug' => $slug]);
+        $category = $this->categoryRepository->findOneBy(['id' => $categoryId, 'slug' => $categorySlug]);
 
         if (!$category) {
             throw $this->createNotFoundException('La catégorie n\'existe pas.');
@@ -150,7 +149,7 @@ class SiteController extends AbstractController
         ]);
     }
 
-    #[Route('/mes-astuces-pour-la-categorie/{categoryId}/{categorySlug}/{trickId}/{trickSlug}', name: 'site_trick_details')]
+    #[Route('/mes-astuces/{categoryId}/{categorySlug}/{trickId}/{trickSlug}', name: 'mapped_trick_details')]
     public function trickDetails($categoryId, $categorySlug, $trickId, $trickSlug): Response
     {
         $category = $this->categoryRepository->findOneBy(['id' => $categoryId, 'slug' => $categorySlug]);
