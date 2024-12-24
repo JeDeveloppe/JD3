@@ -14,6 +14,8 @@ use App\Repository\LegalInformationRepository;
 use App\Repository\TechnologyFamilyRepository;
 use App\Repository\TrainingRepository;
 use App\Service\MailerService;
+use App\Service\NinjasApiService;
+use App\Service\OpenWeatherService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,7 +31,9 @@ class SiteController extends AbstractController
         private TrickRepository $trickRepository,
         private TechnologyFamilyRepository $technologyFamilyRepository,
         private TrainingRepository $trainingRepository,
-        private MailerService $mailerService
+        private MailerService $mailerService,
+        private OpenWeatherService $openWeatherService,
+        private NinjasApiService $ninjasApiService
     )
     {}
 
@@ -38,8 +42,14 @@ class SiteController extends AbstractController
     {
         $metas['description'] = ''; //TODO
 
+        $citiesDatas = [];
+        $citiesDatas[] = $this->openWeatherService->getWeatherFromOneCity("Caen");
+        $citiesDatas[] = $this->openWeatherService->getWeatherFromOneCity("Strasbourg");
+
         return $this->render('site/pages/home/index.html.twig', [
-            'h1' => 'Bienvenue !',
+            'h1' => 'Développeur web full stack',
+            'citiesDatas' => $citiesDatas,
+            'metas' => $metas
         ]);
     }
 
@@ -111,7 +121,7 @@ class SiteController extends AbstractController
         ]);
     }
 
-    #[Route('/mes-astuces-par-categorie', name: 'site_my_categories')]
+    #[Route('/blog', name: 'site_my_categories')]
     public function myCategories(Request $request): Response
     {
         $donneesFromDatabases = $this->categoryRepository->findAll();
@@ -126,13 +136,13 @@ class SiteController extends AbstractController
 
         return $this->render('site/pages/categories/categories.html.twig', [
             'categories' => $categories,
-            'h1' => 'Mes astuces par catégorie',
+            'h1' => 'Mes astuces, conseils et programmes',
             'lead' => 'Pour ne plus chercher sur google ! <i class="fa-regular fa-face-laugh-wink"></i>',
             'metas' => $metas
         ]);
     }
 
-    #[Route('/mes-astuces/{categoryId}/{categorySlug}', name: 'mapped_my_tricks')]
+    #[Route('/blog/{categoryId}/{categorySlug}', name: 'mapped_my_tricks')]
     public function myTricks(Request $request,$categoryId, $categorySlug): Response
     {
         $category = $this->categoryRepository->findOneBy(['id' => $categoryId, 'slug' => $categorySlug]);
@@ -166,7 +176,7 @@ class SiteController extends AbstractController
         ]);
     }
 
-    #[Route('/mes-astuces/{categoryId}/{categorySlug}/{trickId}/{trickSlug}', name: 'mapped_trick_details')]
+    #[Route('/blog/{categoryId}/{categorySlug}/{trickId}/{trickSlug}', name: 'mapped_trick_details')]
     public function trickDetails($categoryId, $categorySlug, $trickId, $trickSlug): Response
     {
         $category = $this->categoryRepository->findOneBy(['id' => $categoryId, 'slug' => $categorySlug]);

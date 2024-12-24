@@ -13,7 +13,7 @@
  */
 return [
     'site' => [
-        'path' => './assets/site.js',
+        'path' => './assets/js/site.js',
         'entrypoint' => true,
     ],
     '@hotwired/stimulus' => [
@@ -26,7 +26,7 @@ return [
         'version' => '7.3.0',
     ],
     'bootstrap' => [
-        'version' => '5.3.3',
+        'path' => './vendor/bootstrap/bootstrap.index.js',
     ],
     '@popperjs/core' => [
         'version' => '2.11.8',
