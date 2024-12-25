@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use DateTimeZone;
-use App\Entity\Trick;
+use App\Entity\Article;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
@@ -18,11 +18,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use phpDocumentor\Reflection\Types\Boolean;
 
-class TrickCrudController extends AbstractCrudController
+class ArticleCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Trick::class;
+        return Article::class;
     }
 
     public function configureFields(string $pageName): iterable
@@ -43,16 +43,16 @@ class TrickCrudController extends AbstractCrudController
     {
         return $crud
             ->setDefaultSort(['id' => 'DESC'])
-            ->setPageTitle('index', 'Liste des astuces')
-            ->setPageTitle('new', 'Nouvelle astuce')
-            ->setPageTitle('edit', 'Gestion d\'une astuce')
+            ->setPageTitle('index', 'Liste des articles')
+            ->setPageTitle('new', 'Nouvel article')
+            ->setPageTitle('edit', 'Gestion d\'un article')
             ->addFormTheme('@FOSCKEditor/Form/ckeditor_widget.html.twig')
             ->showEntityActionsInlined();
     }
 
     public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
-        if($entityInstance instanceof Trick) {
+        if($entityInstance instanceof Article) {
 
             //get current date
             $now = new \DateTimeImmutable('now', new DateTimeZone('Europe/Paris'));

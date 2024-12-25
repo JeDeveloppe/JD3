@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\TrickRepository;
+use App\Repository\ArticleRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: TrickRepository::class)]
-class Trick
+#[ORM\Entity(repositoryClass: ArticleRepository::class)]
+class Article
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -20,7 +20,7 @@ class Trick
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\ManyToOne(inversedBy: 'tricks')]
+    #[ORM\ManyToOne(inversedBy: 'articles')]
     private ?Category $category = null;
 
     #[ORM\Column(length: 500)]

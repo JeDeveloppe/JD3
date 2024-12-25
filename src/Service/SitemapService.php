@@ -3,7 +3,7 @@
 namespace App\Service;
 
 use App\Repository\CategoryRepository;
-use App\Repository\TrickRepository;
+use App\Repository\ArticleRepository;
 use DateTimeZone;
 use DateTimeImmutable;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -15,7 +15,7 @@ class SitemapService
         private RequestStack $requestStack,
         private RouterInterface $routerInterface,
         private CategoryRepository $categoryRepository,
-        private TrickRepository $trickRepository
+        private ArticleRepository $articleRepository
         ){
     }
 
@@ -60,11 +60,11 @@ class SitemapService
             ];
         }
         // #[Route('/mes-astuces/{categoryId}/{categorySlug}/{trickId}/{trickSlug}', name: 'mapped_trick_details')]
-        $tricks = $this->trickRepository->findBy(['isOnline' => true ]);
+        $articles = $this->articleRepository->findBy(['isOnline' => true ]);
 
-        foreach($tricks as $trick){
+        foreach($articles as $article){
             $urls[] = [
-                'loc'        => $this->routerInterface->generate('mapped_trick_details', ['categoryId' => $trick->getCategory()->getId(), 'categorySlug' => $trick->getCategory()->getSlug(), 'trickId' => $trick->getId(), 'trickSlug' => $trick->getSlug()]),
+                'loc'        => $this->routerInterface->generate('mapped_trick_details', ['categoryId' => $article->getCategory()->getId(), 'categorySlug' => $article->getCategory()->getSlug(), 'trickId' => $article->getId(), 'trickSlug' => $article->getSlug()]),
                 'lastmod'    => $category->getUpdatedAt()->format('Y-m-d'),
                 'changefreq' => "monthly",
                 'priority'   => 0.8

@@ -3,21 +3,21 @@
 namespace App\Repository;
 
 use App\Entity\Category;
-use App\Entity\Trick;
+use App\Entity\Article;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Trick>
+ * @extends ServiceEntityRepository<Article>
  */
-class TrickRepository extends ServiceEntityRepository
+class ArticleRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Trick::class);
+        parent::__construct($registry, Article::class);
     }
 
-    public function findTrickByName(string $search, Category $category)
+    public function findArticleByName(string $search, Category $category)
     {
 
         $query = $this->createQueryBuilder('t')
@@ -34,7 +34,7 @@ class TrickRepository extends ServiceEntityRepository
     }
     
     //    /**
-    //     * @return Trick[] Returns an array of Trick objects
+    //     * @return Article[] Returns an array of Article objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -48,7 +48,7 @@ class TrickRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Trick
+    //    public function findOneBySomeField($value): ?Article
     //    {
     //        return $this->createQueryBuilder('t')
     //            ->andWhere('t.exampleField = :val')

@@ -32,7 +32,7 @@ class CategoryCrudController extends AbstractCrudController
             SlugField::new('slug', 'Slug:')->setTargetFieldName('name')->hideOnIndex(),
             TextField::new('commandLineInTerminal', 'Commande:'),
             TextField::new('renderIconStringWithoutParentheses', 'Icone:'),
-            AssociationField::new('tricks', 'Astuces:')
+            AssociationField::new('articles', 'Astuces:')
         ];
     }
     

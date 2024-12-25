@@ -2,9 +2,9 @@
 
 namespace App\Controller\Site;
 
-use App\Form\TrickType;
+use App\Form\ArticleType;
 use App\Form\ContactType;
-use App\Repository\TrickRepository;
+use App\Repository\ArticleRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\CategoryRepository;
 use App\Service\MentionsLegalesService;
@@ -28,7 +28,7 @@ class SiteController extends AbstractController
         private PaginatorInterface $paginator,
         private LegalInformationRepository $legalInformationRepository,
         private MentionsLegalesService $mentionsLegalesService,
-        private TrickRepository $trickRepository,
+        private ArticleRepository $articleRepository,
         private TechnologyFamilyRepository $technologyFamilyRepository,
         private TrainingRepository $trainingRepository,
         private MailerService $mailerService,
@@ -143,7 +143,7 @@ class SiteController extends AbstractController
     }
 
     #[Route('/blog/{categoryId}/{categorySlug}', name: 'mapped_my_tricks')]
-    public function myTricks(Request $request,$categoryId, $categorySlug): Response
+    public function myArticles(Request $request,$categoryId, $categorySlug): Response
     {
         $category = $this->categoryRepository->findOneBy(['id' => $categoryId, 'slug' => $categorySlug]);
 
@@ -151,11 +151,11 @@ class SiteController extends AbstractController
             throw $this->createNotFoundException('La catégorie n\'existe pas.');
         }
 
-        $tricks = $this->trickRepository->findBy(['category' => $category, 'isOnline' => true ], ['id' => 'DESC']);
+        $articles = $this->articleRepository->findBy(['category' => $category, 'isOnline' => true ], ['id' => 'DESC']);
 
         $metas['description'] = 'Mon petit google à moi des actuces, programmes, conseils trouvez sur le web pour mes réalisations concernant la catégorie '.$category->getName();
 
-        $form = $this->createForm(TrickType::class);
+        $form = $this->createForm(ArticleType::class);
         $form->handleRequest($request);
 
 
@@ -163,13 +163,13 @@ class SiteController extends AbstractController
 
             $search = str_replace(" ","%", $form->get('search')->getData());
 
-            $tricks = $this->trickRepository->findTrickByName($search, $category);
+            $articles = $this->articleRepository->findArticleByName($search, $category);
 
         }
 
-        return $this->render('site/pages/tricks/tricks.html.twig', [
+        return $this->render('site/pages/articles/articles.html.twig', [
             'category' => $category,
-            'tricks' => $tricks,
+            'articles' => $articles,
             'h1' => 'Mes astuces '.$category->getName(),
             'metas' => $metas,
             'form' => $form
@@ -185,18 +185,18 @@ class SiteController extends AbstractController
             throw $this->createNotFoundException('La catégorie n\'existe pas.');
         }
 
-        $trick = $this->trickRepository->findOneBy(['id' => $trickId, 'slug' => $trickSlug]);
+        $article = $this->articleRepository->findOneBy(['id' => $trickId, 'slug' => $trickSlug]);
 
-        if (!$trick) {
+        if (!$article) {
             throw $this->createNotFoundException('Cette astuce n\'existe pas.');
         }
 
         $metas['description'] = ''; //TODO
 
-        return $this->render('site/pages/tricks/trick.html.twig', [
+        return $this->render('site/pages/articles/article.html.twig', [
             'category' => $category,
-            'h1' => $trick->getName(),
-            'trick' => $trick,
+            'h1' => $article->getName(),
+            'article' => $article,
             'metas' => $metas
         ]);
     }

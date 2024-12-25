@@ -25,10 +25,10 @@ class Category
     private ?string $renderIconStringWithoutParentheses = null;
 
     /**
-     * @var Collection<int, Trick>
+     * @var Collection<int, Article>
      */
-    #[ORM\OneToMany(targetEntity: Trick::class, mappedBy: 'category')]
-    private Collection $tricks;
+    #[ORM\OneToMany(targetEntity: Article::class, mappedBy: 'category')]
+    private Collection $articles;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -41,7 +41,7 @@ class Category
 
     public function __construct()
     {
-        $this->tricks = new ArrayCollection();
+        $this->articles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -86,29 +86,29 @@ class Category
     }
 
     /**
-     * @return Collection<int, Trick>
+     * @return Collection<int, Article>
      */
-    public function getTricks(): Collection
+    public function getArticles(): Collection
     {
-        return $this->tricks;
+        return $this->articles;
     }
 
-    public function addTrick(Trick $trick): static
+    public function addArticle(Article $article): static
     {
-        if (!$this->tricks->contains($trick)) {
-            $this->tricks->add($trick);
-            $trick->setCategory($this);
+        if (!$this->articles->contains($article)) {
+            $this->articles->add($article);
+            $article->setCategory($this);
         }
 
         return $this;
     }
 
-    public function removeTrick(Trick $trick): static
+    public function removeArticle(Article $article): static
     {
-        if ($this->tricks->removeElement($trick)) {
+        if ($this->articles->removeElement($article)) {
             // set the owning side to null (unless already changed)
-            if ($trick->getCategory() === $this) {
-                $trick->setCategory(null);
+            if ($article->getCategory() === $this) {
+                $article->setCategory(null);
             }
         }
 

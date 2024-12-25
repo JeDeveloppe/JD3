@@ -19,10 +19,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for trick in tricks %}
+                    {% for article in articles %}
                         <tr>
-                            <td>{{ trick.name }}</td>
-                            <td class="text-end"><a class="btn btn-primary" href="{{ path('mapped_trick_details', {categoryId: category.id, categorySlug: category.slug, trickId: trick.id, trickSlug: trick.slug }) }}">Voir</a></td>
+                            <td>{{ article.name }}</td>
+                            <td class="text-end"><a class="btn btn-primary" href="{{ path('mapped_trick_details', {categoryId: category.id, categorySlug: category.slug, trickId: article.id, trickSlug: article.slug }) }}">Voir</a></td>
                         </tr>
                     {% else %}
                         <tr>

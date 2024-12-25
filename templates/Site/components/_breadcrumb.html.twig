@@ -5,11 +5,11 @@
                 <li class="breadcrumb-item">
                     <i class="fa-solid fa-road"></i> <a class="text-decoration-none" href="{{ path('site_my_categories') }}">Toutes les articles</a>
                 </li>
-                {% if trick is defined %}
+                {% if article is defined %}
                     <li class="breadcrumb-item">
                         <a class="text-decoration-none" href="{{ path('mapped_my_tricks', {categoryId: category.id, categorySlug: category.slug }) }}">{{ category.name}}</a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">{{ trick.name }}</li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ article.name }}</li>
                 {% else %}
                     <li class="breadcrumb-item active" aria-current="page">
                         {{ category.name }}
