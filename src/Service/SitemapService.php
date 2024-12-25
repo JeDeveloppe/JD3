@@ -60,7 +60,8 @@ class SitemapService
             ];
         }
         // #[Route('/mes-astuces/{categoryId}/{categorySlug}/{trickId}/{trickSlug}', name: 'mapped_trick_details')]
-        $tricks = $this->trickRepository->findAll();
+        $tricks = $this->trickRepository->findBy(['isOnline' => true ]);
+
         foreach($tricks as $trick){
             $urls[] = [
                 'loc'        => $this->routerInterface->generate('mapped_trick_details', ['categoryId' => $trick->getCategory()->getId(), 'categorySlug' => $trick->getCategory()->getSlug(), 'trickId' => $trick->getId(), 'trickSlug' => $trick->getSlug()]),

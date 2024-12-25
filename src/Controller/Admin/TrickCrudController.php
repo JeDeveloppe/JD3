@@ -8,9 +8,15 @@ use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CodeEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class TrickCrudController extends AbstractCrudController
 {
@@ -22,10 +28,14 @@ class TrickCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
+            BooleanField::new('isOnline', 'En ligne:'),
             TextField::new('name', 'Nom:'),
             SlugField::new('slug', 'Slug:')->setTargetFieldName('name')->hideOnIndex(),
-            TextEditorField::new('description', 'Description:'),
+            // CodeEditorField::new('description', 'Description:'),
+            // TextEditorField::new('description', 'Description:'),
+            TextareaField::new('description', 'Description:')->setFormType(CKEditorType::class),
             AssociationField::new('category', 'Visible dans la catégorie:'),
+            DateTimeField::new('updatedAt', 'Date de mise à jour:')->setDisabled(true),
         ];
     }
 
@@ -36,6 +46,7 @@ class TrickCrudController extends AbstractCrudController
             ->setPageTitle('index', 'Liste des astuces')
             ->setPageTitle('new', 'Nouvelle astuce')
             ->setPageTitle('edit', 'Gestion d\'une astuce')
+            ->addFormTheme('@FOSCKEditor/Form/ckeditor_widget.html.twig')
             ->showEntityActionsInlined();
     }
 

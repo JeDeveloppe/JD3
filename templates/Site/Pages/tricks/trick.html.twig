@@ -9,7 +9,7 @@
 	{% include "site/components/_breadcrumb.html.twig" with {category: category, trick: trick} %}
 
 	<div class="row g-0 justify-content-center mb-5">
-		<article class="card p-0 col-11 border rounded-2 mb-1">
+		<article class="card p-0 col-11 col-md-9 col-lg-7 border rounded-2 mb-1">
 			<div class="card-body">{{ trick.description | raw }}</div>
 			<div class="card-footer d-flex justify-content-end align-items-center">
 		        <div class="small">Mise à jour le: {{ trick.updatedAt | date("d/m/Y") }}</div>
