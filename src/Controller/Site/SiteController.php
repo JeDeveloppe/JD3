@@ -151,7 +151,7 @@ class SiteController extends AbstractController
             throw $this->createNotFoundException('La catégorie n\'existe pas.');
         }
 
-        $tricks = $this->trickRepository->findBy(['category' => $category], ['name' => 'ASC']);
+        $tricks = $this->trickRepository->findBy(['category' => $category, 'isOnline' => true ], ['id' => 'DESC']);
 
         $metas['description'] = 'Mon petit google à moi des actuces, programmes, conseils trouvez sur le web pour mes réalisations concernant la catégorie '.$category->getName();
 
