@@ -32,8 +32,8 @@ class ArticleCrudController extends AbstractCrudController
             TextField::new('name', 'Nom:'),
             SlugField::new('slug', 'Slug:')->setTargetFieldName('name')->hideOnIndex(),
             // CodeEditorField::new('description', 'Description:'),
-            // TextEditorField::new('description', 'Description:'),
-            TextareaField::new('description', 'Description:')->setFormType(CKEditorType::class),
+            TextEditorField::new('description', 'Description:'),
+            // TextareaField::new('description', 'Description:')->setFormType(CKEditorType::class),
             AssociationField::new('category', 'Visible dans la catégorie:'),
             DateTimeField::new('updatedAt', 'Date de mise à jour:')->setDisabled(true),
         ];
@@ -46,7 +46,7 @@ class ArticleCrudController extends AbstractCrudController
             ->setPageTitle('index', 'Liste des articles')
             ->setPageTitle('new', 'Nouvel article')
             ->setPageTitle('edit', 'Gestion d\'un article')
-            ->addFormTheme('@FOSCKEditor/Form/ckeditor_widget.html.twig')
+            // ->addFormTheme('@FOSCKEditor/Form/ckeditor_widget.html.twig')
             ->showEntityActionsInlined();
     }
 
