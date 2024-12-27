@@ -2,6 +2,10 @@
 # the same directory as your front controller, index.php, in a standard symfony
 # web application is under the "public" project subdirectory.
 
+RewriteEngine On
+RewriteCond %{SERVER_PORT} !=443
+RewriteRule ^(.*)$ https://www.je-developpe.fr/$1 [R=301,L]
+
 # Use the front controller as index file.
 DirectoryIndex index.php
 

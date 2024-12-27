@@ -170,7 +170,7 @@ class SiteController extends AbstractController
         return $this->render('site/pages/articles/articles.html.twig', [
             'category' => $category,
             'articles' => $articles,
-            'h1' => 'Mes astuces '.$category->getName(),
+            'h1' => 'Mes articles: '.$category->getName(),
             'metas' => $metas,
             'form' => $form
         ]);
