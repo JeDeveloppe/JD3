@@ -33,8 +33,10 @@ class SitemapService
         //?on recupere la date au moment de la requete
         $now = new DateTimeImmutable('now', new DateTimeZone('Europe/Paris'));
         
+        //?on recupere toutes les routes du projet
         $allRoutesGeneratedByControllers = $this->routerInterface->getRouteCollection()->all();
 
+        //?on boucle sur les routes
         foreach($allRoutesGeneratedByControllers as $key => $route){
             //! les routes sans paramêtres commencent par site_
             if(substr($key,0,5) == 'site_'){
@@ -49,22 +51,20 @@ class SitemapService
         }     
 
         //! les autres routes un peu plus complexes
-        // #[Route('/mes-astuces/{categoryId}/{categorySlug}', name: 'mapped_my_tricks')]
         $categories = $this->categoryRepository->findAll();
         foreach($categories as $category){
             $urls[] = [                
-                'loc'        => $this->routerInterface->generate('mapped_my_tricks', ['categoryId' => $category->getId(), 'categorySlug' => $category->getSlug()]),
+                'loc'        => $this->routerInterface->generate('mapped_my_articles_from_category', ['categorySlug' => $category->getSlug()]),
                 'lastmod'    => $category->getUpdatedAt()->format('Y-m-d'),
                 'changefreq' => "monthly",
                 'priority'   => 0.8
             ];
         }
-        // #[Route('/mes-astuces/{categoryId}/{categorySlug}/{trickId}/{trickSlug}', name: 'mapped_trick_details')]
-        $articles = $this->articleRepository->findBy(['isOnline' => true ]);
 
+        $articles = $this->articleRepository->findBy(['isOnline' => true ]);
         foreach($articles as $article){
             $urls[] = [
-                'loc'        => $this->routerInterface->generate('mapped_trick_details', ['categoryId' => $article->getCategory()->getId(), 'categorySlug' => $article->getCategory()->getSlug(), 'trickId' => $article->getId(), 'trickSlug' => $article->getSlug()]),
+                'loc'        => $this->routerInterface->generate('mapped_article_details', ['categorySlug' => $article->getCategory()->getSlug(), 'articleSlug' => $article->getSlug()]),
                 'lastmod'    => $category->getUpdatedAt()->format('Y-m-d'),
                 'changefreq' => "monthly",
                 'priority'   => 0.8

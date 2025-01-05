@@ -2,20 +2,21 @@
 
 namespace App\Controller\Site;
 
+use App\Entity\Article;
 use App\Form\ArticleType;
 use App\Form\ContactType;
+use App\Service\MailerService;
+use App\Service\NinjasApiService;
+use App\Service\OpenWeatherService;
 use App\Repository\ArticleRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\TrainingRepository;
 use App\Service\MentionsLegalesService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\LegalInformationRepository;
 use App\Repository\TechnologyFamilyRepository;
-use App\Repository\TrainingRepository;
-use App\Service\MailerService;
-use App\Service\NinjasApiService;
-use App\Service\OpenWeatherService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -134,18 +135,25 @@ class SiteController extends AbstractController
 
         $metas['description'] = 'Mon petit google à moi des actuces, programmes, conseils trouvez sur le web pour mes réalisations.';
 
+        //pour chaque categorie,je cherche le dernier article
+        $lastArticles = [];
+        foreach ($categories as $category) {
+            $lastArticles[$category->getName()] = $this->articleRepository->findOneBy(['category' => $category, 'isOnline' => true ], ['id' => 'DESC']) ?? null;
+        }
+
         return $this->render('site/pages/categories/categories.html.twig', [
             'categories' => $categories,
+            'lastArticles' => $lastArticles,
             'h1' => 'Mes astuces, conseils et programmes',
             'lead' => 'Pour ne plus chercher sur google ! <i class="fa-regular fa-face-laugh-wink"></i>',
             'metas' => $metas
         ]);
     }
 
-    #[Route('/blog/{categoryId}/{categorySlug}', name: 'mapped_my_tricks')]
-    public function myArticles(Request $request,$categoryId, $categorySlug): Response
+    #[Route('/blog/{categorySlug}', name: 'mapped_my_articles_from_category')]
+    public function myArticles(Request $request,$categorySlug): Response
     {
-        $category = $this->categoryRepository->findOneBy(['id' => $categoryId, 'slug' => $categorySlug]);
+        $category = $this->categoryRepository->findOneBy(['slug' => $categorySlug]);
 
         if (!$category) {
             throw $this->createNotFoundException('La catégorie n\'existe pas.');
@@ -176,19 +184,19 @@ class SiteController extends AbstractController
         ]);
     }
 
-    #[Route('/blog/{categoryId}/{categorySlug}/{trickId}/{trickSlug}', name: 'mapped_trick_details')]
-    public function trickDetails($categoryId, $categorySlug, $trickId, $trickSlug): Response
+    #[Route('/blog/{categorySlug}/{articleSlug}', name: 'mapped_article_details')]
+    public function articleDetails($categorySlug, $articleSlug): Response
     {
-        $category = $this->categoryRepository->findOneBy(['id' => $categoryId, 'slug' => $categorySlug]);
+        $category = $this->categoryRepository->findOneBy(['slug' => $categorySlug]);
 
         if (!$category) {
             throw $this->createNotFoundException('La catégorie n\'existe pas.');
         }
 
-        $article = $this->articleRepository->findOneBy(['id' => $trickId, 'slug' => $trickSlug]);
+        $article = $this->articleRepository->findOneBy(['slug' => $articleSlug]);
 
         if (!$article) {
-            throw $this->createNotFoundException('Cette astuce n\'existe pas.');
+            throw $this->createNotFoundException('Cet article n\'existe pas.');
         }
 
         $metas['description'] = ''; //TODO

@@ -5,19 +5,15 @@ namespace App\Controller\Admin;
 use DateTimeZone;
 use App\Entity\Article;
 use Doctrine\ORM\EntityManagerInterface;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\CodeEditorField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
-use phpDocumentor\Reflection\Types\Boolean;
 
 class ArticleCrudController extends AbstractCrudController
 {
@@ -40,13 +36,14 @@ class ArticleCrudController extends AbstractCrudController
             BooleanField::new('isOnline', 'En ligne:'),
             TextField::new('name', 'Nom:'),
             SlugField::new('slug', 'Slug:')->setTargetFieldName('name')->hideOnIndex(),
-            // CodeEditorField::new('description', 'Description:'),
-            TextEditorField::new('description', 'Description:')->setFormTypeOptions([
-                'block_name' => 'custom_description',
-                'data' => $data
-            ])->setHtmlAttribute('id', 'Article_description')
-            ->setColumns(9)->onlyOnForms(),
-            // TextareaField::new('description', 'Description:')->setFormType(CKEditorType::class),
+            TextEditorField::new('description', 'Description:')
+                ->setFormTypeOptions([
+                    'block_name' => 'custom_description',
+                    'data' => $data
+                ])
+                ->setHtmlAttribute('id', 'Article_description')
+                ->setColumns(9)
+                ->onlyOnForms(),
             AssociationField::new('category', 'Visible dans la catégorie:'),
             DateTimeField::new('updatedAt', 'Date de mise à jour:')->setDisabled(true),
         ];

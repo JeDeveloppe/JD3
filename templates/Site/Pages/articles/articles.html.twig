@@ -7,7 +7,7 @@
 	<h1 class="col-12 text-center mt-5">{{ h1 }}</h1>
 
     {% include "site/components/_breadcrumb.html.twig" with {category: category} %}
-    {% include "site/forms/_search_trick.html.twig" %}
+    {% include "site/forms/_search_article.html.twig" %}
 
 	<div class="row g-0 justify-content-center mb-5">
         <div class="col-11 col-md-8 col-lg-7">
@@ -22,7 +22,7 @@
                     {% for article in articles %}
                         <tr>
                             <td>{{ article.name }}</td>
-                            <td class="text-end"><a class="btn btn-primary" href="{{ path('mapped_trick_details', {categoryId: category.id, categorySlug: category.slug, trickId: article.id, trickSlug: article.slug }) }}">Voir</a></td>
+                            <td class="text-end"><a class="btn btn-primary" href="{{ path('mapped_article_details', {categorySlug: category.slug, articleSlug: article.slug }) }}">Voir</a></td>
                         </tr>
                     {% else %}
                         <tr>

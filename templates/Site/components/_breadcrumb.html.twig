@@ -7,7 +7,7 @@
                 </li>
                 {% if article is defined %}
                     <li class="breadcrumb-item">
-                        <a class="text-decoration-none" href="{{ path('mapped_my_tricks', {categoryId: category.id, categorySlug: category.slug }) }}">{{ category.name}}</a>
+                        <a class="text-decoration-none" href="{{ path('mapped_my_articles_from_category', {categorySlug: category.slug }) }}">{{ category.name}}</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">{{ article.name }}</li>
                 {% else %}

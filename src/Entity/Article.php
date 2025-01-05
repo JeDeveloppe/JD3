@@ -5,8 +5,19 @@ namespace App\Entity;
 use App\Repository\ArticleRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
+#[UniqueEntity(
+    fields: ['name'],
+    message: 'This name is already used.',
+    errorPath: 'name',
+)]
+#[UniqueEntity(
+    fields: ['slug'],
+    message: 'This slug is already used.',
+    errorPath: 'slug',
+)]
 class Article
 {
     #[ORM\Id]

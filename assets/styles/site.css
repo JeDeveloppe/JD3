@@ -103,3 +103,7 @@ pre {
         transform: translate(-50%, 0);
     }
 }
+
+pre:hover {
+    cursor: copy;
+}

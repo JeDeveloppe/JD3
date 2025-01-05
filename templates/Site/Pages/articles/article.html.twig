@@ -1,10 +1,10 @@
 {% extends "site/components/_base.html.twig" %}
 {% block title %}
-	{{ h1 }}
+	{{ category.name}} - {{ h1 }}
 {% endblock %}
 {% block body %}
 
-	<h1 class="col-12 text-center mt-5">{{ h1 }}</h1>
+	<h1 class="col-11 text-center mt-5 mx-auto">{{ h1 }}</h1>
 
 	{% include "site/components/_breadcrumb.html.twig" with {category: category, article: article} %}
 
@@ -13,35 +13,34 @@
 			<div class="card-body">{{ article.description | raw }}</div>
 			<div class="card-footer d-flex justify-content-end align-items-center">
 		        <div class="small">Mise à jour le: {{ article.updatedAt | date("d/m/Y") }}</div>
-                {# <button id="copyButton" class="btn btn-outline-dark"><i class="fa-solid fa-copy"></i></button> #}
             </div>
 		</article>
 	</div>
 
-	<script>
-        let presentations = document.querySelectorAll('pre');
+    <script type="text/javascript">
 
-        if(presentations){
+            var presentations = document.querySelectorAll('pre');
 
-            presentations.forEach(presentation => {
-                presentation.style.cursor = 'copy';
-                presentation.addEventListener('click', () => {
-                    let textPre = presentation.textContent;
-                    let height = presentation.offsetHeight;
-                    console.log(textPre);
-                    navigator.clipboard.writeText(presentation.textContent);
-                    presentation.style.height = height + 'px';
-                    presentation.classList.add('d-flex', 'justify-content-center', 'align-items-center');
-                    presentation.innerHTML = 'C\'est copié!';
+            if(presentations) {
 
-                    setTimeout(() => {
-                        presentation.innerHTML = textPre;
-                        presentation.classList.remove('d-flex', 'justify-content-center', 'align-items-center');
-                    }, 2000);
+                presentations.forEach(presentation => {
+                    presentation.addEventListener('click', () => {
+                        var textPre = presentation.textContent;
+                        var height = presentation.offsetHeight;
+                        
+                        navigator.clipboard.writeText(textPre);
+
+                        presentation.style.height = height + 'px';
+                        presentation.classList.add('d-flex', 'justify-content-center', 'align-items-center');
+                        presentation.innerHTML = 'C\'est copié!';
+
+                        setTimeout(() => {
+                            presentation.innerHTML = textPre;
+                            presentation.classList.remove('d-flex', 'justify-content-center', 'align-items-center');
+                        }, 2000);
+                    });
                 });
-            });
-        }
+            }
         
 	</script>
-
 {% endblock %}
