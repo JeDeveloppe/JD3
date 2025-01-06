@@ -18,14 +18,13 @@
                     <a href="{{ path('mapped_my_articles_from_category', {categorySlug: category.slug }) }}" class="_card_full_button"></a>
                     <div class="card-header text-center fw-bold">{{ category.articles | length }} {{ articles }}</div>
                     <twig:ux:icon name="{{ category.renderIconStringWithoutParentheses }}" class="card-img-top p-5 p-md-4"/></twig:ux:icon>
-                        <div class="card-footer small text-end fst-italic d-flex flex-wrap">
-                            <div class="col-12">Mise à jour 
+                        <div class="card-footer small text-end fst-italic">
+                            Mise à jour 
                                 {% if lastArticles[category.name].updatedAt is defined %}
                                     le: {{ lastArticles[category.name].updatedAt | date("d/m/Y") }}
                                 {% else %}
                                     bientôt...
                                 {% endif %}
-                            </div>
                         </div>
                     </div>
                 </article>

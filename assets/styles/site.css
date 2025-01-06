@@ -39,6 +39,9 @@ pre {
     padding-bottom: 15px;
     padding-left: 15px;
 }
+pre:hover {
+    cursor: copy;
+}
 
 .custom_shadow {
     box-shadow:
@@ -102,8 +105,4 @@ pre {
     100% {
         transform: translate(-50%, 0);
     }
-}
-
-pre:hover {
-    cursor: copy;
 }

@@ -22,7 +22,14 @@
                     {% for article in articles %}
                         <tr>
                             <td>{{ article.name }}</td>
-                            <td class="text-end"><a class="btn btn-primary" href="{{ path('mapped_article_details', {categorySlug: category.slug, articleSlug: article.slug }) }}">Voir</a></td>
+                            <td class="text-end">
+                                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                <a class="btn btn-dark text-white me-2" target="_blank" href="{{ ea_url().setController('App\\Controller\\Admin\\ArticleCrudController').setAction('edit')}}">
+                                        <span class="fa fa-edit"></span>
+                                    </a>
+                                {% endif %}
+                                <a class="btn btn-primary" href="{{ path('mapped_article_details', {categorySlug: category.slug, articleSlug: article.slug }) }}">Voir</a>
+                            </td>
                         </tr>
                     {% else %}
                         <tr>

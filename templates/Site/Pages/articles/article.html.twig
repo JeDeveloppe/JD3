@@ -19,24 +19,34 @@
 
     <script type="text/javascript">
 
+            //?on récupere tous les blocs presentation <pre>
             var presentations = document.querySelectorAll('pre');
 
+            //?s'il y a un au moins un bloc
             if(presentations) {
 
+                //?on cré une boucle sur tous les blocs
                 presentations.forEach(presentation => {
+
+                    //?on ajoute un ecouteur d'evenement par bloc
                     presentation.addEventListener('click', () => {
                         var textPre = presentation.textContent;
                         var height = presentation.offsetHeight;
+                        presentation.classList.add('position-relative','px-0');
                         
+                        let newPre = document.createElement('div');
+                        newPre.innerHTML = 'C\'est copié!';
+                        newPre.style.height = height + 'px';
+                        newPre.classList.add('d-flex', 'justify-content-center', 'align-items-center','position-absolute', 'top-0', 'left-0', 'w-100', 'h-100', 'bg-success');
+                        presentation.appendChild(newPre);
+
+                        //?on copie le contenu
                         navigator.clipboard.writeText(textPre);
 
-                        presentation.style.height = height + 'px';
-                        presentation.classList.add('d-flex', 'justify-content-center', 'align-items-center');
-                        presentation.innerHTML = 'C\'est copié!';
-
+                        //?apres 2s on remet comme avant
                         setTimeout(() => {
-                            presentation.innerHTML = textPre;
-                            presentation.classList.remove('d-flex', 'justify-content-center', 'align-items-center');
+                            newPre.remove();
+                            presentation.classList.remove('px-0');
                         }, 2000);
                     });
                 });

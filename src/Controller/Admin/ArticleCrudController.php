@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use DateTimeZone;
 use App\Entity\Article;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
@@ -44,8 +45,19 @@ class ArticleCrudController extends AbstractCrudController
                 ->setHtmlAttribute('id', 'Article_description')
                 ->setColumns(9)
                 ->onlyOnForms(),
-            AssociationField::new('category', 'Visible dans la catégorie:'),
-            DateTimeField::new('updatedAt', 'Date de mise à jour:')->setDisabled(true),
+            AssociationField::new('category', 'Visible dans la catégorie:')
+                ->setRequired(true)
+                ->setFormTypeOptions(
+                    [
+                        'placeholder' => 'Sélectionner une catégorie...',
+                    ]
+                )
+                ->setQueryBuilder(
+                    fn(QueryBuilder $queryBuilder) => 
+                    $queryBuilder
+                    ->orderBy('entity.name', 'ASC')
+                ),
+            DateTimeField::new('updatedAt', 'Date de mise à jour:')->setDisabled(true)->onlyWhenUpdating(),
         ];
     }
 

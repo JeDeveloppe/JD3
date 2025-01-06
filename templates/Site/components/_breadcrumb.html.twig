@@ -14,6 +14,13 @@
                     <li class="breadcrumb-item active" aria-current="page">
                         {{ category.name }}
                     </li>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <li class="breadcrumb-item active">
+                            <a class="btn btn-sm btn-success text-white" target="_blank" href="{{ ea_url().setController('App\\Controller\\Admin\\ArticleCrudController').setAction('new').setEntityId(category.id)}}">
+                                    <span class="fa-solid fa-plus"></span>
+                                </a>
+                        </li>
+                    {% endif %}
                 {% endif %}
             </ol>
         </nav>
