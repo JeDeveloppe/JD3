@@ -236,4 +236,7 @@ return [
     'color-name' => [
         'version' => '1.1.4',
     ],
+    'typed.js' => [
+        'version' => '2.1.0',
+    ],
 ];

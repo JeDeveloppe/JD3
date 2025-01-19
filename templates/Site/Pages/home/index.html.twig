@@ -6,10 +6,20 @@
 
     <div class="row g-0 justify-content-center my-5">
         <p class="col-11 col-md-8 col-lg-7 mb-3">
-            Le code est avant tout pour moi une <span id="typewriter" class="text-danger fw-bolder"></span>.
+            J'ai créé ce petit site: <br/> - 
+                <span {{ stimulus_controller('symfony/ux-typed', {
+                    strings: ['pour m\'entrainer et m\'améliorer ', 'pour tester mes connaissances... ','pour mettre en pratique mes connaissances ', 'pour vous dire que je suis autodidacte à 100%... '],
+                    smartBackspace: true,
+                    startDelay: 500,
+                    backSpeed: 50,
+                    backDelay: 500,
+                    loop: true,
+                    showCursor: true,
+                    cursorChar: '✨'
+                }) }}></span>
         </p>
         <p class="col-11 col-md-8 col-lg-7">
-            <span class="fw-bolder fst-italic text-primary">Je suis autodidacte à 100%</span>, n' hésitez pas à prendre contact avec moi si vous avez un projet.
+            <span class="fw-bolder fst-italic text-primary">N' hésitez pas à prendre contact avec moi si vous avez un projet.</span>
         </p>
     </div>
 
@@ -41,20 +51,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        var i = 0;
-        var txt = ' passion'; /* The text */
-        var speed = 500; /* The speed/duration of the effect in milliseconds */
-
-        function typeWriter() {
-            if (i < txt.length) {
-                document.getElementById("typewriter").innerHTML += txt.charAt(i);
-                i++;
-                setTimeout(typeWriter, speed);
-            }
-        }
-
-        typeWriter();
-    </script>
 {% endblock %}

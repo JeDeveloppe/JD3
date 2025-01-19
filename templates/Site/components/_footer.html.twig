@@ -1,6 +1,12 @@
 <footer class="row g-0 align-items-center p-4 mt-auto" style="background-color: rgba(0, 0, 0, 0.05);">
 	<div class="col-12 col-md-4 text-center text-md-start mb-3 mb-md-0">
-		2020 - {{ 'now'|date('Y') }}<br/>
+	    {% set startedAt = 2020 %}
+		{% set now = 'now'|date('Y') %}
+		{% if startedAt != now %}
+			{{ startedAt }} - {{ now }}<br/>
+		{% else %}
+			{{ now }}<br/>
+		{% endif %}
 		<div id="blockToDisplayClock" class="clock" onload="showTime()"></div>
 	</div>
 	<div class="col-12 col-md-4 text-center mb-3 mb-md-0">

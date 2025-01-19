@@ -85,7 +85,7 @@ class SiteController extends AbstractController
     #[Route('/mes-realisations', name: 'site_my_projects')]
     public function myProjects(Request $request): Response
     {
-        $donneesFromDatabases = $this->projectRepository->findBy(['isOnline' => true]);
+        $donneesFromDatabases = $this->projectRepository->findBy(['isOnline' => true], ['startedAt' => 'DESC']);
 
         $projects = $this->paginator->paginate(
             $donneesFromDatabases, /* query NOT result */
