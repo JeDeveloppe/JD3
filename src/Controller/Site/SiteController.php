@@ -2,12 +2,14 @@
 
 namespace App\Controller\Site;
 
+use App\Entity\Domain;
 use App\Entity\Article;
 use App\Form\ArticleType;
 use App\Form\ContactType;
 use App\Service\MailerService;
 use App\Service\NinjasApiService;
 use App\Service\OpenWeatherService;
+use App\Repository\DomainRepository;
 use App\Repository\ArticleRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\CategoryRepository;
@@ -34,7 +36,8 @@ class SiteController extends AbstractController
         private TrainingRepository $trainingRepository,
         private MailerService $mailerService,
         private OpenWeatherService $openWeatherService,
-        private NinjasApiService $ninjasApiService
+        private NinjasApiService $ninjasApiService,
+        private DomainRepository $domainRepository,
     )
     {}
 
@@ -122,93 +125,6 @@ class SiteController extends AbstractController
         ]);
     }
 
-    #[Route('/blog', name: 'site_my_categories')]
-    public function myCategories(Request $request): Response
-    {
-        $donneesFromDatabases = $this->categoryRepository->findAll();
-
-        $categories = $this->paginator->paginate(
-            $donneesFromDatabases, /* query NOT result */
-            $request->query->getInt('page', 1), /*page number*/
-            12 /*limit per page*/
-        );
-
-        $metas['description'] = 'Mon petit google à moi des actuces, programmes, conseils trouvez sur le web pour mes réalisations.';
-
-        //pour chaque categorie,je cherche le dernier article
-        $lastArticles = [];
-        foreach ($categories as $category) {
-            $lastArticles[$category->getName()] = $this->articleRepository->findOneBy(['category' => $category, 'isOnline' => true ], ['id' => 'DESC']) ?? null;
-        }
-
-        return $this->render('site/pages/categories/categories.html.twig', [
-            'categories' => $categories,
-            'lastArticles' => $lastArticles,
-            'h1' => 'Mes astuces, conseils et programmes',
-            'lead' => 'Pour ne plus chercher sur google ! <i class="fa-regular fa-face-laugh-wink"></i>',
-            'metas' => $metas
-        ]);
-    }
-
-    #[Route('/blog/{categorySlug}', name: 'mapped_my_articles_from_category')]
-    public function myArticles(Request $request,$categorySlug): Response
-    {
-        $category = $this->categoryRepository->findOneBy(['slug' => $categorySlug]);
-
-        if (!$category) {
-            throw $this->createNotFoundException('La catégorie n\'existe pas.');
-        }
-
-        $articles = $this->articleRepository->findBy(['category' => $category, 'isOnline' => true ], ['id' => 'DESC']);
-
-        $metas['description'] = 'Mon petit google à moi des actuces, programmes, conseils trouvez sur le web pour mes réalisations concernant la catégorie '.$category->getName();
-
-        $form = $this->createForm(ArticleType::class);
-        $form->handleRequest($request);
-
-
-        if($form->isSubmitted() && $form->isValid()) {
-
-            $search = str_replace(" ","%", $form->get('search')->getData());
-
-            $articles = $this->articleRepository->findArticleByName($search, $category);
-
-        }
-
-        return $this->render('site/pages/articles/articles.html.twig', [
-            'category' => $category,
-            'articles' => $articles,
-            'h1' => 'Mes articles: '.$category->getName(),
-            'metas' => $metas,
-            'form' => $form
-        ]);
-    }
-
-    #[Route('/blog/{categorySlug}/{articleSlug}', name: 'mapped_article_details')]
-    public function articleDetails($categorySlug, $articleSlug): Response
-    {
-        $category = $this->categoryRepository->findOneBy(['slug' => $categorySlug]);
-
-        if (!$category) {
-            throw $this->createNotFoundException('La catégorie n\'existe pas.');
-        }
-
-        $article = $this->articleRepository->findOneBy(['slug' => $articleSlug]);
-
-        if (!$article) {
-            throw $this->createNotFoundException('Cet article n\'existe pas.');
-        }
-
-        $metas['description'] = ''; //TODO
-
-        return $this->render('site/pages/articles/article.html.twig', [
-            'category' => $category,
-            'h1' => $article->getName(),
-            'article' => $article,
-            'metas' => $metas
-        ]);
-    }
-
     #[Route('/mentions-legales', name: 'site_mentions_legales')]
     public function mentionsLegales(): Response
     {
@@ -233,6 +149,60 @@ class SiteController extends AbstractController
         return $this->render('site/pages/knowledges/knowledges.html.twig', [
             'technologiesFamilies' => $technologiesFamilies,
             'h1' => 'Mes connaissances',
+            'metas' => $metas
+        ]);
+    }
+
+    #[Route('/blog', name: 'site_my_domains')]
+    public function myDomains(Request $request): Response
+    {
+        $donneesFromDatabases = $this->domainRepository->findAll();
+
+        $domains = $this->paginator->paginate(
+            $donneesFromDatabases, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            12 /*limit per page*/
+        );
+
+        $metas['description'] = 'Mon petit google à moi des actuces, programmes et conseils trouvez sur le web...';
+
+        return $this->render('site/pages/blog/domains.html.twig', [
+            'domains' => $domains,
+            'h1' => 'Mes astuces, conseils et programmes',
+            'lead' => 'Pour ne plus chercher sur google ! <i class="fa-regular fa-face-laugh-wink"></i>',
+            'metas' => $metas
+        ]);
+    }
+
+    #[Route('/blog/{domainSlug}', name: 'site_my_categories_by_domain')]
+    public function myCategories(Request $request): Response
+    {
+        $domain = $this->domainRepository->findOneBy(['slug' => $request->attributes->get('domainSlug')]);
+        if (!$domain) {
+            throw $this->createNotFoundException('Ce domaine n\'existe pas.');
+        }
+
+        $donneesFromDatabases = $this->categoryRepository->findBy(['domain' => $domain]);
+
+        $categories = $this->paginator->paginate(
+            $donneesFromDatabases, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            12 /*limit per page*/
+        );
+
+        $metas['description'] = 'Mon petit google à moi des actuces, programmes, conseils trouvez sur le web pour mes réalisations.';
+
+        //pour chaque categorie,je cherche le dernier article
+        $lastArticles = [];
+        foreach ($categories as $category) {
+            $lastArticles[$category->getName()] = $this->articleRepository->findOneBy(['category' => $category, 'isOnline' => true ], ['id' => 'DESC']) ?? null;
+        }
+
+        return $this->render('site/pages/categories/categories.html.twig', [
+            'categories' => $categories,
+            'domain' => $domain,
+            'lastArticles' => $lastArticles,
+            'h1' => $domain->getName(),
             'metas' => $metas
         ]);
     }

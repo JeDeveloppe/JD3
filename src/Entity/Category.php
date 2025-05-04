@@ -50,6 +50,9 @@ class Category
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
+    #[ORM\ManyToOne(inversedBy: 'categories')]
+    private ?Domain $domain = null;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -163,6 +166,18 @@ class Category
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getDomain(): ?Domain
+    {
+        return $this->domain;
+    }
+
+    public function setDomain(?Domain $domain): static
+    {
+        $this->domain = $domain;
 
         return $this;
     }

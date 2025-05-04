@@ -2,18 +2,19 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Category;
-use App\Entity\LegalInformation;
-use App\Entity\Project;
-use App\Entity\Technology;
-use App\Entity\TechnologyFamily;
-use App\Entity\Training;
+use App\Entity\Domain;
 use App\Entity\Article;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
-use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use App\Entity\Project;
+use App\Entity\Category;
+use App\Entity\Training;
+use App\Entity\Technology;
+use App\Entity\LegalInformation;
+use App\Entity\TechnologyFamily;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -36,6 +37,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToRoute('Site', 'fa-solid fa-earth-europe', 'site_home');
 
         yield MenuItem::section('Blog');
+        yield MenuItem::linkToCrud('Les domaines', 'fas fa-list', Domain::class);
         yield MenuItem::linkToCrud('Les catégories', 'fas fa-list', Category::class);
         yield MenuItem::linkToCrud('Les articles', 'fas fa-list', Article::class);
 

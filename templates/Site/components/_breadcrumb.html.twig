@@ -3,23 +3,39 @@
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <i class="fa-solid fa-road"></i> <a class="text-decoration-none" href="{{ path('site_my_categories') }}">Toutes les articles</a>
+                    <i class="fa-solid fa-road"></i> <a class="text-decoration-none" href="{{ path('site_my_domains') }}"> Domaines</a>
                 </li>
-                {% if article is defined %}
+                {% if domain is defined and category is not defined %}
                     <li class="breadcrumb-item">
-                        <a class="text-decoration-none" href="{{ path('mapped_my_articles_from_category', {categorySlug: category.slug }) }}">{{ category.name}}</a>
+                        <a class="text-decoration-none" href="{{ path('site_my_categories_by_domain', {domainSlug: domain.slug }) }}">{{ domain.name }}</a> > Toutes les catégories
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">{{ article.name }}</li>
                 {% else %}
-                    <li class="breadcrumb-item active" aria-current="page">
-                        {{ category.name }}
+                    <li class="breadcrumb-item">
+                        <a class="text-decoration-none" href="{{ path('site_my_categories_by_domain', {domainSlug: domain.slug }) }}">{{ domain.name }}</a>
                     </li>
-                    {% if is_granted('ROLE_SUPER_ADMIN') %}
-                        <li class="breadcrumb-item active">
-                            <a class="btn btn-sm btn-success text-white" target="_blank" href="{{ ea_url().setController('App\\Controller\\Admin\\ArticleCrudController').setAction('new').setEntityId(category.id)}}">
-                                    <span class="fa-solid fa-plus"></span>
-                                </a>
+                    {% if category is defined and article is not defined %}
+                        <li class="breadcrumb-item">
+                            <a class="text-decoration-none" href="{{ path('blog_mapped_my_articles_from_category', {domainSlug: category.domain.slug, categorySlug: category.slug }) }}" > {{ category.name}}</a> > Tous les articles
                         </li>
+                    {% else %}
+                        <li class="breadcrumb-item">
+                            <a class="text-decoration-none" href="{{ path('blog_mapped_my_articles_from_category', {domainSlug: category.domain.slug, categorySlug: category.slug }) }}" > {{ category.name}}</a>
+                        </li>
+                        {% if article is defined %}
+
+                            <li class="breadcrumb-item active" aria-current="page">{{ article.name }}</li>
+                        {% else %}
+                            <li class="breadcrumb-item active" aria-current="page">
+                                {{ category.name }}
+                            </li>
+                            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                <li class="breadcrumb-item active">
+                                    <a class="btn btn-sm btn-success text-white" target="_blank" href="{{ ea_url().setController('App\\Controller\\Admin\\ArticleCrudController').setAction('new').setEntityId(category.id)}}">
+                                            <span class="fa-solid fa-plus"></span>
+                                        </a>
+                                </li>
+                            {% endif %}
+                        {% endif %}
                     {% endif %}
                 {% endif %}
             </ol>

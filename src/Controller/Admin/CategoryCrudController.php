@@ -28,6 +28,7 @@ class CategoryCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
+            AssociationField::new('domain', 'Domaine:')->setRequired(true),
             TextField::new('name', 'Nom:'),
             SlugField::new('slug', 'Slug:')->setTargetFieldName('name')->hideOnIndex(),
             TextField::new('commandLineInTerminal', 'Commande:'),

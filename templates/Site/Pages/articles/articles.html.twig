@@ -28,12 +28,12 @@
                                         <span class="fa fa-edit"></span>
                                     </a>
                                 {% endif %}
-                                <a class="btn btn-primary" href="{{ path('mapped_article_details', {categorySlug: category.slug, articleSlug: article.slug }) }}">Voir</a>
+                                <a class="btn btn-primary" href="{{ path('blog_mapped_article_details', {domainSlug: category.domain.slug, categorySlug: category.slug, articleSlug: article.slug }) }}">Voir</a>
                             </td>
                         </tr>
                     {% else %}
                         <tr>
-                            <td class="fst-italic" colspan="2">Aucune astuce pour le moment...! (J'y travail)</td>
+                            <td class="fst-italic" colspan="2">Aucun article pour le moment...! (J'y travail)</td>
                         </tr>
                     {% endfor %}
                 </tbody>
