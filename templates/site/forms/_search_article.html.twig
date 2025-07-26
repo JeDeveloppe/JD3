@@ -1,0 +1,23 @@
+{% include "site/forms/_display_form_errors.html.twig" %}
+
+<div class="row g-0 justify-content-center mb-5">
+    <div class="col-11 d-flex justify-content-center">
+        {{ form_start(form) }}
+            <div class="input-group position-relative">
+                {{ form_widget(form.search) }}
+                <span class="input-group-append valid_button">
+                    {% if form.vars.value.search is not defined %}
+                        <button class="btn" type="submit">
+                            <i class="fa fa-search text-success"></i>
+                        </button>
+                    {% else %}
+                        {% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+                        <a class="btn" href="{{ currentPath }}">
+                            <i class="fa-solid fa-eraser text-warning"></i>
+                        </a>
+                    {% endif %}
+                </span>
+            </div>
+    {{ form_end(form) }}
+        </div>
+</div>

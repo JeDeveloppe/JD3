@@ -1,0 +1,85 @@
+{% block _Article_custom_description_widget %}
+    <script>
+        tinymce.init({
+            selector: '#Article_description',
+            language: 'fr_FR',
+            file_picker_types: 'file image media',
+            license_key: 'gpl|lkwvjapr71696sz7qevsl3gmpjrzdtx7lks26p7sey326c17',
+            plugins: [
+            // Core editing features
+            'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table','tabfocus', 'visualblocks', 'wordcount',
+            // Your account includes a free trial of TinyMCE premium features
+            // Try the most popular premium features until Jan 9, 2025:
+            // 'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf'
+            ],
+            toolbar1: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
+            indentation: "20pt",
+            indent_use_margin: false,
+
+            lists_indent_on_tab: true,
+
+            setup: function (editor) {
+                editor.on("keydown", function (e) {
+                if (event.keyCode == 9) {
+                    // tab pressed
+
+                    editor.execCommand("mceInsertContent", false, "  "); // inserts tab
+
+                    event.preventDefault();
+
+                    console.log("indent added to the paragraph");
+
+                    return false;
+                }
+                });
+            },
+            mergetags_list: [
+            { value: 'First.Name', title: 'First Name' },
+            { value: 'Email', title: 'Email' },
+            ],
+            image_title: true,
+            /* enable automatic uploads of images represented by blob or data URIs*/
+            automatic_uploads: true,
+            /*
+                URL of our upload handler (for more details check: https://www.tiny.cloud/docs/configure/file-image-upload/#images_upload_url)
+                images_upload_url: 'postAcceptor.php',
+                here we add custom filepicker only to Image dialog
+            */
+            file_picker_types: 'image',
+            /* and here's our custom image picker*/
+            file_picker_callback: (cb, value, meta) => {
+                const input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                input.setAttribute('accept', 'image/*');
+
+                input.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+
+                const reader = new FileReader();
+                reader.addEventListener('load', () => {
+                    /*
+                    Note: Now we need to register the blob in TinyMCEs image blob
+                    registry. In the next release this part hopefully won't be
+                    necessary, as we are looking to handle it internally.
+                    */
+                    const id = 'blobid' + (new Date()).getTime();
+                    const blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+                    const base64 = reader.result.split(',')[1];
+                    const blobInfo = blobCache.create(id, file, base64);
+                    blobCache.add(blobInfo);
+
+                    /* call the callback and populate the Title field with the file name */
+                    cb(blobInfo.blobUri(), { title: file.name });
+                });
+                reader.readAsDataURL(file);
+                });
+
+                input.click();
+            },
+            ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
+        });
+    </script>
+    <input type="text" name="Article[description]" id="Article_description" value="{{ value}}" />
+{% endblock _Article_custom_description_widget %}

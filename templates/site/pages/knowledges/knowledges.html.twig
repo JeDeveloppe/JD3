@@ -1,0 +1,36 @@
+{% extends "site/components/_base.html.twig" %}
+{% block title %}
+	{{ h1 }}
+{% endblock %}
+{% block body %}
+	<h1 class="col-12 text-center my-5">{{ h1 }}</h1>
+
+	<div class="row g-0 justify-content-around align-items-start mb-5">
+        <div class="col-11 col-sm-9 px-2 col-lg-6 col-xl-5 mb-5 mb-lg-0 d-flex justify-content-center order-lg-1 sticky-lg-top">
+            {{ render_chart(chart, {'class': 'my-chart'}) }}
+        </div>
+        <div class="col-11 px-1 col-lg-6 col-xl-5 d-flex flex-wrap justify-content-center order-lg-0">
+            {% for technologyFamily in technologiesFamilies %}
+                <div class="jumbotron col-12 shadow rounded mb-4 p-2">
+                    <h2 class="display-6">{{ technologyFamily.name }}</h2>
+                    <p class="small">{{ technologyFamily.description }}</p>
+                    <hr class="my-4">
+                    <ul class="list-group list-group-flush">
+                        {% for technology in technologyFamily.technologies|sort((b, a) => a.knowledgeRate <=> b.knowledgeRate) %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <twig:ux:icon name="{{ technology.renderIconStringWithoutParentheses }}" class="technologyIconeSize"/></twig:ux:icon> {{ technology.name }}
+                                </div>
+                                <div class="progress col-8">
+                                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: {{ technology.knowledgeRate }}%" aria-valuenow="{{ technology.knowledgeRate }}" aria-valuemin="0" aria-valuemax="100">{{ technology.knowledgeRate }} %</div>
+                                </div>
+
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+	</div>
+
+{% endblock %}

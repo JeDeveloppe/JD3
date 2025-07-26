@@ -1,0 +1,54 @@
+{% extends "site/components/_base.html.twig" %}
+{% block title %}{{ h1 }}{% endblock %}
+{% block body %}
+
+    <h1 class="col-12 text-center my-5">{{ h1}}</h1>
+
+    <div class="row g-0 justify-content-center my-5">
+        <p class="col-11 col-md-8 col-lg-7 mb-3">
+            J'ai créé ce petit site: <br/> - 
+                <span {{ stimulus_controller('symfony/ux-typed', {
+                    strings: ['pour m\'entrainer et m\'améliorer ', 'pour tester mes connaissances... ','pour mettre en pratique mes connaissances ', 'pour vous dire que je suis autodidacte à 100%... '],
+                    smartBackspace: true,
+                    startDelay: 500,
+                    backSpeed: 50,
+                    backDelay: 500,
+                    loop: true,
+                    showCursor: true,
+                    cursorChar: '✨'
+                }) }}></span>
+        </p>
+        <p class="col-11 col-md-8 col-lg-7">
+            <span class="fw-bolder fst-italic text-primary">N' hésitez pas à prendre contact avec moi si vous avez un projet.</span>
+        </p>
+    </div>
+
+    <div class="jumbotron jumbotron-fluid my-5">
+        <div class="container">
+            <h3 class="display-6 mb-4">Quelques informations provenant de l'API OpenWeather</h3>
+            <div class="row g-0 justify-content-around align-items-center">
+                {% for data in citiesDatas %}
+                    <div class="col-11 col-md-6 col-lg-5 mb-3">
+                        <div class="card col-11 mx-auto p-0">
+                            <div class="card-header">{{ data.name }}</div>
+                            <div class="card-body">
+                                <table class="table table-sm">
+                                    <tbody>
+                                        <tr><td>Lever du soleil:</td><td>{{ data.sys.sunrise|date("H:m:s", "Europe/Paris") }}</td></tr>
+                                        <tr><td>Coucher du soleil:</td><td>{{ data.sys.sunset|date("H:m:s", "Europe/Paris") }}</td></tr>
+                                        <tr><td>Température min:</td><td>{{ data.main.temp_min }} °C</td></tr>
+                                        <tr><td>Température max:</td><td>{{ data.main.temp_max }} °C</td></tr>
+                                        <tr><td>Pression atmosphérique:</td><td>{{ data.main.pressure }} hPa</td></tr>
+                                        <tr><td>Humidité:</td><td>{{ data.main.humidity }} %</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <p class="text-center fst-italic">Aïe<br/>Leur serveur semble actulement indisponible !</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

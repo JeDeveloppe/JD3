@@ -1,0 +1,24 @@
+{% extends "site/components/_base.html.twig" %}
+{% block title %}{{  h1 }}{% endblock %}
+{% block body %}
+
+    <h1 class="col-12 text-center my-5">{{ h1 }}</h1>
+
+    <div class="row g-0 justify-content-center mb-5">
+        {% for training in trainings %}
+            <div class="jumbotron my-5 col-10 col-sm-9 col-md-7 shadow rounded p-4">
+                <h2 class="display-5">{{ training.name | raw | raw }}</h2>
+                <div class="lead mb-3">{{ training.diplomeName | raw }}</div>
+                <div class="col-12 d-flex flex-wrap justify-content-around align-item-center bg-light p-3 border rounded-2 mb-4">
+                        {{ training.description | raw }}
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12 small text-center">Début: {{ training.startedAt | date("d/m/Y") }} - Fin: {{ training.endAt ? training.endAt | date("d/m/Y") : "Toujours en cours..." }}</div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {{ knp_pagination_render(trainings, 'site/components/_pagination.html.twig') }}
+
+{% endblock %}

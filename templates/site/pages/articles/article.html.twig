@@ -1,0 +1,56 @@
+{% extends "site/components/_base.html.twig" %}
+{% block title %}
+	{{ category.name}} - {{ h1 }}
+{% endblock %}
+{% block body %}
+
+	<h1 class="col-11 text-center mt-5 mx-auto">{{ h1 }}</h1>
+
+	{% include "site/components/_breadcrumb.html.twig" with {category: category, article: article} %}
+
+	<div class="row g-0 justify-content-center mb-5">
+		<article class="card p-0 col-11 col-md-9 col-lg-7 border rounded-2 mb-1">
+			<div class="card-body">{{ article.description | raw }}</div>
+			<div class="card-footer d-flex justify-content-end align-items-center">
+		        <div class="small">Mise à jour le: {{ article.updatedAt | date("d/m/Y") }}</div>
+            </div>
+		</article>
+	</div>
+
+    <script type="text/javascript">
+
+            //?on récupere tous les blocs presentation <pre>
+            var presentations = document.querySelectorAll('pre');
+
+            //?s'il y a un au moins un bloc
+            if(presentations) {
+
+                //?on cré une boucle sur tous les blocs
+                presentations.forEach(presentation => {
+
+                    //?on ajoute un ecouteur d'evenement par bloc
+                    presentation.addEventListener('click', () => {
+                        var textPre = presentation.textContent;
+                        var height = presentation.offsetHeight;
+                        presentation.classList.add('position-relative','px-0');
+                        
+                        let newPre = document.createElement('div');
+                        newPre.innerHTML = 'C\'est copié!';
+                        newPre.style.height = height + 'px';
+                        newPre.classList.add('d-flex', 'justify-content-center', 'align-items-center','position-absolute', 'top-0', 'left-0', 'w-100', 'h-100', 'bg-success');
+                        presentation.appendChild(newPre);
+
+                        //?on copie le contenu
+                        navigator.clipboard.writeText(textPre);
+
+                        //?apres 2s on remet comme avant
+                        setTimeout(() => {
+                            newPre.remove();
+                            presentation.classList.remove('px-0');
+                        }, 2000);
+                    });
+                });
+            }
+        
+	</script>
+{% endblock %}

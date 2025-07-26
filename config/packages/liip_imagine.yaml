@@ -1,0 +1,15 @@
+liip_imagine :
+    resolvers :
+        default :
+            web_path : ~
+
+    filter_sets :
+        cache : ~
+
+        # the name of the "filter set"
+        projectImage :
+            # adjust the image quality to 75%
+            quality : 100
+            # list of transformations to apply (the "filters")
+            filters :
+                thumbnail: { size: [500, 500], mode: inset }

@@ -1,0 +1,108 @@
+@font-face {
+    font-family: Orbitron;
+    src: url(./../fonts/Orbitron-VariableFont_wght.ttf);
+}
+
+.technologyIconeSize {
+    width: 60px;
+    height: 60px;
+}
+.footerIconeSize {
+    width: 40px;
+    height: 40px;
+}
+._card_full_button {
+    background: transparent;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    z-index: 1;
+}
+._card_full_button:hover {
+    box-shadow:
+        rgba(0, 0, 0, 0.25) 0px 54px 55px,
+        rgba(0, 0, 0, 0.12) 0px -12px 30px,
+        rgba(0, 0, 0, 0.12) 0px 4px 6px,
+        rgba(0, 0, 0, 0.17) 0px 12px 13px,
+        rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+pre {
+    background-color: aquamarine;
+    width: 98%;
+    margin-top: 15px;
+    border-radius: 5px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+}
+pre:hover {
+    cursor: copy;
+}
+
+.custom_shadow {
+    box-shadow:
+        rgba(0, 0, 0, 0.25) 0px 54px 55px,
+        rgba(0, 0, 0, 0.12) 0px -12px 30px,
+        rgba(0, 0, 0, 0.12) 0px 4px 6px,
+        rgba(0, 0, 0, 0.17) 0px 12px 13px,
+        rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.clock {
+    color: #17d4fe;
+    font-family: Orbitron;
+    letter-spacing: 2px;
+}
+
+.navbar-brand {
+    margin-right: 1rem;
+    transition: all 0.5s ease-in-out;
+}
+
+.navbar-brand img {
+    width: 60px;
+    height: auto;
+    border: 2px solid burlywood;
+    border-radius: 5px;
+    background-color: white;
+}
+
+@media (min-width: 992px) {
+    .navbar-brand {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        animation: floatation 30s ease-in-out infinite;
+    }
+    .navbar-brand img {
+        scale: 2.5;
+    }
+}
+
+@keyframes floatation {
+    0% {
+        transform: translate(-50%, 0);
+    }
+    10% {
+        transform: translate(-55%, -5%);
+    }
+    30% {
+        transform: translate(-50%, 5%);
+    }
+    50% {
+        transform: translate(-60%, -5%);
+    }
+    70% {
+        transform: translate(-50%, 5%);
+    }
+    80% {
+        transform: translate(-60%, -5%);
+    }
+    100% {
+        transform: translate(-50%, 0);
+    }
+}

@@ -1,0 +1,36 @@
+{% extends "site/components/_base.html.twig" %}
+{% block title %}Mes articles pour ne plus chercher sur Google !{% endblock %}
+{% block body %}
+
+    <h1 class="col-11 text-center mt-5 mx-auto">{{ h1 }}</h1>
+    <p class="lead col-11 text-center small fst-italic mx-auto">{{ lead | raw}}</p>
+
+    <div class="row g-0 justify-content-start my-5">
+        {% for key,category in categories %}
+            {# some variables #}
+            {% set articles = 'article' %}
+            {% if category.articles | length > 1 %}
+            {% set articles = 'articles' %}
+            {% endif %}
+
+                <article class="col-6 col-md-4 col-lg-3 col-xxl-2 mb-3">
+                    <div class="card col-11 col-sm-10 col-xxl-11 mx-auto">
+                    <a href="{{ path('mapped_my_articles_from_category', {categorySlug: category.slug }) }}" class="_card_full_button"></a>
+                    <div class="card-header text-center fw-bold">{{ category.articles | length }} {{ articles }}</div>
+                    <twig:ux:icon name="{{ category.renderIconStringWithoutParentheses }}" class="card-img-top p-5 p-md-4"/></twig:ux:icon>
+                        <div class="card-footer small text-end fst-italic">
+                            Mise à jour 
+                                {% if lastArticles[category.name].updatedAt is defined %}
+                                    le: {{ lastArticles[category.name].updatedAt | date("d/m/Y") }}
+                                {% else %}
+                                    bientôt...
+                                {% endif %}
+                        </div>
+                    </div>
+                </article>
+        {% endfor %}
+    </div>
+
+    {{ knp_pagination_render(categories, 'site/components/_pagination.html.twig') }}
+
+{% endblock %}
