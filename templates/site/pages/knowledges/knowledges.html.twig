@@ -1,36 +1,47 @@
 {% extends "site/components/_base.html.twig" %}
 {% block title %}
-	{{ h1 }}
+    {{ h1 }}
 {% endblock %}
 {% block body %}
-	<h1 class="col-12 text-center my-5">{{ h1 }}</h1>
+    <h1 class="col-12 text-center my-5">{{ h1 }}</h1>
 
-	<div class="row g-0 justify-content-around align-items-start mb-5">
-        <div class="col-11 col-sm-9 px-2 col-lg-6 col-xl-5 mb-5 mb-lg-0 d-flex justify-content-center order-lg-1 sticky-lg-top">
-            {{ render_chart(chart, {'class': 'my-chart'}) }}
+    <div class="row g-0 justify-content-center align-items-start mb-5">
+        
+        {# Le conteneur du graphique avec un positionnement "sticky" #}
+        <div class="col-12 col-lg-6 col-xl-5 mb-5 mb-lg-0 order-lg-1 sticky-lg-top" style="top: 20px;">
+            <div class="card shadow-sm h-100">
+                <div class="card-body p-4 d-flex justify-content-center align-items-center">
+                    {{ render_chart(chart, {'class': 'my-chart w-100 h-100'}) }}
+                </div>
+            </div>
         </div>
-        <div class="col-11 px-1 col-lg-6 col-xl-5 d-flex flex-wrap justify-content-center order-lg-0">
+        
+        {# Le conteneur des technologies #}
+        <div class="col-12 col-lg-6 col-xl-5 d-flex flex-column g-3 order-lg-0">
             {% for technologyFamily in technologiesFamilies %}
-                <div class="jumbotron col-12 shadow rounded mb-4 p-2">
-                    <h2 class="display-6">{{ technologyFamily.name }}</h2>
-                    <p class="small">{{ technologyFamily.description }}</p>
-                    <hr class="my-4">
-                    <ul class="list-group list-group-flush">
-                        {% for technology in technologyFamily.technologies|sort((b, a) => a.knowledgeRate <=> b.knowledgeRate) %}
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <div>
-                                    <twig:ux:icon name="{{ technology.renderIconStringWithoutParentheses }}" class="technologyIconeSize"/></twig:ux:icon> {{ technology.name }}
-                                </div>
-                                <div class="progress col-8">
-                                    <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: {{ technology.knowledgeRate }}%" aria-valuenow="{{ technology.knowledgeRate }}" aria-valuemin="0" aria-valuemax="100">{{ technology.knowledgeRate }} %</div>
-                                </div>
-
-                            </li>
-                        {% endfor %}
-                    </ul>
+                <div class="card mb-4 shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <h2 class="card-title h3 text-primary">{{ technologyFamily.name }}</h2>
+                        <p class="card-text text-muted">{{ technologyFamily.description }}</p>
+                        <hr class="my-4">
+                        <ul class="list-group list-group-flush">
+                            {% for technology in technologyFamily.technologies|sort((b, a) => a.knowledgeRate <=> b.knowledgeRate) %}
+                                <li class="list-group-item d-flex flex-column flex-sm-row justify-content-between align-items-center">
+                                    <div class="mb-2 mb-sm-0 me-sm-2 text-center text-sm-start">
+                                        <twig:ux:icon name="{{ technology.renderIconStringWithoutParentheses }}" class="technologyIconeSize text-secondary me-2"/>{{ technology.name }}
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <div class="progress" style="height: 1.25rem;">
+                                            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: {{ technology.knowledgeRate }}%" aria-valuenow="{{ technology.knowledgeRate }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                    <div class="ms-sm-2 fw-bold text-success">{{ technology.knowledgeRate }} %</div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
             {% endfor %}
         </div>
-	</div>
-
+    </div>
 {% endblock %}

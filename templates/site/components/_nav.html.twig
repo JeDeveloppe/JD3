@@ -1,47 +1,47 @@
 <nav class="navbar navbar-expand-lg bg-primary mb-lg-5" data-bs-theme="dark">
-	<div class="container-fluid">
-		<a class="navbar-brand" href="{{ path('site_home') }}">
-			<img src="{{ asset('images/logoSite.png') }}" alt="Logo du site Je Développe">
-		</a>
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-			<span id="hamburgerMenu">
-				<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-book-half" viewBox="0 0 16 16">
-				<path d="M8.5 2.687c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783"/>
-				</svg>
-			</span>
-		</button>
-		<div class="collapse navbar-collapse " id="navbarColor01">
-			<ul class="navbar-nav me-auto">
-				<li class="nav-item mt-2 mt-lg-0">
-					<a class="nav-link" href="{{ path('site_my_knowledges') }}">Connaissances</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="{{ path('site_my_projects') }}">Réalisations</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="{{ path('site_my_trainings') }}">Formations</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="{{ path('site_my_categories') }}">Blog</a>
-				</li>
-			</ul>
-			<ul class="navbar-nav ms-auto">
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-user"></i></a>
-					<div class="dropdown-menu">
-						{% if is_granted('ROLE_SUPER_ADMIN') %}
-							<a class="dropdown-item" href="{{ path('admin') }}"><i class="fa-solid fa-gear"></i> ADMIN</a>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="{{ path('app_logout')}}"><i class="fa-solid fa-lock-open text-warning"></i> Déconnexion</a>
-						{% else %}
-							<a class="dropdown-item" href="{{ path('app_login')}}"><i class="fa-solid fa-lock text-warning"></i> Se connecter</a>
-						{% endif %}
-					</div>
-				</li>
-				<li class="nav-item d-flex">
-					<a class="nav-link border border-2 rounded-5 px-2" href="{{ path('site_contact') }}"><i class="fa-solid fa-envelope"></i> Contactez-moi !</a>
-				</li>
-			</ul>
-		</div>
-	</div>
+    <div class="container-fluid">
+        <a class="navbar-brand me-auto me-lg-0" href="{{ path('site_home') }}">
+            <img src="{{ asset('images/logoSite.png') }}" alt="Logo du site Je Développe">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbarCollapse" aria-controls="mainNavbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNavbarCollapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('site_my_knowledges') }}">Connaissances</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('site_my_projects') }}">Réalisations</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('site_my_trainings') }}">Formations</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('site_my_categories') }}">Blog</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-user me-1"></i> Mon compte
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                            <li><a class="dropdown-item" href="{{ path('admin') }}"><i class="fa-solid fa-gear me-2"></i> ADMIN</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{ path('app_logout')}}"><i class="fa-solid fa-lock-open me-2 text-warning"></i> Déconnexion</a></li>
+                        {% else %}
+                            <li><a class="dropdown-item" href="{{ path('app_login')}}"><i class="fa-solid fa-lock me-2 text-warning"></i> Se connecter</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                <li class="nav-item d-lg-flex d-none">
+                    <a class="btn btn-outline-light rounded-pill ms-3" href="{{ path('site_contact') }}">
+                        <i class="fa-solid fa-envelope me-2"></i> Contactez-moi !
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </nav>

@@ -4,9 +4,9 @@
 
     <h1 class="col-12 text-center my-5">{{ h1}}</h1>
 
-    <div class="row g-0 justify-content-center my-5">
-        <p class="col-11 col-md-8 col-lg-7 mb-3">
-            J'ai créé ce petit site: <br/> - 
+    <div class="row g-0 justify-content-center my-5 px-3">
+        <p class="col-12 col-md-8 col-lg-7 mb-3 lead">
+            J'ai créé ce petit site: <br/>
                 <span {{ stimulus_controller('symfony/ux-typed', {
                     strings: ['pour m\'entrainer et m\'améliorer ', 'pour tester mes connaissances... ','pour mettre en pratique mes connaissances ', 'pour vous dire que je suis autodidacte à 100%... '],
                     smartBackspace: true,
@@ -18,37 +18,74 @@
                     cursorChar: '✨'
                 }) }}></span>
         </p>
-        <p class="col-11 col-md-8 col-lg-7">
+        <p class="col-12 col-md-8 col-lg-7 px-3">
             <span class="fw-bolder fst-italic text-primary">N' hésitez pas à prendre contact avec moi si vous avez un projet.</span>
         </p>
     </div>
 
-    <div class="jumbotron jumbotron-fluid my-5">
-        <div class="container">
-            <h3 class="display-6 mb-4">Quelques informations provenant de l'API OpenWeather</h3>
-            <div class="row g-0 justify-content-around align-items-center">
-                {% for data in citiesDatas %}
-                    <div class="col-11 col-md-6 col-lg-5 mb-3">
-                        <div class="card col-11 mx-auto p-0">
-                            <div class="card-header">{{ data.name }}</div>
-                            <div class="card-body">
-                                <table class="table table-sm">
-                                    <tbody>
-                                        <tr><td>Lever du soleil:</td><td>{{ data.sys.sunrise|date("H:m:s", "Europe/Paris") }}</td></tr>
-                                        <tr><td>Coucher du soleil:</td><td>{{ data.sys.sunset|date("H:m:s", "Europe/Paris") }}</td></tr>
-                                        <tr><td>Température min:</td><td>{{ data.main.temp_min }} °C</td></tr>
-                                        <tr><td>Température max:</td><td>{{ data.main.temp_max }} °C</td></tr>
-                                        <tr><td>Pression atmosphérique:</td><td>{{ data.main.pressure }} hPa</td></tr>
-                                        <tr><td>Humidité:</td><td>{{ data.main.humidity }} %</td></tr>
-                                    </tbody>
-                                </table>
+    <div class="container my-5 py-5 bg-light rounded-3 shadow">
+        <div class="row g-0 justify-content-center">
+            <h3 class="display-6 mb-4 text-center">Quelques informations provenant de l'API OpenWeather</h3>
+            
+            {% if citiesDatas is not empty %}
+                {# Utilisation de "col-12" pour occuper toute la largeur sur mobile, puis de "col-md-6" et "col-lg-4" pour une meilleure répartition sur les écrans plus larges. #}
+                <div class="row g-4 justify-content-center">
+                    {% for city in citiesDatas %}
+                        <div class="col-12 col-md-6 col-lg-4 d-flex">
+                            <div class="card h-100 w-100 shadow-sm border-0">
+                                <div class="card-header bg-primary text-white text-center fs-5">{{ city.name }}</div>
+                                <div class="card-body p-4">
+                                    <div class="row g-2">
+                                        {# Les paires icône-donnée restent sur une seule colonne pour les petits écrans, puis se divisent sur deux colonnes. #}
+                                        <div class="col-12 d-flex align-items-center mb-2">
+                                            <i class="fa-solid fa-cloud-sun me-2 text-info"></i>
+                                            <span class="fw-bold me-auto">Lever du soleil:</span>
+                                            <span>{{ city.sunrise }}</span>
+                                        </div>
+                                        <div class="col-12 d-flex align-items-center mb-2">
+                                            <i class="fa-solid fa-cloud-moon me-2 text-warning"></i>
+                                            <span class="fw-bold me-auto">Coucher du soleil:</span>
+                                            <span>{{ city.sunset }}</span>
+                                        </div>
+                                        <div class="col-12 d-flex align-items-center mb-2">
+                                            <i class="fa-solid fa-temperature-low me-2 text-primary"></i>
+                                            <span class="fw-bold me-auto">Température min:</span>
+                                            <span>{{ city.temp_min }} °C</span>
+                                        </div>
+                                        <div class="col-12 d-flex align-items-center mb-2">
+                                            <i class="fa-solid fa-temperature-high me-2 text-danger"></i>
+                                            <span class="fw-bold me-auto">Température max:</span>
+                                            <span>{{ city.temp_max }} °C</span>
+                                        </div>
+                                        <div class="col-12 d-flex align-items-center mb-2">
+                                            <i class="fa-solid fa-gauge-high me-2 text-secondary"></i>
+                                            <span class="fw-bold me-auto">Pression:</span>
+                                            <span>{{ city.pressure }} hPa</span>
+                                        </div>
+                                        <div class="col-12 d-flex align-items-center mb-2">
+                                            <i class="fa-solid fa-droplet me-2 text-info"></i>
+                                            <span class="fw-bold me-auto">Humidité:</span>
+                                            <span>{{ city.humidity }} %</span>
+                                        </div>
+                                        <div class="col-12 d-flex align-items-center mb-2">
+                                            <i class="fa-solid fa-wind me-2 text-primary"></i>
+                                            <span class="fw-bold me-auto">Vent:</span>
+                                            <span>{{ city.wind }} m/s</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="col-12 col-md-8 col-lg-7 text-center">
+                    <div class="alert alert-danger" role="alert">
+                        <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                        <strong>Aïe!</strong> Le serveur de l'API semble actuellement indisponible.
                     </div>
-                {% else %}
-                    <p class="text-center fst-italic">Aïe<br/>Leur serveur semble actulement indisponible !</p>
-                {% endfor %}
-            </div>
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

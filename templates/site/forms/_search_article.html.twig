@@ -1,23 +1,24 @@
 {% include "site/forms/_display_form_errors.html.twig" %}
 
-<div class="row g-0 justify-content-center mb-5">
-    <div class="col-11 d-flex justify-content-center">
-        {{ form_start(form) }}
-            <div class="input-group position-relative">
-                {{ form_widget(form.search) }}
-                <span class="input-group-append valid_button">
-                    {% if form.vars.value.search is not defined %}
-                        <button class="btn" type="submit">
-                            <i class="fa fa-search text-success"></i>
-                        </button>
-                    {% else %}
+<div class="row g-0 justify-content-center my-4">
+    <div class="col-12 col-md-8 col-lg-6">
+        {{ form_start(form, {'attr': {'class': 'd-flex'}}) }}
+            <div class="input-group input-group-lg shadow-sm">
+                {{ form_widget(form.search, {'attr': {'class': 'form-control rounded-start-pill', 'placeholder': 'Rechercher...'}}) }}
+                
+                <span class="input-group-text bg-white rounded-end-pill p-0 border-0">
+                    {% if form.vars.value.search is defined and form.vars.value.search is not empty %}
                         {% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
-                        <a class="btn" href="{{ currentPath }}">
-                            <i class="fa-solid fa-eraser text-warning"></i>
+                        <a class="btn btn-transparent text-secondary px-3" href="{{ currentPath }}" title="Effacer la recherche">
+                            <i class="fa-solid fa-circle-xmark"></i>
                         </a>
+                    {% else %}
+                        <button class="btn btn-transparent text-primary px-3" type="submit" title="Lancer la recherche">
+                            <i class="fa fa-search"></i>
+                        </button>
                     {% endif %}
                 </span>
             </div>
-    {{ form_end(form) }}
-        </div>
+        {{ form_end(form) }}
+    </div>
 </div>

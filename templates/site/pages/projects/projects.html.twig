@@ -4,36 +4,62 @@
 
     <h1 class="col-12 text-center my-5">{{ h1 }}</h1>
 
-    <div class="row g-0 justify-content-center mb-5">
-        {% for project in projects %}
-            <div class="jumbotron my-5 col-10 col-sm-9 col-md-7 shadow rounded p-4">
-                <h2 class="display-5">{{ project.name }}</h2>
-                <div class="col-12 d-flex flex-wrap justify-content-around align-item-center">
-                    <img class="col-12 col-sm-6 col-md-2" src="{{ vich_uploader_asset(project, 'imageFile') | imagine_filter('projectImage') }}" alt="Logo du site {{ project.name }}" />
-                    <div class="col-12 col-sm-6 col-md-8 d-flex justify-content-start align-items-center p-1">
-                        {{ project.description | raw }}
-                    </div>
-                    <div class="col-12 col-md-2 d-flex justify-content-center align-items-center mt-4 mt-md-0">
-                        {# some variable for the page #}
-                        {% set disabled = "" %}
-                        {% set textButtonToUrl = "Voir le site" %}
-                        {% if project.url is null or project.endAt is null %}
-                            {% set disabled = "disabled" %}
-                            {% set textButtonToUrl = "En travaux..." %}
-                        {% endif %}
-                        <a class="btn btn-primary {{ disabled }} btn-sm" href="{{ project.url }}" target="_blank" role="button">{{ textButtonToUrl }}</a>
+    <div class="container my-5">
+        <div class="row g-4 justify-content-center">
+            {% for project in projects %}
+                <div class="col-12 col-lg-10 col-xl-8">
+                    <div class="card shadow-lg border-0 h-100">
+                        <div class="card-body p-4">
+                            <h2 class="card-title display-6 fw-bold text-primary mb-3">{{ project.name }}</h2>
+                            <hr class="mb-4">
 
+                            <div class="row g-4 align-items-center">
+                                {# Image du projet #}
+                                <div class="col-12 col-md-4 d-flex justify-content-center">
+                                    <img class="img-fluid rounded-3 shadow" src="{{ vich_uploader_asset(project, 'imageFile') | imagine_filter('projectImage') }}" alt="Logo du site {{ project.name }}" style="max-height: 200px; object-fit: contain;" />
+                                </div>
+                                
+                                {# Description et bouton #}
+                                <div class="col-12 col-md-8">
+                                    <div class="d-flex flex-column h-100">
+                                        <div class="mb-3">
+                                            {{ project.description | raw }}
+                                        </div>
+
+                                        <div class="mt-auto text-center text-md-start">
+                                            {% set disabled = "" %}
+                                            {% set textButtonToUrl = "Voir le site" %}
+                                            {% if project.url is null or project.endAt is null %}
+                                                {% set disabled = "disabled" %}
+                                                {% set textButtonToUrl = "En travaux..." %}
+                                            {% endif %}
+                                            <a class="btn btn-primary {{ disabled }} btn-sm" href="{{ project.url }}" target="_blank" role="button">{{ textButtonToUrl }}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="mt-4">
+                            
+                            {# Technologies et dates #}
+                            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center">
+                                <div class="d-flex justify-content-center align-items-center mb-2 mb-sm-0 flex-wrap">
+                                    {% for technology in project.technologies|sort((a, b) => a.orderOfAppearance <=> b.orderOfAppearance) %}
+                                        <twig:ux:icon name="{{ technology.renderIconStringWithoutParentheses }}" class="technologyIconeSize mx-1 my-1 text-secondary"/></twig:ux:icon>
+                                    {% endfor %}
+                                </div>
+                                <div class="small text-muted text-center text-sm-end">
+                                    <span class="fw-bold">Début:</span> {{ project.startedAt | date("d/m/Y") }}
+                                    <span class="mx-1">-</span>
+                                    <span class="fw-bold">Fin:</span> {{ project.endAt ? project.endAt | date("d/m/Y") : "Toujours en travaux..." }}
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-                <hr class="mt-4">
-                <div class="row justify-content-center">
-                    {% for technology in project.technologies|sort((a, b) => a.orderOfAppearance <=> b.orderOfAppearance) %}
-                        <twig:ux:icon name="{{ technology.renderIconStringWithoutParentheses }}" class="technologyIconeSize"/></twig:ux:icon>
-                    {% endfor %}
-                    <div class="col-12 small text-center">Début: {{ project.startedAt | date("d/m/Y") }} - Fin: {{ project.endAt ? project.endAt | date("d/m/Y") : "Toujours en travaux..." }}</div>
-                </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
 
     {{ knp_pagination_render(projects, 'site/components/_pagination.html.twig') }}

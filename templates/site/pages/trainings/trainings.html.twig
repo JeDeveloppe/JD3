@@ -6,14 +6,26 @@
 
     <div class="row g-0 justify-content-center mb-5">
         {% for training in trainings %}
-            <div class="jumbotron my-5 col-10 col-sm-9 col-md-7 shadow rounded p-4">
-                <h2 class="display-5">{{ training.name | raw | raw }}</h2>
-                <div class="lead mb-3">{{ training.diplomeName | raw }}</div>
-                <div class="col-12 d-flex flex-wrap justify-content-around align-item-center bg-light p-3 border rounded-2 mb-4">
-                        {{ training.description | raw }}
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-12 small text-center">Début: {{ training.startedAt | date("d/m/Y") }} - Fin: {{ training.endAt ? training.endAt | date("d/m/Y") : "Toujours en cours..." }}</div>
+            <div class="col-12 col-md-10 col-lg-8 col-xl-7">
+                <div class="card my-5 shadow-sm rounded-3">
+                    <div class="card-body p-4">
+                        <h2 class="card-title display-6 fw-bold text-primary">{{ training.name | raw }}</h2>
+                        <h3 class="card-subtitle lead mb-3 text-muted">{{ training.diplomeName | raw }}</h3>
+                        
+                        {# Content wrapper with better styling #}
+                        <div class="bg-light p-3 border rounded-2 mb-4">
+                            {{ training.description | raw }}
+                        </div>
+                        
+                        {# Date information at the bottom of the card #}
+                        <div class="row g-0 justify-content-end">
+                            <div class="col-12 text-end small text-muted">
+                                <span>Début: <span class="fw-bold">{{ training.startedAt | date("d/m/Y") }}</span></span>
+                                <span class="mx-2">-</span>
+                                <span>Fin: <span class="fw-bold">{{ training.endAt ? training.endAt | date("d/m/Y") : "Toujours en cours..." }}</span></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         {% endfor %}

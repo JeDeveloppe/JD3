@@ -2,6 +2,9 @@
 
 namespace App\Service;
 
+use DateTimeImmutable;
+use DateTimeZone;
+use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class OpenWeatherService
@@ -23,8 +26,19 @@ class OpenWeatherService
             ]
         ]);
 
-        $donnees = $response->toArray();
-        
+        $datas = $response->toArray();
+   
+        $donnees = [
+            'name' => $datas['name'],
+            'temp_min' => $datas['main']['temp_min'],
+            'temp_max' => $datas['main']['temp_max'],
+            'humidity' => $datas['main']['humidity'],
+            'wind' => $datas['wind']['speed'],
+            'pressure' => $datas['main']['pressure'],
+            'sunrise' => $this->getTimeFromTimestamp($datas['sys']['sunrise']),
+            'sunset' => $this->getTimeFromTimestamp($datas['sys']['sunset']),
+        ];
+
         //?exemple of donnees
         /*
         array:30 [▼
@@ -69,6 +83,11 @@ class OpenWeatherService
             */
 
         return $donnees;
+    }
+
+    private function getTimeFromTimestamp(int $timestamp)
+    {
+        return (new DateTimeImmutable('@' . $timestamp))->setTimezone(new DateTimeZone('Europe/Paris'))->format('H:i:s');
     }
 
 }

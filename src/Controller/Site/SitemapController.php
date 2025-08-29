@@ -16,7 +16,7 @@ class SitemapController extends AbstractController
         )
     {}
 
-    #[Route('/sitemap.xml', name: 'sitemap')]
+    #[Route('/sitemap.xml', name: 'sitemap', defaults: ['_format' => 'xml'])]
     public function index(): Response
     {
 

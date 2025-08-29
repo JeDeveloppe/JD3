@@ -2,32 +2,53 @@
 {% block title %}Contactez- moi !{% endblock %}
 {% block body %}
 
-	<h1 class="col-12 text-center my-5">{{ h1 }}</h1>
+    <div class="container my-5 py-5">
+        <div class="row g-0 justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8 col-xl-7">
+                <div class="card shadow-lg p-4 p-md-5">
+                    <div class="card-body">
+                        <h1 class="card-title text-center text-primary fw-bold mb-4">{{ h1 }}</h1>
+                        <p class="card-text text-center text-muted mb-5">
+                            N'hésitez pas à me contacter pour toute question, demande ou projet. Je vous répondrai dans les plus brefs délais.
+                        </p>
 
-	<div class="row g-0 justify-content-center mb-5">
-		<div class="col-11 col-sm-9 col-md-8 col-xl-7 col-xxl-6 px-xl-5">
+                        {{ form_start(form, {'attr': {'class': 'row g-4'}}) }}
+                            
+                            {# Champ Email avec form-floating pour un design moderne #}
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    {{ form_widget(form.email, {'attr': {'placeholder': 'Votre adresse e-mail'}}) }}
+                                    {{ form_label(form.email) }}
+                                </div>
+                                {{ form_errors(form.email) }}
+                            </div>
 
-			{{ form_start(form) }}
-				<div class="col-12">
-					<label class="form-label">{{ form_label(form.email) }}</label>
-					{{ form_widget(form.email) }}
-				</div>
-				<div class="col-12">
-					<label class="form-label">{{ form_label(form.sujet) }}</label>
-					{{ form_widget(form.sujet) }}
-				</div>
-				<div class="col-12">
-					<label class="form-label">{{ form_label(form.message) }}</label>
-					{{ form_widget(form.message) }}
-				</div>
-				<div class="col-12 text-center">
-					<button type="submit" class="btn btn-primary">Envoyer</button>
-				</div>
-			{{ form_end(form) }}
+                            {# Champ Sujet avec form-floating #}
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    {{ form_widget(form.sujet, {'attr': {'placeholder': 'Le sujet de votre message'}}) }}
+                                    {{ form_label(form.sujet) }}
+                                </div>
+                                {{ form_errors(form.sujet) }}
+                            </div>
 
-		</div>
+                            {# Champ Message avec form-floating #}
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    {{ form_widget(form.message, {'attr': {'placeholder': 'Votre message', 'style': 'height: 150px;'}}) }}
+                                    {{ form_label(form.message) }}
+                                </div>
+                                {{ form_errors(form.message) }}
+                            </div>
 
-	</div>
+                            <div class="col-12 text-center mt-5">
+                                <button type="submit" class="btn btn-primary btn-lg px-5 shadow-sm">Envoyer</button>
+                            </div>
 
-
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

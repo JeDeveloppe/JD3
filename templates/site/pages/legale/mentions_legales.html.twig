@@ -4,34 +4,39 @@
 
 {% block body %}
 
-    <div class="row g-0 justify-content-around align-items-center my-4">
-        <h1 class="col-12 text-center">Mentions légales</h1>
-        <div class="col-12 small text-center">Date de dernière mise à jour : {{ legales.updatedAt | date('d-m-Y') }}</div>
-    </div>
-
-    <div class="row g-0 py-5 bg-white justify-content-around">
-
-        <div class="col-11 col-md-8 col-xl-7 mb-5">
-            <h4 class="text-purple">Informations légales</h4>
-                <p>
-                    <span class="fw-bolder">Propriétaire du site :</span> {{ legales.companyName }}<br />
-                    <span class="fw-bolder">Contact :</span> {{ legales.emailCompany }}<br />
-                    <span class="fw-bolder">Adresse :</span> {{ legales.streetCompany }} {{ legales.postalCodeCompany }} {{ legales.cityCompany }}<br />
-                    <span class="fw-bolder">Hébergeur du site :</span> {{ legales.hostName }} {{ legales.hostStreet }} {{ legales.hostPostalCode }} {{ legales.hostCity }}<br/>
-                    <span class="fw-bolder">Développement & webmaster :</span> {{ legales.webmasterCompanyName }}<br />
-                    <span class="fw-bolder">Webdesign :</span> {{ legales.webdesignerName }}
-                </p>
+    <div class="container my-5 py-3">
+        <div class="row g-0 justify-content-center">
+            <div class="col-12 col-lg-10 col-xl-8 text-center">
+                <h1 class="display-4 fw-bold text-primary mb-2">Mentions légales</h1>
+                <p class="text-muted small">Date de dernière mise à jour : <span class="fw-bold">{{ legales.updatedAt | date('d-m-Y') }}</span></p>
+                <hr class="my-5">
+            </div>
         </div>
 
-        {% for paragraph in paragraphs %}
-
-            <div class="col-11 col-md-8 col-xl-7 mb-3">
-                <h4 class="text-purple">{{ paragraph.title }}</h4>
-                    <p>{{ paragraph.text | raw }}</p>
+        <div class="row g-0 justify-content-center">
+            <div class="col-12 col-lg-10 col-xl-8 mb-5">
+                <div class="card shadow-sm p-4">
+                    <h3 class="h4 text-primary fw-bold mb-3">Informations légales</h3>
+                    <p class="mb-0">
+                        <span class="fw-bolder">Propriétaire du site :</span> {{ legales.companyName }}<br />
+                        <span class="fw-bolder">Contact :</span> <a href="mailto:{{ legales.emailCompany }}" class="text-decoration-none">{{ legales.emailCompany }}</a><br />
+                        <span class="fw-bolder">Adresse :</span> {{ legales.streetCompany }} {{ legales.postalCodeCompany }} {{ legales.cityCompany }}<br />
+                        <span class="fw-bolder">Hébergeur du site :</span> {{ legales.hostName }} {{ legales.hostStreet }} {{ legales.hostPostalCode }} {{ legales.hostCity }}<br/>
+                        <span class="fw-bolder">Développement & webmaster :</span> {{ legales.webmasterCompanyName }}<br />
+                        <span class="fw-bolder">Webdesign :</span> {{ legales.webdesignerName }}
+                    </p>
+                </div>
             </div>
 
-        {% endfor %}
-
+            {% for paragraph in paragraphs %}
+                <div class="col-12 col-lg-10 col-xl-8 mb-4">
+                    <div class="card shadow-sm p-4">
+                        <h3 class="h4 text-primary fw-bold mb-3">{{ paragraph.title }}</h3>
+                        <p class="mb-0">{{ paragraph.text | raw }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 
 {% endblock %}

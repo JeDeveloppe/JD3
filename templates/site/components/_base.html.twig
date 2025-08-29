@@ -1,43 +1,44 @@
 <!DOCTYPE html>
-<html lang="fr">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        {#block meta description par page #}
-        {% if metas is defined %}
-            <meta name="description" content="{{ metas.description }}">
-        {% else %}
-            <meta name="description" content="Je Développe, le petit site qui regroupe toutes mes diverses connaissances !">
-        {% endif %}
-        {#endblock meta description par page #}
-        <title>Je Développe | {% block title %}{% endblock %}</title>
-        {#balise googleAnalytics #}
-        {% include "site/components/_googleAnalytics.html.twig" %}
-        {#endbalise googleAnalytics #}
-        <link rel="icon" type="image/png" href="{{ asset('favicon/favicon-96x96.png') }}" sizes="96x96" />
-        <link rel="icon" type="image/svg+xml" href="{{ asset('favicon/favicon.svg') }}" />
-        <link rel="shortcut icon" href="{{ asset('favicon/favicon.ico') }}" />
-        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-touch-icon.png') }}" />
-        <meta name="apple-mobile-web-app-title" content="JeDév" />
-        <link rel="manifest" href="{{ asset('favicon/site.webmanifest') }}" />
-        {# fontawesome icones #}
-        <script src="https://kit.fontawesome.com/39dfe16fa3.js" crossorigin="anonymous"></script>
+<html lang="fr" data-bs-theme="light">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <title>Je Développe | {% block title %}{% endblock %}</title>
 
-        {% block stylesheets %}
-        {% endblock %}
+    {# Meta Description for SEO #}
+    <meta name="description" content="{% block meta_description %}Je Développe, le petit site qui regroupe toutes mes diverses connaissances !{% endblock %}">
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('site') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body class="d-flex flex-column min-vh-100">
+    {# Favicon for multiple devices #}
+    <link rel="icon" type="image/png" href="{{ asset('favicon/favicon-96x96.png') }}" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon/favicon.svg') }}" />
+    <link rel="shortcut icon" href="{{ asset('favicon/favicon.ico') }}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-touch-icon.png') }}" />
+    <meta name="apple-mobile-web-app-title" content="JeDév" />
+    <link rel="manifest" href="{{ asset('favicon/site.webmanifest') }}" />
+    
+    {% block stylesheets %}
+        {# Your stylesheets go here #}
+    {% endblock %}
 
-        {% include "./site/components/_nav.html.twig" %}
+    {% block javascripts %}
+        {% block importmap %}{{ importmap('site') }}{% endblock %}
+    {% endblock %}
+</head>
+<body class="d-flex flex-column min-vh-100">
 
+    {% include "./site/components/_nav.html.twig" %}
+
+    <main class="flex-grow-1">
         {% include "./site/components/_flash_message.html.twig" %}
-
+        
         {% block body %}{% endblock %}
+    </main>
+    
+    {% include "./site/components/_footer.html.twig" %}
 
-        {% include "./site/components/_footer.html.twig" %}
-    </body>
+    <script src="https://kit.fontawesome.com/39dfe16fa3.js" crossorigin="anonymous" async></script>
+    {% include "site/components/_googleAnalytics.html.twig" %}
+
+</body>
 </html>

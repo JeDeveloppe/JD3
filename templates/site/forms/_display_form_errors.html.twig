@@ -1,13 +1,15 @@
 {% if not form.vars.valid %}
-    <div class="row g-0">
-        <ul class="col-12 text-center list-unstyled">
-            {# Loop through every form item #}
-            {% for child in form.children %}
-                {# Display the errors of the form item #}
-                {%for error in child.vars.errors%}
-                    <li class="text-danger small">{{error.message}}</li>
-                {%endfor%}
-            {%endfor%}
-        </ul>
+    <div class="row g-0 justify-content-center mb-4">
+        <div class="col-12 col-md-10 col-lg-8">
+            <div class="alert alert-danger" role="alert">
+                <ul class="list-unstyled mb-0">
+                    {% for child in form.children %}
+                        {% for error in child.vars.errors %}
+                            <li><i class="fa-solid fa-triangle-exclamation me-2"></i>{{ error.message }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
     </div>
-{%endif%}
+{% endif %}

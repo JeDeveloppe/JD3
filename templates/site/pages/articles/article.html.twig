@@ -1,56 +1,84 @@
 {% extends "site/components/_base.html.twig" %}
 {% block title %}
-	{{ category.name}} - {{ h1 }}
+    {{ category.name}} - {{ h1 }}
 {% endblock %}
 {% block body %}
 
-	<h1 class="col-11 text-center mt-5 mx-auto">{{ h1 }}</h1>
+    <div class="container my-5">
+        <div class="row g-0 justify-content-center">
+            <h1 class="col-12 text-center display-4 fw-bold text-primary mb-3">{{ h1 }}</h1>
+            
+            {% include "site/components/_breadcrumb.html.twig" with {category: category, article: article} %}
+        </div>
+        
+        <div class="row g-0 justify-content-center mb-5">
+            <article class="col-12 col-md-10 col-lg-8">
+                <div class="card shadow-lg border-0 rounded-3">
+                    <div class="card-body p-4 p-md-5">
+                        <div class="article-content">
+                            {{ article.description | raw }}
+                        </div>
+                    </div>
+                    <div class="card-footer bg-light d-flex justify-content-end align-items-center py-3">
+                        <div class="small text-muted fst-italic">Mise à jour le: <span class="fw-bold">{{ article.updatedAt | date("d/m/Y") }}</span></div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+    
+    <style>
+        .code-container {
+            position: relative;
+        }
 
-	{% include "site/components/_breadcrumb.html.twig" with {category: category, article: article} %}
+        .copy-button {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
 
-	<div class="row g-0 justify-content-center mb-5">
-		<article class="card p-0 col-11 col-md-9 col-lg-7 border rounded-2 mb-1">
-			<div class="card-body">{{ article.description | raw }}</div>
-			<div class="card-footer d-flex justify-content-end align-items-center">
-		        <div class="small">Mise à jour le: {{ article.updatedAt | date("d/m/Y") }}</div>
-            </div>
-		</article>
-	</div>
+        .code-container:hover .copy-button {
+            opacity: 1;
+        }
+    </style>
 
     <script type="text/javascript">
+        // Helper function to show a temporary message
+        function showCopySuccess(button) {
+            const originalText = button.innerHTML;
+            button.innerHTML = '<i class="fa-solid fa-check"></i> Copié !';
+            button.classList.remove('btn-secondary');
+            button.classList.add('btn-success');
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.classList.remove('btn-success');
+                button.classList.add('btn-secondary');
+            }, 2000);
+        }
 
-            //?on récupere tous les blocs presentation <pre>
-            var presentations = document.querySelectorAll('pre');
+        document.querySelectorAll('pre').forEach(pre => {
+            const button = document.createElement('button');
+            button.innerHTML = '<i class="fa-solid fa-clipboard"></i> Copier';
+            button.classList.add('btn', 'btn-secondary', 'btn-sm', 'copy-button');
 
-            //?s'il y a un au moins un bloc
-            if(presentations) {
+            const container = document.createElement('div');
+            container.classList.add('code-container');
+            
+            pre.parentNode.insertBefore(container, pre);
+            container.appendChild(pre);
+            container.appendChild(button);
 
-                //?on cré une boucle sur tous les blocs
-                presentations.forEach(presentation => {
-
-                    //?on ajoute un ecouteur d'evenement par bloc
-                    presentation.addEventListener('click', () => {
-                        var textPre = presentation.textContent;
-                        var height = presentation.offsetHeight;
-                        presentation.classList.add('position-relative','px-0');
-                        
-                        let newPre = document.createElement('div');
-                        newPre.innerHTML = 'C\'est copié!';
-                        newPre.style.height = height + 'px';
-                        newPre.classList.add('d-flex', 'justify-content-center', 'align-items-center','position-absolute', 'top-0', 'left-0', 'w-100', 'h-100', 'bg-success');
-                        presentation.appendChild(newPre);
-
-                        //?on copie le contenu
-                        navigator.clipboard.writeText(textPre);
-
-                        //?apres 2s on remet comme avant
-                        setTimeout(() => {
-                            newPre.remove();
-                            presentation.classList.remove('px-0');
-                        }, 2000);
-                    });
+            button.addEventListener('click', () => {
+                const textToCopy = pre.textContent;
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    showCopySuccess(button);
+                }).catch(err => {
+                    console.error('Failed to copy text: ', err);
                 });
-            }
-        
-	</script>
+            });
+        });
+    </script>
 {% endblock %}

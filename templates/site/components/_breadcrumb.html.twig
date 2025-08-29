@@ -1,24 +1,28 @@
-<div class="row g-0 justify-content-around mt-5 mb-2">
-    <div class="ps-2">
-        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-            <ol class="breadcrumb">
+<div class="row g-0 justify-content-center my-4">
+    <div class="col-12 col-md-10 col-lg-8 px-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item">
-                    <i class="fa-solid fa-road"></i> <a class="text-decoration-none" href="{{ path('site_my_categories') }}">Toutes les articles</a>
+                    <a href="{{ path('site_my_categories') }}" class="text-decoration-none d-flex align-items-center">
+                        <i class="fa-solid fa-house me-2"></i> Articles
+                    </a>
                 </li>
-                {% if article is defined %}
+                {% if article is defined and article is not null %}
                     <li class="breadcrumb-item">
-                        <a class="text-decoration-none" href="{{ path('mapped_my_articles_from_category', {categorySlug: category.slug }) }}">{{ category.name}}</a>
+                        <a href="{{ path('mapped_my_articles_from_category', {categorySlug: category.slug }) }}" class="text-decoration-none">
+                            {{ category.name }}
+                        </a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">{{ article.name }}</li>
-                {% else %}
+                {% elseif category is defined and category is not null %}
                     <li class="breadcrumb-item active" aria-current="page">
                         {{ category.name }}
                     </li>
                     {% if is_granted('ROLE_SUPER_ADMIN') %}
-                        <li class="breadcrumb-item active">
-                            <a class="btn btn-sm btn-success text-white" target="_blank" href="{{ ea_url().setController('App\\Controller\\Admin\\ArticleCrudController').setAction('new').setEntityId(category.id)}}">
-                                    <span class="fa-solid fa-plus"></span>
-                                </a>
+                        <li class="breadcrumb-item d-flex align-items-center">
+                            <a class="btn btn-sm btn-outline-primary ms-2" target="_blank" href="{{ ea_url().setController('App\\Controller\\Admin\\ArticleCrudController').setAction('new').setEntityId(category.id)}}">
+                                <i class="fa-solid fa-plus me-1"></i> Ajouter
+                            </a>
                         </li>
                     {% endif %}
                 {% endif %}

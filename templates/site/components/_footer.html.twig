@@ -1,22 +1,74 @@
-<footer class="row g-0 align-items-center p-4 mt-auto" style="background-color: rgba(0, 0, 0, 0.05);">
-	<div class="col-12 col-md-4 text-center text-md-start mb-3 mb-md-0">
-	    {% set startedAt = 2020 %}
-		{% set now = 'now'|date('Y') %}
-		{% if startedAt != now %}
-			{{ startedAt }} - {{ now }}<br/>
-		{% else %}
-			{{ now }}<br/>
-		{% endif %}
-		<div id="blockToDisplayClock" class="clock" onload="showTime()"></div>
-	</div>
-	<div class="col-12 col-md-4 text-center mb-3 mb-md-0">
-		<a href="http://www.linkedin.com/in/wetta-rene-jd" class="mx-2" target="_blank" role="button"><twig:ux:icon name="skill-icons:linkedin" class="footerIconeSize"/></a>
-		<a href="https://github.com/JeDeveloppe" class="mx-2" target="_blank" role="button"><twig:ux:icon name="skill-icons:github-dark" class="footerIconeSize"/></a>
-		<a href="https://www.facebook.com/JeDevloppe" class="mx-2" target="_blank" role="button"><twig:ux:icon name="devicon:facebook" class="footerIconeSize"/></a>
-	</div>
-	<ul class="col-12 col-md-4 nav justify-content-center justify-content-md-end">
-		<li class="nav-item">
-			<a class="nav-link text-dark" href="{{ path('site_mentions_legales') }}">Mentions légales</a>
-		</li>
-	</ul>
+<footer class="bg-light py-4 border-top">
+    <div class="container">
+        <div class="row g-3 align-items-center">
+
+            {# Copyright and Clock Section #}
+            <div class="col-12 col-md-4 text-center text-md-start">
+                {% set startedAt = 2020 %}
+                {% set now = 'now'|date('Y') %}
+                <small class="text-muted">
+                    {% if startedAt != now %}
+                        &copy; {{ startedAt }} - {{ now }}
+                    {% else %}
+                        &copy; {{ now }}
+                    {% endif %}
+                </small>
+                <br>
+                <small class="text-muted" id="clock"></small>
+            </div>
+
+            {# Social Media Icons Section #}
+            <div class="col-12 col-md-4 text-center">
+                <a href="http://www.linkedin.com/in/wetta-rene-jd" class="mx-2" target="_blank" rel="noopener noreferrer" aria-label="Mon profil LinkedIn"><twig:ux:icon name="skill-icons:linkedin" class="footerIconeSize" /></a>
+                <a href="https://github.com/JeDeveloppe" class="mx-2" target="_blank" rel="noopener noreferrer" aria-label="Mon profil GitHub"><twig:ux:icon name="skill-icons:github-dark" class="footerIconeSize" /></a>
+                <a href="https://www.facebook.com/JeDevloppe" class="mx-2" target="_blank" rel="noopener noreferrer" aria-label="Ma page Facebook"><twig:ux:icon name="devicon:facebook" class="footerIconeSize" /></a>
+            </div>
+
+            {# Navigation Links #}
+            <div class="col-12 col-md-4 text-center text-md-end">
+                <ul class="nav justify-content-center justify-content-md-end">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="{{ path('site_mentions_legales') }}">Mentions légales</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        {# Development Stack Section #}
+        <div class="row mt-3">
+            <div class="col-12 text-center text-md-end">
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item me-1">
+                        <small class="text-muted">Développé avec :</small>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="https://symfony.com" target="_blank" rel="noopener noreferrer" title="Visitez Symfony" aria-label="Développé avec Symfony">
+                            <twig:ux:icon name="skill-icons:symfony-dark" class="footerIconeDevBySize" />
+                        </a>
+                    </li>
+                    <li class="list-inline-item ms-1">
+                        <a href="https://www.servbay.com" target="_blank" rel="noopener noreferrer" title="Visitez ServBay - Votre environnement de développement local" aria-label="Développé avec ServBay">
+                            <img src="{{ asset('images/icon_blue@64.png') }}" alt="Logo de ServBay" class="footerIconeDevBySize" />
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </footer>
+
+<script>
+    function showTime() {
+        const date = new Date();
+        let h = date.getHours();
+        let m = date.getMinutes();
+        let s = date.getSeconds();
+        h = (h < 10) ? "0" + h : h;
+        m = (m < 10) ? "0" + m : m;
+        s = (s < 10) ? "0" + s : s;
+        const time = h + ":" + m + ":" + s;
+        document.getElementById("clock").textContent = time;
+        setTimeout(showTime, 1000);
+    }
+    document.addEventListener("DOMContentLoaded", showTime);
+</script>
