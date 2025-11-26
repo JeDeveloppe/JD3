@@ -6,7 +6,8 @@
         'tel': '06.42.02.56.29',
         'email': 'wetta.rene@gmail.com',
         'adresse': '64b rue Emeraude, 14540 Bourguébus',
-        'web': 'je-developpe.fr'
+        'web': 'je-developpe.fr',
+        'linkedin_url': 'https://fr.linkedin.com/in/wetta-rene-perso'
     },
     'accroche': "Manager opérationnel et commercial chevronné avec 20 ans d'expérience dans la gestion de centres de profit. Reconnu pour mon leadership d'équipe (jusqu'à 20 personnes), ma capacité à gérer des volumes stratégiques (CA annuel jusqu'à 23 M€), et mon expertise dans l'optimisation des flux. Orienté vers la performance, le développement des collaborateurs et l'intégration de solutions digitales."
 } %}
@@ -17,9 +18,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CV - {{ profil.prenom }} {{ profil.nom }}</title>
-    <!-- Inclure Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!-- Inclure Bootstrap Icons (pour les symboles) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
         /* Styles personnalisés pour améliorer l'UX */
@@ -30,7 +29,23 @@
         .section-title { color: #3498db; border-bottom: 3px solid #3498db; padding-bottom: 0.5rem; margin-bottom: 1.5rem; }
         .experience-header { margin-top: 1.5rem; }
         .skill-badge { margin: 0.25rem; font-weight: 500; }
-        .footer-message { margin-top: 3rem; padding: 1.5rem; background-color: #f0f8ff; border-radius: 8px; text-align: center; border: 1px solid #3498db; }
+        
+        /* Styles pour le compteur de vues avec effet d'apparition (fade-in) */
+        .footer-message { 
+            margin-top: 3rem; 
+            padding: 1.5rem; 
+            background-color: #f0f8ff; 
+            border-radius: 8px; 
+            text-align: center; 
+            border: 1px solid #3498db; 
+            opacity: 0; /* Opacité initiale à 0 pour le fade-in */
+            transition: opacity 0.8s ease-in-out; /* Transition d'opacité */
+        }
+        /* Classe ajoutée par JS pour révéler le bloc */
+        .footer-message.visible { 
+            opacity: 1; 
+        }
+        
     </style>
 </head>
 <body>
@@ -38,17 +53,22 @@
 <div class="container cv-container mt-5 mb-5 rounded">
     <div class="row g-0">
         
-        <!-- Colonne de gauche (Sidebar - 4/12) : Informations et Compétences Clés -->
         <div class="col-lg-4 sidebar rounded-start">
             <div class="text-center mb-4">
                 <h1 class="display-5 fw-bold text-uppercase">{{ profil.nom }}</h1>
                 <h2 class="h3 fw-light">{{ profil.prenom }}</h2>
                 <span class="badge bg-info text-dark p-2 mt-2">{{ profil.titre }}</span>
+                
+                <p class="mt-2 mb-0">
+                    <a href="{{ profil.contact.linkedin_url }}" target="_blank" class="text-white text-decoration-none small fw-bold">
+                        <i class="bi bi-linkedin me-1"></i> Profil LinkedIn
+                    </a>
+                </p>
+                
             </div>
 
             <hr class="border-light opacity-50">
             
-            <!-- Coordonnées -->
             <h3 class="h5 mt-4 mb-3 text-warning">CONTACT</h3>
             <ul class="list-unstyled small">
                 <li><i class="bi bi-phone"></i> Tél: {{ profil.contact.tel }}</li>
@@ -59,7 +79,6 @@
 
             <hr class="border-light opacity-50">
 
-            <!-- Compétences (Savoir-faire et savoir-être) -->
             <h3 class="h5 mt-4 mb-3 text-warning">COMPÉTENCES CLÉS</h3>
             
             <p class="fw-bold mb-1">Management & Leadership 📈</p>
@@ -98,15 +117,13 @@
 
             <hr class="border-light opacity-50">
 
-            <!-- Formation -->
             <h3 class="h5 mt-4 mb-3 text-warning">FORMATION</h3>
             <p class="mb-1"><strong>Développeur Web (Diplôme professionnel)</strong></p>
-            <p class="small text-light">PENCLASSROOM</p>
+            <p class="small text-light">par OPENCLASSROOM</p>
             <p class="mb-1"><strong>Baccalauréat Scientifique (Bac S)</strong></p>
             
             <hr class="border-light opacity-50">
 
-            <!-- Centres d'Intérêts -->
             <h3 class="h5 mt-4 mb-3 text-warning">CENTRES D'INTÉRÊTS</h3>
             <ul class="list-unstyled small">
                 <li><i class="bi bi-code-slash"></i> Code informatique</li>
@@ -115,19 +132,15 @@
 
         </div>
 
-        <!-- Colonne de droite (Contenu Principal - 8/12) : Profil et Expériences -->
         <div class="col-lg-8 main-content rounded-end">
             
-            <!-- Profil / Accroche -->
             <h3 class="section-title">PROFIL</h3>
             <p class="lead small">{{ profil.accroche }}</p>
 
-            <!-- Expériences -->
             <h3 class="section-title">EXPÉRIENCES PROFESSIONNELLES (2003 - Aujourd'hui)</h3>
 
             <div class="border-start border-3 ps-3">
                 
-                <!-- Poste 1 -->
                 <div class="mb-4">
                     <h4 class="h5 fw-bold text-dark">Responsable de Centre de Gestion Opérationnelle</h4>
                     <p class="text-muted mb-1">EUROMASTER GRENTHEVILLE (14) | Sept. 2022 – Aujourd'hui</p>
@@ -138,7 +151,6 @@
                     </ul>
                 </div>
                 
-                <!-- Poste 2 -->
                 <div class="mb-4 experience-header">
                     <h4 class="h5 fw-bold text-dark">Manager de Centre de Profit</h4>
                     <p class="text-muted mb-1">EUROMASTER STRASBOURG (67) | Oct. 2016 – Août 2022</p>
@@ -149,7 +161,6 @@
                     </ul>
                 </div>
 
-                <!-- Poste 3 -->
                 <div class="mb-0 experience-header">
                     <h4 class="h5 fw-bold text-dark">De Technicien à Chef d’Atelier</h4>
                     <p class="text-muted mb-1">EUROMASTER SELESTAT (67) | Janv. 2003 – Sept. 2016</p>
@@ -164,15 +175,16 @@
     </div>
 </div>
 
-<!-- BLOC AFFICHAGE DU COMPTEUR DE VUES -->
 <div class="container mb-5">
     <div class="row">
         <div class="col-12">
-            <div class="footer-message">
+            <div class="footer-message" id="footer-message-block">
                 <p class="lead" id="visit-counter">
                     {# Twig affiche la valeur passée par le contrôleur #}
                     Merci d'avoir consulté mon CV en ligne ! Vous êtes la 
                     <strong>
+                        {# Simulation de total_views #}
+                        {% set total_views = 42 %}
                         {{ total_views }}
                         {# Logique Twig pour ajouter 'ère' ou 'ème' #}
                         {{ total_views == 1 ? 'ère' : 'ème' }}
@@ -188,8 +200,19 @@
     </div>
 </div>
 
-<!-- Inclure Bootstrap 5 JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const messageBlock = document.getElementById('footer-message-block');
+        
+        // Attendre 500ms avant de révéler le bloc pour un effet "wow" subtil
+        setTimeout(() => {
+            // Ajouter la classe 'visible' qui passe l'opacité de 0 à 1 (grâce à la transition CSS)
+            messageBlock.classList.add('visible');
+        }, 500); 
+    });
+</script>
 
 </body>
 </html>
