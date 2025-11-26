@@ -1,241 +1,187 @@
+{% set profil = {
+    'nom': 'WETTA',
+    'prenom': 'RENÉ',
+    'titre': 'MANAGER OPÉRATIONNEL & LEADER D\'ÉQUIPE',
+    'contact': {
+        'tel': '06.42.02.56.29',
+        'email': 'wetta.rene@gmail.com',
+        'adresse': '64b rue Emeraude, 14540 Bourguébus',
+        'web': 'je-developpe.fr'
+    },
+    'accroche': "Manager opérationnel et commercial chevronné avec 20 ans d'expérience dans la gestion de centres de profit. Reconnu pour mon leadership d'équipe (jusqu'à 20 personnes), ma capacité à gérer des volumes stratégiques (CA annuel jusqu'à 23 M€), et mon expertise dans l'optimisation des flux. Orienté vers la performance, le développement des collaborateurs et l'intégration de solutions digitales."
+} %}
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>CV – René Wetta | Manager opérationnel (Bootstrap 5)</title>
-  <meta name="description" content="CV numérique de René Wetta, manager opérationnel et chef d'équipe avec plus de 20 ans d'expérience." />
-
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
-  <style>
-    /* VARIABLES COULEURS PERSONNALISÉES */
-    :root {
-        --bs-primary: #0F6FFF; /* Bleu principal */
-        --bs-secondary-rgb: 108, 117, 125;
-        --bs-light-blue: #EBF5FF; /* Fond clair pour les cartes */
-        --bs-accent-green: #22C55E; /* Accent vert pour les succès/vérifications */
-        --bs-accent-orange: #FF7700; /* Accent orange pour les titres */
-    }
-    
-    /* STYLES GÉNÉRAUX ET TYPOGRAPHIE */
-    body {
-        font-family: 'Open Sans', sans-serif;
-        background-color: #F7F8FA; /* Arrière-plan global */
-    }
-    h1, h2, h3 {
-        font-family: 'Montserrat', sans-serif;
-    }
-    .card {
-        border-color: rgba(0,0,0,0.05) !important;
-    }
-
-    /* FIX OFFSET ANCHOR (pour la navbar fixe) */
-    :target::before {
-        content: "";
-        display: block;
-        height: 70px;
-        margin: -70px 0 0;
-    }
-    
-    /* PRINT */
-    @media print {
-        .d-print-none {
-            display: none !important;
-        }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - {{ profil.prenom }} {{ profil.nom }}</title>
+    <!-- Inclure Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Inclure Bootstrap Icons (pour les symboles) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        /* Styles personnalisés pour améliorer l'UX */
+        body { background-color: #f8f9fa; }
+        .cv-container { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+        .sidebar { background-color: #2c3e50; color: white; padding: 2rem; } /* Bleu foncé pour la sidebar */
+        .main-content { padding: 2rem; background-color: white; }
+        .section-title { color: #3498db; border-bottom: 3px solid #3498db; padding-bottom: 0.5rem; margin-bottom: 1.5rem; }
+        .experience-header { margin-top: 1.5rem; }
+        .skill-badge { margin: 0.25rem; font-weight: 500; }
+        .footer-message { margin-top: 3rem; padding: 1.5rem; background-color: #f0f8ff; border-radius: 8px; text-align: center; border: 1px solid #3498db; }
+    </style>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm d-print-none">
-    <div class="container">
-      <a class="navbar-brand fw-bold d-lg-none" href="#">René Wetta</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-        <ul class="navbar-nav gap-3">
-          <li class="nav-item"><a class="nav-link fw-semibold" href="#profil">Profil</a></li>
-          <li class="nav-item"><a class="nav-link fw-semibold" href="#xp">Expériences</a></li>
-          <li class="nav-item"><a class="nav-link fw-semibold" href="#skills">Compétences</a></li>
-          <li class="nav-item"><a class="nav-link fw-semibold" href="#formation">Formation</a></li>
-          <li class="nav-item"><a class="nav-link fw-semibold" href="#interets">Centres d’intérêt</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
 
-  <main class="container py-5 pt-lg-5 mt-lg-5">
-    <div class="row g-4 mt-2">
-      <div class="col-lg-7">
-        <div class="card p-4 shadow-sm border-0" style="background-color: var(--bs-light-blue);">
-          <h1 class="card-title fw-bold display-5 mb-1">René Wetta</h1>
-          <p class="text-secondary fs-5 mb-3">Manager opérationnel – Chef d’équipe confirmé</p>
-
-          <div class="d-flex flex-wrap gap-3 text-muted small mb-3">
-            <span><i class="bi bi-geo-alt-fill me-1 text-primary"></i> Bourguébus (14540)</span>
-            <span><i class="bi bi-telephone-fill me-1 text-primary"></i> <a href="tel:+33642025629" class="text-decoration-none text-muted">06 42 02 56 29</a></span>
-            <span><i class="bi bi-envelope-fill me-1 text-primary"></i> <a href="mailto:wetta.rene@gmail.com" class="text-decoration-none text-muted">wetta.rene@gmail.com</a></span>
-            <span><i class="bi bi-linkedin me-1 text-primary"></i> <a href="https://www.linkedin.com/in/wetta-rene-perso/" target="_blank" rel="noopener" class="text-decoration-none text-muted">LinkedIn</a></span>
-            <span><i class="bi bi-globe me-1 text-primary"></i> <a href="https://je-developpe.fr" target="_blank" rel="noopener" class="text-decoration-none text-muted">je-developpe.fr</a></span>
-          </div>
-
-          <div class="d-flex gap-2 mb-3 d-print-none">
-            <a class="btn btn-primary btn-lg fw-semibold" href="mailto:wetta.rene@gmail.com?subject=Candidature%20-%20Ren%C3%A9%20Wetta"><i class="bi bi-send-fill me-2"></i>Me contacter</a>
-          </div>
-
-          <div class="d-flex flex-wrap gap-2 mt-2">
-            <span class="badge text-bg-primary fw-normal p-2">Automobile & gestion de centres</span>
-            <span class="badge text-bg-primary fw-normal p-2">Leadership & optimisation</span>
-            <span class="badge text-bg-primary fw-normal p-2">Relation client B2C/B2B</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-5">
-        <div class="card p-4 shadow-sm border-0" id="profil">
-          <h2 class="card-title fw-bold fs-4" style="color: var(--bs-accent-orange);"><i class="bi bi-person-circle me-2"></i>Profil</h2>
-          <p class="card-text">Manager opérationnel avec plus de 20 ans d’expérience dans l’automobile et la gestion de centres. Fort d'une polyvalence éprouvée, j'excelle en pilotage d’équipes (jusqu’à 20 collaborateurs), optimisation des process et satisfaction client. Maîtrisant la gestion de contextes variés, je suis reconnu pour ma capacité à simplifier, structurer et améliorer la performance, tout en favorisant le bien-être des équipes et en m'adaptant rapidement à toute nouvelle mission ou environnement technique.</p>
-          <div class="d-flex flex-wrap gap-2 mt-2">
-            <span class="badge text-bg-light border text-primary p-2">Organisation</span>
-            <span class="badge text-bg-light border text-primary p-2">Planification</span>
-            <span class="badge text-bg-light border text-primary p-2">Formation</span>
-            <span class="badge text-bg-light border text-primary p-2">Digital</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <section class="card p-4 shadow-sm border-0 mt-4" id="xp">
-      <h2 class="card-title fw-bold fs-4 mb-4" style="color: var(--bs-accent-orange);"><i class="bi bi-briefcase-fill me-2"></i>Expériences professionnelles</h2>
-      <div class="list-group list-group-flush">
+<div class="container cv-container mt-5 mb-5 rounded">
+    <div class="row g-0">
         
-        <div class="list-group-item px-0 pb-4">
-          <div class="d-flex w-100 justify-content-between flex-wrap gap-2">
-            <h5 class="mb-1 fw-bold">Responsable centre de gestion opérationnel</h5>
-            <small class="text-muted fw-semibold" style="color: var(--bs-accent-orange) !important;">Sept. 2022 – Aujourd’hui</small>
-          </div>
-          <p class="mb-2 text-muted">Euromaster – Grentheville (14)</p>
-          <ul class="list-unstyled ms-3">
-            <li><i class="bi bi-check-circle-fill me-2" style="color: var(--bs-accent-green);"></i>Pilotage de l’organisation et respect des délais.</li>
-            <li><i class="bi bi-check-circle-fill me-2" style="color: var(--bs-accent-green);"></i>Procédures renforcées pour une exécution rapide et conforme.</li>
-            <li><i class="bi bi-check-circle-fill me-2" style="color: var(--bs-accent-green);"></i>Optimisation des opérations quotidiennes avec l’équipe.</li>
-            <li><i class="bi bi-check-circle-fill me-2" style="color: var(--bs-accent-green);"></i>Gestion efficace des imprévus et excellent relationnel.</li>
-          </ul>
-        </div>
+        <!-- Colonne de gauche (Sidebar - 4/12) : Informations et Compétences Clés -->
+        <div class="col-lg-4 sidebar rounded-start">
+            <div class="text-center mb-4">
+                <h1 class="display-5 fw-bold text-uppercase">{{ profil.nom }}</h1>
+                <h2 class="h3 fw-light">{{ profil.prenom }}</h2>
+                <span class="badge bg-info text-dark p-2 mt-2">{{ profil.titre }}</span>
+            </div>
 
-        <div class="list-group-item px-0 pb-4">
-          <div class="d-flex w-100 justify-content-between flex-wrap gap-2">
-            <h5 class="mb-1 fw-bold">Responsable centre auto (ex-chef d’atelier)</h5>
-            <small class="text-muted fw-semibold" style="color: var(--bs-accent-orange) !important;">Oct. 2016 – Août 2022</small>
-          </div>
-          <p class="mb-2 text-muted">Euromaster – Strasbourg (67)</p>
-          <ul class="list-unstyled ms-3">
-            <li><i class="bi bi-check-circle-fill me-2" style="color: var(--bs-accent-green);"></i>Management d’une équipe de 10 à 20 personnes.</li>
-            <li><i class="bi bi-check-circle-fill me-2" style="color: var(--bs-accent-green);"></i>Transmission claire → continuité opérationnelle renforcée.</li>
-            <li><i class="bi bi-check-circle-fill me-2" style="color: var(--bs-accent-green);"></i>Propositions organisationnelles et techniques → gains de productivité.</li>
-            <li><i class="bi bi-check-circle-fill me-2" style="color: var(--bs-accent-green);"></i>Développement de l’esprit d’équipe, mutualisation et partage d’idées.</li>
-          </ul>
-        </div>
-
-        <div class="list-group-item px-0 pb-0">
-          <div class="d-flex w-100 justify-content-between flex-wrap gap-2">
-            <h5 class="mb-1 fw-bold">Responsable atelier & technicien</h5>
-            <small class="text-muted fw-semibold" style="color: var(--bs-accent-orange) !important;">Janv. 2003 – Sept. 2016</small>
-          </div>
-          <p class="mb-2 text-muted">Euromaster – Sélestat (67)</p>
-          <ul class="list-unstyled ms-3">
-            <li><i class="bi bi-check-circle-fill me-2" style="color: var(--bs-accent-green);"></i>Planification d’activité et supervision atelier.</li>
-            <li><i class="bi bi-check-circle-fill me-2" style="color: var(--bs-accent-green);"></i>Relation client complète : accueil, devis, commandes, facturation.</li>
-            <li><i class="bi bi-check-circle-fill me-2" style="color: var(--bs-accent-green);"></i>Expertise technique service rapide VL/VI (pneus, freins, vidange, géométrie).</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <div class="row g-4 mt-4">
-      <div class="col-lg-6">
-        <div class="card p-4 shadow-sm border-0">
-          
-          <section class="pb-3 border-bottom mb-4" id="skills">
-            <h2 class="card-title fw-bold fs-4 mb-3" style="color: var(--bs-accent-orange);"><i class="bi bi-tools me-2"></i>Compétences clés</h2>
-            <ul class="list-unstyled">
-              <li class="mb-2"><strong>Management & leadership:</strong> gestion d’équipe, développement des compétences, organisation des plannings</li>
-              <li class="mb-2"><strong>Opérations & commerce:</strong> relation client B2C/B2B, facturation, stocks, litiges</li>
-              <li class="mb-2"><strong>Digital & informatique:</strong> Google Suite, Excel, Word, Symfony, PHP, JavaScript, HTML/CSS</li>
-              <li class="mb-0"><strong>Qualités humaines:</strong> rigueur, adaptabilité, pédagogie, force de proposition, esprit d’équipe</li>
+            <hr class="border-light opacity-50">
+            
+            <!-- Coordonnées -->
+            <h3 class="h5 mt-4 mb-3 text-warning">CONTACT</h3>
+            <ul class="list-unstyled small">
+                <li><i class="bi bi-phone"></i> Tél: {{ profil.contact.tel }}</li>
+                <li><i class="bi bi-envelope"></i> Email: {{ profil.contact.email }}</li>
+                <li><i class="bi bi-geo-alt"></i> Adresse: {{ profil.contact.adresse }}</li>
+                <li><i class="bi bi-globe"></i> Web: <a href="http://{{ profil.contact.web }}" target="_blank" class="text-white text-decoration-none fw-bold">{{ profil.contact.web }}</a></li>
             </ul>
-          </section>
 
-          <section class="pb-3 border-bottom mb-4" id="formation">
-            <h2 class="card-title fw-bold fs-4 mb-3" style="color: var(--bs-accent-orange);"><i class="bi bi-book-fill me-2"></i>Formation</h2>
-            <ul class="list-unstyled">
-              <li class="mb-2"><strong>Interne (Euromaster):</strong> management, organisation, sécurité</li>
-              <li class="mb-0"><strong>Autoformation:</strong> développement web (Symfony, PHP, JS, HTML/CSS)</li>
-            </ul>
-          </section>
+            <hr class="border-light opacity-50">
 
-          <section id="interets">
-            <h2 class="card-title fw-bold fs-4 mb-3" style="color: var(--bs-accent-orange);"><i class="bi bi-heart-fill me-2"></i>Centres d’intérêt</h2>
-            <ul class="list-unstyled">
-              <li class="mb-2"><i class="bi bi-dot me-2 text-primary"></i><strong>Sport en club:</strong> tennis de table</li>
-              <li class="mb-2"><i class="bi bi-dot me-2 text-primary"></i><strong>Vélo & voyages:</strong> curiosité, ouverture</li>
-              <li class="mb-0"><i class="bi bi-dot me-2 text-primary"></i><strong>Code informatique:</strong> auto-apprentissage, polyvalence</li>
+            <!-- Compétences (Savoir-faire et savoir-être) -->
+            <h3 class="h5 mt-4 mb-3 text-warning">COMPÉTENCES CLÉS</h3>
+            
+            <p class="fw-bold mb-1">Management & Leadership 📈</p>
+            <div class="d-flex flex-wrap mb-3">
+                <span class="badge bg-secondary skill-badge">Gérer une équipe (20 pers.)</span>
+                <span class="badge bg-secondary skill-badge">Pédagogie & Formation</span>
+                <span class="badge bg-secondary skill-badge">Force de proposition</span>
+                <span class="badge bg-secondary skill-badge">Esprit d'équipe</span>
+            </div>
+
+            <p class="fw-bold mb-1">Gestion Opérationnelle ⚙️</p>
+            <div class="d-flex flex-wrap mb-3">
+                <span class="badge bg-secondary skill-badge">Optimisation des flux</span>
+                <span class="badge bg-secondary skill-badge">Relation Clients B2B/B2C</span>
+                <span class="badge bg-secondary skill-badge">Gestion des stocks</span>
+                <span class="badge bg-secondary skill-badge">Planification</span>
+            </div>
+
+            <p class="fw-bold mb-1">Digital & Technique 💻</p>
+            <div class="d-flex flex-wrap mb-3">
+                <span class="badge bg-secondary skill-badge">Développement Web (Junior)</span>
+                <span class="badge bg-secondary skill-badge">PHP, Symfony</span>
+                <span class="badge bg-secondary skill-badge">Google Suite/Excel</span>
+                <span class="badge bg-secondary skill-badge">Expertise VL/VI</span>
+            </div>
+
+            <hr class="border-light opacity-50">
+
+            <!-- Formation -->
+            <h3 class="h5 mt-4 mb-3 text-warning">FORMATION</h3>
+            <p class="mb-1"><strong>Développeur Web (Diplôme professionnel)</strong></p>
+            <p class="small text-light">PENCLASSROOM</p>
+            <p class="mb-1"><strong>Baccalauréat Scientifique (Bac S)</strong></p>
+            
+            <hr class="border-light opacity-50">
+
+            <!-- Centres d'Intérêts -->
+            <h3 class="h5 mt-4 mb-3 text-warning">CENTRES D'INTÉRÊTS</h3>
+            <ul class="list-unstyled small">
+                <li><i class="bi bi-code-slash"></i> Code informatique</li>
+                <li><i class="bi bi-bicycle"></i> Vélo & Tennis de table (club)</li>
             </ul>
-          </section>
+
         </div>
-      </div>
 
-      <div class="col-lg-6">
-        <section class="card p-4 shadow-sm border-0 h-100">
-          <h2 class="card-title fw-bold fs-4 mb-3" style="color: var(--bs-accent-orange);"><i class="bi bi-trophy-fill me-2"></i>Réalisations</h2>
-          <ul class="list-unstyled">
-            <li class="mb-3"><i class="bi bi-lightning-charge-fill me-2" style="color: var(--bs-accent-green);"></i><strong>Optimisation des délais:</strong> amélioration du respect des échéances grâce à la priorisation.</li>
-            <li class="mb-3"><i class="bi bi-people-fill me-2" style="color: var(--bs-accent-green);"></i><strong>Cohésion d’équipe:</strong> mise en place de rituels de communication pour fluidifier les opérations.</li>
-            <li class="mb-0"><i class="bi bi-star-fill me-2" style="color: var(--bs-accent-green);"></i><strong>Qualité de service:</strong> standardisation de procédures pour réduire les erreurs et litiges.</li>
-          </ul>
-        </section>
-      </div>
+        <!-- Colonne de droite (Contenu Principal - 8/12) : Profil et Expériences -->
+        <div class="col-lg-8 main-content rounded-end">
+            
+            <!-- Profil / Accroche -->
+            <h3 class="section-title">PROFIL</h3>
+            <p class="lead small">{{ profil.accroche }}</p>
+
+            <!-- Expériences -->
+            <h3 class="section-title">EXPÉRIENCES PROFESSIONNELLES (2003 - Aujourd'hui)</h3>
+
+            <div class="border-start border-3 ps-3">
+                
+                <!-- Poste 1 -->
+                <div class="mb-4">
+                    <h4 class="h5 fw-bold text-dark">Responsable de Centre de Gestion Opérationnelle</h4>
+                    <p class="text-muted mb-1">EUROMASTER GRENTHEVILLE (14) | Sept. 2022 – Aujourd'hui</p>
+                    <ul class="small">
+                        <li><strong>Pilotage Stratégique :</strong> Gestion centralisée des opérations techniques pour l'ensemble de la Normandie (50 techniciens) et contribution à un CA annuel de 23 millions d'euros.</li>
+                        <li><strong>Performance Opérationnelle :</strong> Définition et priorisation des tâches pour garantir la réactivité et le respect des délais.</li>
+                        <li><strong>Management Transversal :</strong> Collaboration active pour l'optimisation des opérations quotidiennes et le respect des procédures.</li>
+                    </ul>
+                </div>
+                
+                <!-- Poste 2 -->
+                <div class="mb-4 experience-header">
+                    <h4 class="h5 fw-bold text-dark">Manager de Centre de Profit</h4>
+                    <p class="text-muted mb-1">EUROMASTER STRASBOURG (67) | Oct. 2016 – Août 2022</p>
+                    <ul class="small">
+                        <li><strong>Direction de Centre :</strong> Management d'une équipe de 10 à 20 personnes et responsabilité d'un CA annuel de 2 millions d'euros.</li>
+                        <li><strong>Leadership d'Équipe :</strong> Encadrement des collaborateurs et promotion de l'esprit d'équipe.</li>
+                        <li><strong>Amélioration Continue :</strong> Proposition d'améliorations organisationnelles basées sur l'analyse terrain pour optimiser les processus.</li>
+                    </ul>
+                </div>
+
+                <!-- Poste 3 -->
+                <div class="mb-0 experience-header">
+                    <h4 class="h5 fw-bold text-dark">De Technicien à Chef d’Atelier</h4>
+                    <p class="text-muted mb-1">EUROMASTER SELESTAT (67) | Janv. 2003 – Sept. 2016</p>
+                    <ul class="small">
+                        <li><strong>Gestion et Planification :</strong> Gestion et planification de l'activité de l'atelier.</li>
+                        <li><strong>Chaîne Client :</strong> Maîtrise complète de la relation client (accueil, devis, commande, facturation, litiges).</li>
+                        <li><strong>Expertise Technique :</strong> Assurance de l'expertise technique VL et VI.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
-    <footer class="text-center text-muted py-4 mt-5 small">
-      © René Wetta — CV numérique. Dernière mise à jour: <span id="date"></span>.
-    </footer>
-  </main>
+<!-- BLOC MIS À JOUR : Utilise la variable 'total_views' de Symfony -->
+<div class="container mb-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="footer-message">
+                <p class="lead" id="visit-counter">
+                    {# Twig affiche la valeur passée par le contrôleur #}
+                    Merci d'avoir consulté mon CV en ligne ! Vous êtes la 
+                    <strong>
+                        {{ total_views }}
+                        {# Logique Twig pour ajouter 'ère' ou 'ème' #}
+                        {{ total_views == 1 ? 'ère' : 'ème' }}
+                    </strong> 
+                    personne à voir cette page.
+                </p>
+                <p class="h4 mt-3 text-primary fw-bold">
+                    "Passons des chiffres du CV aux résultats de demain. Contactez-moi pour planifier notre succès !"
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- FIN BLOC MIS À JOUR -->
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-  
-  <script>
-    // Date de mise à jour automatique
-    const d = new Date();
-    document.getElementById('date').textContent = d.toLocaleDateString('fr-FR');
+<!-- Inclure Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-    // Smooth scroll for the navbar (adapted for Bootstrap)
-    document.querySelectorAll('.navbar a[href^="#"]').forEach(link => {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (!target) return;
-        
-        // Use scrollIntoView with smooth behavior (native support is better)
-        target.scrollIntoView({
-          behavior: 'smooth'
-        });
+<!-- Le script JavaScript de compteur (localStorage) est supprimé car le contrôleur le gère désormais -->
 
-        // Close the mobile menu if open
-        const navbarCollapse = document.getElementById('navbarNav');
-        if (navbarCollapse.classList.contains('show')) {
-            const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
-            if (bsCollapse) {
-                bsCollapse.hide();
-            }
-        }
-      });
-    });
-  </script>
 </body>
 </html>

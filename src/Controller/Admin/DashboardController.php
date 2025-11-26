@@ -9,6 +9,7 @@ use App\Entity\Technology;
 use App\Entity\TechnologyFamily;
 use App\Entity\Training;
 use App\Entity\Article;
+use App\Entity\Cv;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -49,5 +50,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Paramètres du site');
         yield MenuItem::linkToCrud('Les familles technologiques', 'fas fa-list', TechnologyFamily::class);
         yield MenuItem::linkToCrud('Les infos légales', 'fas fa-list', LegalInformation::class);
+
+        yield MenuItem::section('CV');
+        yield MenuItem::linkToCrud('Les vues du CV', 'fas fa-list', Cv::class);
     }
 }
