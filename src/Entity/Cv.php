@@ -16,6 +16,9 @@ class Cv
     #[ORM\Column]
     private ?int $numberOfView = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -29,6 +32,18 @@ class Cv
     public function setNumberOfView(int $numberOfView): static
     {
         $this->numberOfView = $numberOfView;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
 
         return $this;
     }

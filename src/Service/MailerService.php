@@ -50,9 +50,9 @@ class MailerService
      * Envoie une alerte lorsque le CV est consulté par un nouvel utilisateur (nouvelle session).
      * @param int $totalViews Le nouveau nombre total de vues.
      */
-    public function sendCvViewAlert(int $totalViews): void
+    public function sendCvViewAlert(int $totalViews, string $cvName): void
     {
-        $subject = "👀 Nouvelle consultation de votre CV en ligne ! (#{$totalViews})";
+        $subject = "👀 Nouvelle consultation du CV ({$cvName}) ! (#{$totalViews})";
         
         $email = (new TemplatedEmail())
             // Utilisez une adresse d'envoi vérifiée

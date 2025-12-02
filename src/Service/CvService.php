@@ -26,19 +26,20 @@ class CvService
      * et incrémente le compteur si ce n'est pas déjà fait pour cette session.
      * @return int Le nombre de vues actuel (après potentielle incrémentation).
      */
-    public function returnNumberOfViewsAndAddNewView(): int
+    public function returnNumberOfViewsAndAddNewView($cvName): int
     {
         // Récupérer l'objet Session
         $session = $this->requestStack->getSession();
 
         // 1. Tenter de trouver l'enregistrement existant
         // On trie par 'id' ascendant pour garantir qu'on prend le premier (et unique)
-        $entity = $this->repository->findOneBy([], ['id' => 'ASC']);
+        $entity = $this->repository->findOneBy(['name' => $cvName]);
         
         // 2. Si l'entité n'existe PAS, la créer
         if (!$entity) {
             $entity = new Cv();
             $entity->setNumberOfView(0); // Initialiser à 0
+            $entity->setName($cvName);
             // Si votre entité CV a d'autres champs obligatoires, vous devez les définir ici
         }
 
@@ -57,7 +58,7 @@ class CvService
             $this->em->flush();
 
             // 6. Optionnel: envoyer une alerte par email (si vous avez un service mail configuré)
-            $this->mailerService->sendCvViewAlert($currentViews + 1);
+            $this->mailerService->sendCvViewAlert($currentViews + 1, $cvName);
             
             // Retourner le nouveau nombre de vues
             return $currentViews + 1;

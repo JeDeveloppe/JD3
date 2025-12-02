@@ -9,25 +9,55 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class CvController extends AbstractController
 {
-    #[Route('/cv', name: 'app_cv')]
-    public function index(CvService $cvService): Response
-    {
+    /**
+     * @var array
+     * Tableau privé contenant toutes les métadonnées des CV :
+     * - 'file': Le nom du fichier Twig.
+     * - 'title': Le titre utilisé sur le bouton de la page d'index.
+     */
+    private const AUTHORIZED_CVS = [
+        'manager' => [
+            'file' => 'manager.html.twig',
+            'title' => 'Voir le CV Manager Opérationnel',
+            'description' => 'CV de Manager Opérationnel et Commercial avec expertise en gestion multi-sites et leadership d\'équipes transversales.',
+            'icon' => 'bi-people',
+            'color' => 'btn-info'
+        ]
+    ];
 
+    #[Route('/cv', name: 'app_cv')]
+    public function index(): Response
+    {
+        // 1. On passe le tableau complet des CV autorisés à la vue d'index
         return $this->render('cv/index.html.twig', [
+            'cv_list' => self::AUTHORIZED_CVS,
         ]);
     }
 
-    #[Route('/cv/manager', name: 'app_cv_manager')]
-    public function cvManager(CvService $cvService): Response
+    /**
+     * Gère l'affichage d'un CV dynamique et le comptage des vues.
+     */
+    #[Route('/cv/{cvName}', name: 'app_cv_show')]
+    public function cvShow(string $cvName, CvService $cvService): Response
     {
-        // 1. Appelle le service pour gérer la vue (incrémente si nouvelle session)
-        // et récupère le nombre total de vues depuis la base de données.
-        $totalViews = $cvService->returnNumberOfViewsAndAddNewView();
+        // 1. Vérification : On regarde si la clé $cvName existe dans le tableau
+        if (!isset(self::AUTHORIZED_CVS[$cvName])) {
+            $this->addFlash('error', 'Le CV demandé n\'existe pas.');
+            return $this->redirectToRoute('app_cv'); 
+        }
+
+        // 2. Récupération des données spécifiques
+        $cvData = self::AUTHORIZED_CVS[$cvName];
+        $templatePath = 'cv/' . $cvData['file']; 
+
+        // 3. Gestion des vues
+        $totalViews = $cvService->returnNumberOfViewsAndAddNewView($cvName);
         
-        // 2. Transmet le nombre de vues à la vue Twig
-        return $this->render('cv/manager.html.twig', [
+        // 4. Affichage du template
+        return $this->render($templatePath, [
             'controller_name' => 'CvController',
-            'total_views' => $totalViews, // Nouvelle variable disponible dans le template
+            'cv_name' => $cvName,
+            'total_views' => $totalViews,
         ]);
     }
 }

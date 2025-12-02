@@ -1,24 +1,10 @@
-{% set profil = {
-    'nom': 'WETTA',
-    'prenom': 'RENÉ',
-    'titre': 'MANAGER OPÉRATIONNEL & LEADER D\'ÉQUIPE',
-    'contact': {
-        'tel': '06.42.02.56.29',
-        'email': 'wetta.rene@gmail.com',
-        'adresse': '64b rue Emeraude, 14540 Bourguébus',
-        'web': 'je-developpe.fr',
-        'linkedin_url': 'https://fr.linkedin.com/in/wetta-rene-perso'
-    },
-    'accroche': "Manager opérationnel et commercial chevronné avec 20 ans d'expérience dans la gestion de centres de profit. Reconnu pour mon leadership d'équipe (jusqu'à 20 personnes), ma capacité à gérer des volumes stratégiques (CA annuel jusqu'à 23 M€), et mon expertise dans l'optimisation des flux. Orienté vers la performance, le développement des collaborateurs et l'intégration de solutions digitales."
-} %}
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CV - {{ profil.prenom }} {{ profil.nom }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <title>CV - RENÉ WETTA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
         /* Styles personnalisés pour améliorer l'UX */
@@ -55,12 +41,12 @@
         
         <div class="col-lg-4 sidebar rounded-start">
             <div class="text-center mb-4">
-                <h1 class="display-5 fw-bold text-uppercase">{{ profil.nom }}</h1>
-                <h2 class="h3 fw-light">{{ profil.prenom }}</h2>
-                <span class="badge bg-info text-dark p-2 mt-2">{{ profil.titre }}</span>
+                <h1 class="display-5 fw-bold text-uppercase">WETTA</h1>
+                <h2 class="h3 fw-light">RENÉ</h2>
+                <span class="badge bg-info text-dark p-2 mt-2">MANAGER OPÉRATIONNEL</span>
                 
                 <p class="mt-2 mb-0">
-                    <a href="{{ profil.contact.linkedin_url }}" target="_blank" class="text-white text-decoration-none small fw-bold">
+                    <a href="https://fr.linkedin.com/in/wetta-rene-perso" target="_blank" class="text-white text-decoration-none small fw-bold">
                         <i class="bi bi-linkedin me-1"></i> Profil LinkedIn
                     </a>
                 </p>
@@ -71,16 +57,26 @@
             
             <h3 class="h5 mt-4 mb-3 text-warning">CONTACT</h3>
             <ul class="list-unstyled small">
-                <li><i class="bi bi-phone"></i> Tél: {{ profil.contact.tel }}</li>
-                <li><i class="bi bi-envelope"></i> Email: {{ profil.contact.email }}</li>
-                <li><i class="bi bi-geo-alt"></i> Adresse: {{ profil.contact.adresse }}</li>
-                <li><i class="bi bi-globe"></i> Web: <a href="http://{{ profil.contact.web }}" target="_blank" class="text-white text-decoration-none fw-bold">{{ profil.contact.web }}</a></li>
+                <li><i class="bi bi-phone"></i> Tél: 06.42.02.56.29</li>
+                <li><i class="bi bi-envelope"></i> Email: wetta.rene@gmail.com</li>
+                <li><i class="bi bi-geo-alt"></i> Adresse: 64b rue Emeraude, 14540 Bourguébus</li>
+                <li><i class="bi bi-globe"></i> Web: <a href="http://je-developpe.fr" target="_blank" class="text-white text-decoration-none fw-bold">je-developpe.fr</a></li>
             </ul>
 
             <hr class="border-light opacity-50">
 
             <h3 class="h5 mt-4 mb-3 text-warning">COMPÉTENCES CLÉS</h3>
             
+            {# CONSERVATION du bloc QHSE/QSE #}
+            <p class="fw-bold mb-1">Qualité, Hygiène, Sécurité & Environnement (QHSE) 🛡️</p>
+            <div class="d-flex flex-wrap mb-3">
+                <span class="badge bg-danger skill-badge">Conformité aux modes opératoires</span>
+                <span class="badge bg-danger skill-badge">Prévention et sécurité multi-sites</span>
+                <span class="badge bg-danger skill-badge">Animation de la sécurité</span>
+                <span class="badge bg-danger skill-badge">Gestion des risques (DUERP)</span>
+                <span class="badge bg-danger skill-badge">Respect des normes et procédures</span>
+            </div>
+
             <p class="fw-bold mb-1">Management & Leadership 📈</p>
             <div class="d-flex flex-wrap mb-3">
                 <span class="badge bg-secondary skill-badge">Gérer une équipe (20 pers.)</span>
@@ -105,6 +101,7 @@
                 <span class="badge bg-secondary skill-badge">Relation Clients B2B/B2C</span>
                 <span class="badge bg-secondary skill-badge">Gestion des stocks</span>
                 <span class="badge bg-secondary skill-badge">Planification</span>
+                <span class="badge bg-secondary skill-badge">Respect des normes et procédures</span>
             </div>
 
             <p class="fw-bold mb-1">Digital & Technique 💻</p>
@@ -135,29 +132,38 @@
         <div class="col-lg-8 main-content rounded-end">
             
             <h3 class="section-title">PROFIL</h3>
-            <p class="lead small">{{ profil.accroche }}</p>
+            <p class="lead small">Manager opérationnel et commercial chevronné avec 20 ans d'expérience dans le <strong>pilotage de centres de profit et la gestion multi-sites</strong>. Reconnu pour mon <strong>leadership d'équipes transversales (jusqu'à 50 techniciens)</strong>, ma capacité à <strong>favoriser la synergie des centres</strong> et à stimuler la performance commerciale. Orienté vers la valorisation de l'expérience client, le développement des collaborateurs et la respect des règles de l'entreprise.</p>
 
             <h3 class="section-title">EXPÉRIENCES PROFESSIONNELLES (2003 - Aujourd'hui)</h3>
 
             <div class="border-start border-3 ps-3">
                 
                 <div class="mb-4">
-                    <h4 class="h5 fw-bold text-dark">Responsable de Centre de Gestion Opérationnelle</h4>
+                    <h4 class="h5 fw-bold text-dark">Responsable de Centre de Gestion Opérationnelle (Périmètre Multi-sites)</h4>
                     <p class="text-muted mb-1">EUROMASTER GRENTHEVILLE (14) | Sept. 2022 – Aujourd'hui</p>
                     <ul class="small">
-                        <li><strong>Pilotage Stratégique :</strong> Gestion centralisée des opérations techniques pour l'ensemble de la Normandie (50 techniciens) et contribution à un CA annuel de 23 millions d'euros.</li>
-                        <li><strong>Performance Opérationnelle :</strong> Définition et priorisation des tâches pour garantir la réactivité et le respect des délais.</li>
-                        <li><strong>Management Transversal :</strong> Collaboration active pour l'optimisation des opérations quotidiennes et le respect des procédures.</li>
+                        {# ADAPTATION MULTI-SITES ET SYNERGIE #}
+                        <li><strong>Pilotage Multi-sites & Synergie :</strong> <span class="fw-bold">Gestion centralisée et animation d’un périmètre étendu</span> (Normandie, 50 techniciens). Contribution à un CA de 23 M€ en <span class="fw-bold">favorisant la synergie entre les différents centres</span>.</li>
+                        {# RENFORCEMENT QSE #}
+                        <li><strong>Conformité et Maîtrise des Risques :</strong> Sensibilisation active des équipes à la sécurité et aux modes opératoires.</li>
+                        {# ADAPTATION MANAGEMENT ÉQUIPE TRANSVERSALE #}
+                        <li><strong>Animation d'Équipe Élargie :</strong> <span class="fw-bold">Animation d’une équipe </span> (directs/transversaux) répartis sur l'ensemble du périmètre, en valorisant leur expérience.</li>
+                        <li><strong>Performance Opérationnelle :</strong> Définition et priorisation des tâches pour garantir la réactivité et l'optimisation des flux.</li>
                     </ul>
                 </div>
                 
                 <div class="mb-4 experience-header">
-                    <h4 class="h5 fw-bold text-dark">Manager de Centre de Profit</h4>
+                    <h4 class="h5 fw-bold text-dark">Manager de centre de profits</h4>
                     <p class="text-muted mb-1">EUROMASTER STRASBOURG (67) | Oct. 2016 – Août 2022</p>
                     <ul class="small">
-                        <li><strong>Direction de Centre :</strong> Management d'une équipe de 10 à 20 personnes et responsabilité d'un CA annuel de 2 millions d'euros.</li>
-                        <li><strong>Leadership d'Équipe :</strong> Encadrement des collaborateurs et promotion de l'esprit d'équipe.</li>
-                        <li><strong>Amélioration Continue :</strong> Proposition d'améliorations organisationnelles basées sur l'analyse terrain pour optimiser les processus.</li>
+                        {# CIBLAGE VENTE ET MANAGEMENT #}
+                        <li><strong>Direction et Vente :</strong> <span class="fw-bold">Management</span> d'une équipe de 10 à 20 personnes et <span class="fw-bold">dynamisation des ventes</span> pour atteindre un CA annuel de 2 millions d'euros.</li>
+                        <li><strong>Logistique et Gestion des Stocks :</strong> <sapn class="fw-bold">Gestion du stock</span> de marchandises (pièces/accessoires/pneus) incluant des importantes implantations saisonnières et <span class="fw-bold">pilotage du service gardiennage</span> (environ 7000 pneus).</li>
+                        <li><strong>Sécurité et Prévention :</strong> <span class="fw-bold">Animation de la sécurité</span> du site (prévention des accidents, gestion des équipements de protection). <strong>Sensibilisation</strong> quotidienne des équipes aux bonnes pratiques.</li>
+                        <li><strong>Conformité et Qualité :</strong> S'assurer de la bonne <span class="fw-bold">application des modes opératoires</span> pour maintenir la <strong>qualité</strong> du service et le <strong>respect des normes</strong>de l'entreprise.</li>
+                        {# CIBLAGE DÉVELOPPEMENT ET FIDÉLISATION #}
+                        <li><strong>Développement Commercial & Fidélisation :</strong> <span class="fw-bold">Développement et fidélisation du portefeuille client</span> en proposant les produits et services adaptés aux besoins spécifiques des clients.</li>
+                        <li><strong>Leadership et Compétences :</strong> Encadrement des collaborateurs et promotion de l'esprit d'équipe, contribuant au <span class="fw-bold">développement de leurs compétences</span>.</li>
                     </ul>
                 </div>
 
@@ -183,24 +189,21 @@
                     {# Twig affiche la valeur passée par le contrôleur #}
                     Merci d'avoir consulté mon CV en ligne ! Vous êtes la 
                     <strong>
-                        {# Simulation de total_views #}
-                        {% set total_views = 42 %}
-                        {{ total_views }}
-                        {# Logique Twig pour ajouter 'ère' ou 'ème' #}
-                        {{ total_views == 1 ? 'ère' : 'ème' }}
+                        42
+                        ème
                     </strong> 
                     personne à voir cette page.
                 </p>
                 <p class="h4 mt-3 text-primary fw-bold">
                     "Passons des chiffres du CV aux résultats de demain. Contactez-moi pour planifier notre succès !"
                 </p>
-                <a href="mailto:{{ profil.contact.email }}" class="btn btn-primary btn-lg mt-3"><i class="bi bi-envelope"></i> Contacter René Wetta</a>
+                <a href="mailto:wetta.rene@gmail.com" class="btn btn-primary btn-lg mt-3"><i class="bi bi-envelope"></i> Contacter René Wetta</a>
             </div>
         </div>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {
