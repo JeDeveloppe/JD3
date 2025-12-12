@@ -188,8 +188,10 @@
             </div>
             {% if not is_pdf_export %}
                 <div class="download-button-area">
-                    <a href="/cv/download/manager" class="btn btn-dark btn-lg fw-bold shadow disabled">
-                        <i class="bi bi-download me-2"></i> Télécharger le CV (PDF)
+                    <a href="{{ asset('cv/WETTA_Rene_cv_manager.pdf') }}" 
+                    download="CV_RENE_WETTA_Manager_Operationnel.pdf" 
+                    class="btn btn-dark btn-lg fw-bold shadow">
+                        <i class="bi bi-download"></i> Télécharger le CV (PDF)
                     </a>
                 </div>
             {% endif %}
