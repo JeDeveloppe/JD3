@@ -1,78 +1,137 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>René Wetta - Choix du CV</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .card {
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2) !important;
-        }
-    </style>
-</head>
-<body>
+{% extends 'cv/_layout_cv.html.twig' %}
 
-    <div class="container text-center mt-5">
-        <h1 class="display-4 fw-bold text-primary">RENÉ WETTA</h1>
-        <p class="lead mb-4">Bienvenue. Veuillez choisir le profil qui correspond à votre recherche.</p>
+{% block title %}René Wetta - Expertises & Profils{% endblock %}
 
-        <div class="row justify-content-center mt-5">
-            
-            {# BLOC STATIQUE - Développeur Web (vers site externe, non géré par le CvController) #}
-            <div class="col-md-5 mb-4">
-                <div class="card shadow-lg h-100 border-0">
-                    <div class="card-body p-4">
-                        <h5 class="card-title text-uppercase mb-3 fw-bold text-success">
-                            Profil Développeur Web
-                        </h5>
-                        <p class="card-text text-muted">
-                            Compétences techniques Full Stack (PHP, Symfony, JavaScript, Vue.js). Idéal pour les postes en équipe de développement.
-                        </p>
-                        <a href="/" class="btn btn-success btn-lg mt-3 w-100">
-                            <i class="bi bi-code-slash me-2"></i> Vers le site JeDéveloppe.fr
+{% block body %}
+<style>
+    :root {
+        --tech-color: #198754;
+        --manager-color: #0d6efd;
+    }
+    body { 
+        background: radial-gradient(circle at top right, #e9ecef, #f8f9fa);
+        min-height: 100vh;
+    }
+    .hero-section {
+        padding: 4rem 0 2rem;
+    }
+    .cv-card {
+        border: none;
+        border-radius: 1.25 striped;
+        transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+    }
+    .cv-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+    }
+    .icon-box {
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+    }
+    .bg-tech-soft { background-color: rgba(25, 135, 84, 0.1); color: var(--tech-color); }
+    .bg-manager-soft { background-color: rgba(13, 110, 253, 0.1); color: var(--manager-color); }
+    
+    .btn-custom {
+        border-radius: 10px;
+        padding: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: all 0.2s;
+    }
+    .badge-category {
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+        display: inline-block;
+    }
+</style>
+
+<div class="container hero-section">
+    <div class="text-center mb-5">
+        <h1 class="display-3 fw-black text-dark mb-2">RENÉ <span class="text-primary">WETTA</span></h1>
+        <div class="d-flex justify-content-center align-items-center mb-3">
+            <hr class="w-25 border-primary border-2 opacity-50">
+        </div>
+        <p class="lead text-secondary mx-auto" style="max-width: 700px;">
+            Expert en pilotage opérationnel et passionné par le développement web. 
+            Découvrez le profil adapté à vos besoins stratégiques.
+        </p>
+    </div>
+
+    <div class="row justify-content-center g-4">
+        
+        {# 1. PROFIL DÉVELOPPEUR (Fixe) #}
+        <div class="col-lg-5">
+            <div class="card cv-card shadow-sm h-100 p-3">
+                <div class="card-body d-flex flex-column">
+                    <span class="badge-category text-success fw-bold text-uppercase">Architecture & Code</span>
+                    <div class="icon-box bg-tech-soft">
+                        <i class="bi bi-code-square"></i>
+                    </div>
+                    <h3 class="card-title h4 fw-bold">Développeur Full Stack</h3>
+                    <p class="card-text text-muted mb-4 flex-grow-1">
+                        Spécialisé dans l'écosystème <strong>PHP / Symfony</strong>. Conception d'applications robustes, maintenance évolutive et optimisation de bases de données.
+                    </p>
+                    <div class="mt-auto">
+                        <div class="d-flex flex-wrap gap-2 mb-4">
+                            <span class="badge bg-light text-dark border">Symfony</span>
+                            <span class="badge bg-light text-dark border">PHP 8.x</span>
+                            <span class="badge bg-light text-dark border">MySQL</span>
+                        </div>
+                        <a href="{{ path('site_my_projects') }}" class="btn btn-success btn-custom w-100 shadow-sm">
+                            <i class="bi bi-rocket-takeoff me-2"></i> Explorer le portfolio
                         </a>
                     </div>
                 </div>
             </div>
+        </div>
 
-            {# BOUCLE DYNAMIQUE pour les CV pilotés par le tableau AUTHORIZED_CVS du contrôleur #}
-            {# La variable 'cv_list' doit contenir les données : file, title, description, icon, color #}
-            {% for name, data in cv_list %}
-                <div class="col-md-5 mb-4">
-                    <div class="card shadow-lg h-100 border-0">
-                        <div class="card-body p-4">
-                            
-                            {# Titre de la carte : On extrait le nom du profil (ex: "Manager Opérationnel") #}
-                            <h5 class="card-title text-uppercase mb-3 fw-bold text-primary">
-                                Profil {{ data.title|split('Voir le CV ')|last }}
-                            </h5>
-                            
-                            {# Description tirée du tableau #}
-                            <p class="card-text text-muted">
-                                {{ data.description }}
-                            </p>
-                            
-                            {# Lien et Bouton : Utilise la couleur et l'icône du tableau #}
-                            <a href="{{ path('app_cv_show', {'cvName': name}) }}" class="btn {{ data.color }} btn-lg mt-3 w-100">
-                                <i class="bi {{ data.icon }} me-2"></i> {{ data.title }}
+        {# 2. PROFIL(S) DYNAMIQUE(S) (Management) #}
+        {% for key, data in cv_list %}
+            <div class="col-lg-5">
+                <div class="card cv-card shadow-sm h-100 p-3">
+                    <div class="card-body d-flex flex-column">
+                        <span class="badge-category text-primary fw-bold text-uppercase">Leadership & Stratégie</span>
+                        <div class="icon-box bg-manager-soft">
+                            <i class="bi {{ data.icon|default('bi-briefcase') }}"></i>
+                        </div>
+                        <h3 class="card-title h4 fw-bold">
+                            {{ data.title|replace({'Voir le CV ': ''}) }}
+                        </h3>
+                        <p class="card-text text-muted mb-4 flex-grow-1">
+                            {{ data.description }}
+                        </p>
+                        <div class="mt-auto">
+                            <div class="d-flex flex-wrap gap-2 mb-4">
+                                <span class="badge bg-light text-dark border">Multi-sites</span>
+                                <span class="badge bg-light text-dark border">QHSE</span>
+                                <span class="badge bg-light text-dark border">Centre de profit</span>
+                            </div>
+                            <a href="{{ path('cv_show', {'cvName': key}) }}" class="btn {{ data.color|replace({'btn-': 'btn-outline-'})|default('btn-outline-primary') }} btn-custom w-100 mb-2">
+                                <i class="bi bi-eye me-2"></i> Consulter en ligne
                             </a>
                         </div>
                     </div>
                 </div>
-            {% endfor %}
+            </div>
+        {% endfor %}
 
-        </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</body>
-</html>
+    <div class="text-center mt-5 pt-4">
+        <p class="text-muted small">
+            <i class="bi bi-info-circle me-1"></i> 
+            Besoin d'un profil hybride ? Discutons-en directement.
+        </p>
+    </div>
+</div>
+{% endblock %}

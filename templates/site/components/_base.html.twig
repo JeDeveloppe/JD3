@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
-    <title>Je Développe | {% block title %}{% endblock %}</title>
+    <title>{% block title %}Je Développe{% endblock %}</title>
 
     {# Meta Description for SEO #}
     <meta name="description" content="{% block meta_description %}Je Développe, le petit site qui regroupe toutes mes diverses connaissances !{% endblock %}">
@@ -17,9 +17,7 @@
     <meta name="apple-mobile-web-app-title" content="JeDév" />
     <link rel="manifest" href="{{ asset('favicon/site.webmanifest') }}" />
     
-    {% block stylesheets %}
-        {# Your stylesheets go here #}
-    {% endblock %}
+    {% block stylesheets %}{% endblock %}
 
     {% block javascripts %}
         {% block importmap %}{{ importmap('site') }}{% endblock %}
@@ -27,18 +25,27 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 
-    {% include "./site/components/_nav.html.twig" %}
+    {# BLOC NAVIGATION : On peut maintenant l'écraser #}
+    {% block header %}
+        {% include "./site/components/_nav.html.twig" %}
+    {% endblock %}
 
     <main class="flex-grow-1">
         {% include "./site/components/_flash_message.html.twig" %}
-        
         {% block body %}{% endblock %}
     </main>
     
-    {% include "./site/components/_footer.html.twig" %}
+    {# BLOC FOOTER : On peut maintenant l'écraser #}
+    {% block footer %}
+        {% include "./site/components/_footer.html.twig" %}
+    {% endblock %}
 
     <script src="https://kit.fontawesome.com/39dfe16fa3.js" crossorigin="anonymous" async></script>
-    {% include "site/components/_googleAnalytics.html.twig" %}
+    
+    {# BLOC ANALYTICS : Optionnel, si tu veux le désactiver sur certains CV #}
+    {% block google_analytics %}
+        {% include "site/components/_googleAnalytics.html.twig" %}
+    {% endblock %}
 
 </body>
 </html>

@@ -2,12 +2,12 @@
 
 namespace App\Controller\Site;
 
+use Mpdf\Mpdf;
 use App\Service\CvService;
-use App\Service\ExternalPdfApiService;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 
 final class CvController extends AbstractController
 {
@@ -28,9 +28,11 @@ final class CvController extends AbstractController
         ]
     ];
 
-    #[Route('/cv', name: 'app_cv')]
+    #[Route('/liste-des-cv', name: 'cv_liste', methods: ['GET'])]
     public function index(): Response
     {
+        $listCv = self::AUTHORIZED_CVS;
+
         // 1. On passe le tableau complet des CV autorisés à la vue d'index
         return $this->render('cv/index.html.twig', [
             'cv_list' => self::AUTHORIZED_CVS,
@@ -40,13 +42,13 @@ final class CvController extends AbstractController
     /**
      * Gère l'affichage d'un CV dynamique et le comptage des vues.
      */
-    #[Route('/cv/{cvName}', name: 'app_cv_show')]
+    #[Route('/cv/{cvName}', name: 'cv_show', requirements: ['cvName' => '.+'])]
     public function cvShow(string $cvName, CvService $cvService, Request $request): Response
     {
         // 1. Vérification : On regarde si la clé $cvName existe dans le tableau
         if (!isset(self::AUTHORIZED_CVS[$cvName])) {
             $this->addFlash('error', 'Le CV demandé n\'existe pas.');
-            return $this->redirectToRoute('app_cv'); 
+            return $this->redirectToRoute('cv_liste'); 
         }
 
         // 2. Récupération des données spécifiques

@@ -3,20 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
     <title>CV - RENÉ WETTA (Ciblé Manager)</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
     <style>
-        /* Styles personnalisés pour améliorer l'UX */
+        /* Styles personnalisés pour l'affichage écran (général) */
         body { background-color: #f8f9fa; }
         .cv-container { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
-        .sidebar { background-color: #2c3e50; color: white; padding: 2rem; } /* Bleu foncé pour la sidebar */
+        .sidebar { background-color: #2c3e50; color: white; padding: 2rem; }
         .main-content { padding: 2rem; background-color: white; }
         .section-title { color: #3498db; border-bottom: 3px solid #3498db; padding-bottom: 0.5rem; margin-bottom: 1.5rem; }
         .experience-header { margin-top: 1.5rem; }
         .skill-badge { margin: 0.25rem; font-weight: 500; }
         
-        /* Styles pour le compteur de vues avec effet d'apparition (fade-in) */
+        /* Styles pour le compteur de vues (écran) */
         .footer-message { 
             margin-top: 3rem; 
             padding: 1.5rem; 
@@ -24,23 +26,119 @@
             border-radius: 8px; 
             text-align: center; 
             border: 1px solid #3498db; 
-            opacity: 0; /* Opacité initiale à 0 pour le fade-in */
-            transition: opacity 0.8s ease-in-out; /* Transition d'opacité */
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
         }
-        /* Classe ajoutée par JS pour révéler le bloc */
-        .footer-message.visible { 
-            opacity: 1; 
-        }
+        .footer-message.visible { opacity: 1; }
         .download-button-area {
             text-align: right;
             margin-top: 1.5rem;
             margin-bottom: 1rem;
         }
+        
+        /* ================================================= */
+        /* === RÈGLES CRITIQUES POUR L'IMPRESSION (ULTRA-COMPRESSION & ESPACE AÉRÉ) === */
+        /* ================================================= */
+        @media print {
+            
+            /* RESET GLOBAL et COMPRESSION TYPOGRAPHIQUE MAXIMALE */
+            body, html {
+                font-size: 9pt !important; 
+                line-height: 1.0 !important; 
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            /* Retirer toutes les marges et paddings par défaut */
+            .cv-container, .row, ul, li, p, h1, h2, h3, h4, h5 {
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            
+            /* Le conteneur doit masquer l'excédent de padding du hack */
+            .cv-container {
+                overflow: hidden !important; 
+                box-shadow: none !important;
+                border-radius: 0 !important;
+            }
+            
+            /* Ajustement spécifiques des listes */
+            ul {
+                margin-top: 0.1rem !important;
+                /* AUGMENTATION : Plus d'espace après les listes */
+                margin-bottom: 0.3rem !important;
+                padding-left: 0.8rem !important; 
+            }
+            li {
+                margin-bottom: 0 !important;
+            }
+
+            /* --- FIX 1/3 - 2/3 (FLOAT) --- */
+            .row {
+                /* Gère le flottant */
+                overflow: hidden !important; 
+                width: 100% !important;
+                height: auto !important; 
+            }
+            
+            /* SIDEBAR : COLONNE 1/3 */
+            .sidebar {
+                float: left !important;
+                width: 33.333333% !important; 
+                
+                /* HACK FIXANT LE DÉBORDEMENT DE COULEUR */
+                padding-bottom: 9999px !important;
+                margin-bottom: -9999px !important; 
+
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                background-color: #2c3e50 !important;
+                color: white !important; 
+                padding-top: 0.5rem !important; 
+                padding-left: 0.5rem !important; 
+                padding-right: 0.5rem !important; 
+                border-radius: 0 !important;
+            }
+
+            /* MAIN CONTENT : COLONNE 2/3 */
+            .main-content {
+                float: right !important;
+                width: 66.666667% !important;
+                padding: 0.5rem !important;
+            }
+            
+            /* --- RÈGLES D'ESPACEMENT AÉRÉ --- */
+            /* AUGMENTATION : Plus d'espace après les titres de section principaux */
+            .section-title { margin-bottom: 0.5rem !important; padding-bottom: 0.1rem !important; }
+            
+            /* AUGMENTATION : Plus d'espace avant un nouveau bloc d'expérience */
+            .experience-header { margin-top: 0.5rem !important; margin-bottom: 0.1rem !important; }
+            
+            /* AUGMENTATION : Plus d'espace entre les grandes expériences professionnelles (classe .mb-4) */
+            .mb-4, .my-3, .mb-3 { margin-bottom: 0.4rem !important; }
+            
+            /* AUGMENTATION : Plus d'espace après les petits blocs (date, compétences) */
+            .mb-1, .mt-2 { margin-top: 0.2rem !important; margin-bottom: 0.2rem !important; }
+
+            /* Les badges restent très compacts */
+            .skill-badge { padding: 0.1rem 0.3rem !important; margin: 0.05rem !important; font-size: 8pt !important; }
+            
+            /* Masquer les éléments interactifs */
+            .footer-message, .download-button-area, script, .btn, button { 
+                display: none !important; 
+            }
+            
+            /* Éviter les coupures disgracieuses dans le contenu */
+            .mb-4, .experience-header {
+                page-break-inside: avoid !important;
+                page-break-after: avoid !important; 
+            }
+        }
     </style>
 </head>
 <body>
 
-<div class="container cv-container mt-5 mb-5 rounded">
+<div class="container cv-container {% if not is_pdf_export %}mt-5 mb-5 rounded{% endif %}">
     <div class="row g-0">
         
         <div class="col-lg-4 sidebar rounded-start">
@@ -54,7 +152,6 @@
                         <i class="bi bi-linkedin me-1"></i> Profil LinkedIn
                     </a>
                 </p>
-                
             </div>
 
             <hr class="border-light opacity-50">
@@ -186,12 +283,13 @@
                     </ul>
                 </div>
             </div>
+            
             {% if not is_pdf_export %}
-                <div class="download-button-area">
+                <div class="download-button-area">           
                     <a href="{{ asset('cv/WETTA_Rene_cv_manager.pdf') }}" 
                     download="CV_RENE_WETTA_Manager_Operationnel.pdf" 
-                    class="btn btn-dark btn-lg fw-bold shadow">
-                        <i class="bi bi-download"></i> Télécharger le CV (PDF)
+                    class="btn btn-dark btn-lg fw-bold shadow me-2">
+                        <i class="bi bi-download"></i> Télécharger le CV au format PDF
                     </a>
                 </div>
             {% endif %}
@@ -228,9 +326,7 @@
     document.addEventListener('DOMContentLoaded', (event) => {
         const messageBlock = document.getElementById('footer-message-block');
         
-        // Attendre 500ms avant de révéler le bloc pour un effet "wow" subtil
         setTimeout(() => {
-            // Ajouter la classe 'visible' qui passe l'opacité de 0 à 1 (grâce à la transition CSS)
             messageBlock.classList.add('visible');
         }, 500); 
     });
