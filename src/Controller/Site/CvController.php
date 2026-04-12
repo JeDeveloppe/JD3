@@ -25,7 +25,7 @@ final class CvController extends AbstractController
             'description' => 'CV de Manager Opérationnel et Commercial avec expertise en gestion multi-sites et leadership d\'équipes transversales.',
             'icon' => 'bi-people',
             'color' => 'btn-info'
-        ]
+        ],
     ];
 
     #[Route('/liste-des-cv', name: 'cv_liste', methods: ['GET'])]
