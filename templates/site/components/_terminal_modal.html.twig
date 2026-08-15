@@ -112,6 +112,15 @@
             }
         }
 
+        var extraKeys = Object.keys(extraRoutes);
+        if (extraKeys.length > 0) {
+            input.placeholder = 'essayez : cd ' + extraKeys[0];
+            var intro = document.querySelector('#jd-live-terminal .jd-terminal-line--indent');
+            if (intro) {
+                intro.textContent = 'Tapez une commande (ex: cd ' + extraKeys[0] + '), ou "help" pour la liste.';
+            }
+        }
+
         function printLine(text, variant) {
             var p = document.createElement('p');
             p.className = 'jd-terminal-line' + (variant ? ' ' + variant : '');
@@ -161,7 +170,7 @@
                     printLine('help                 affiche cette aide', 'jd-terminal-line--indent');
                     printLine('whoami               qui suis-je', 'jd-terminal-line--indent');
                     printLine('ls                   liste les pages du site', 'jd-terminal-line--indent');
-                    printLine('cd <page>            navigue vers une page (ex: cd projets)', 'jd-terminal-line--indent');
+                    printLine('cd <page>            navigue vers une page (ex: cd realisation)', 'jd-terminal-line--indent');
                     printLine('cat pourquoi.txt     pourquoi ce site existe', 'jd-terminal-line--indent');
                     printLine('open linkedin|github ouvre mon profil', 'jd-terminal-line--indent');
                     printLine('contact              raccourci vers la page contact', 'jd-terminal-line--indent');

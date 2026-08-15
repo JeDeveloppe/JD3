@@ -189,6 +189,12 @@
     padding: 0.6rem 0;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
+.jd-terminal__open-hint code {
+    background: rgba(255, 255, 255, 0.12);
+    color: var(--jd-teal);
+    padding: 0.1rem 0.4rem;
+    border-radius: 0.3rem;
+}
 
 /* ---------- CARD ---------- */
 .jd-card {
