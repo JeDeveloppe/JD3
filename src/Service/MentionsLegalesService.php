@@ -56,6 +56,21 @@ class MentionsLegalesService
             'text' => $legales->getCompanyName().' ne peut, en aucune façon, être tenue responsable des dommages directs et/ou indirects qui résulteraient de l’utilisation ou de l’accès au site.<br/>'
             .$legales->getCompanyName().' ne saurait notamment voir sa responsabilité engagée en cas d’un dommage ou d’un virus qui pourrait infecter l’ordinateur de l’utilisateur ou son matériel informatique à la suite de l’accès ou de l’utilisation du site.'
             ]
+            ,
+            [
+            'title' => 'DONNÉES PERSONNELLES',
+            'text' => 'Les données transmises via le formulaire de contact (adresse email, message) sont utilisées exclusivement pour répondre à votre demande et ne sont ni cédées, ni vendues à des tiers.<br/>
+            Conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi Informatique et Libertés, vous disposez d’un droit d’accès, de rectification et de suppression des données vous concernant.<br/>
+            Pour exercer ce droit, vous pouvez contacter '.$legales->getCompanyName().' à l’adresse : '.$legales->getEmailCompany().'.<br/>
+            Le formulaire de contact est protégé par Google reCAPTCHA, soumis à la <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">politique de confidentialité</a> et aux <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer">conditions d’utilisation</a> de Google.'
+            ]
+            ,
+            [
+            'title' => 'COOKIES',
+            'text' => 'Le site utilise Google Analytics afin de mesurer sa fréquentation. Ce service dépose un cookie de mesure d’audience uniquement après votre consentement, recueilli via le bandeau affiché lors de votre première visite.<br/>
+            Vous pouvez à tout moment modifier votre choix en cliquant sur « Gérer les cookies » en bas de page.<br/>
+            Aucun cookie publicitaire ou de traçage tiers n’est utilisé sur ce site.'
+            ]
 
         ];
 

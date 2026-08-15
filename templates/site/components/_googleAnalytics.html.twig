@@ -1,9 +1,143 @@
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-EHEWNK4WD2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+{# Bandeau de consentement cookies (CNIL) : Google Analytics n'est charge qu'apres accord explicite #}
+<div class="jd-cookie-banner" id="jd-cookie-banner" hidden>
+    <div class="jd-cookie-banner__text">
+        Ce site utilise des cookies de mesure d'audience (Google Analytics) pour comprendre comment il est visité.
+        Vous pouvez accepter ou refuser leur dépôt. Plus d'infos dans les
+        <a href="{{ path('site_mentions_legales') }}">mentions légales</a>.
+    </div>
+    <div class="jd-cookie-banner__actions">
+        <button type="button" class="jd-cookie-banner__btn jd-cookie-banner__btn--ghost" id="jd-cookie-refuse">Refuser</button>
+        <button type="button" class="jd-cookie-banner__btn jd-cookie-banner__btn--accent" id="jd-cookie-accept">Accepter</button>
+    </div>
+</div>
 
-  gtag('config', 'G-EHEWNK4WD2');
+<style>
+    .jd-cookie-banner {
+        position: fixed;
+        left: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+        z-index: 1080;
+        max-width: 42rem;
+        margin: 0 auto;
+        background: var(--jd-navy, #2c3e50);
+        color: rgba(255, 255, 255, 0.9);
+        border-radius: 0.75rem;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+        padding: 1.1rem 1.25rem;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1rem;
+    }
+    .jd-cookie-banner__text {
+        flex: 1 1 16rem;
+        font-size: 0.85rem;
+        line-height: 1.5;
+    }
+    .jd-cookie-banner__text a {
+        color: var(--jd-teal, #18bc9c);
+    }
+    .jd-cookie-banner__actions {
+        display: flex;
+        gap: 0.6rem;
+        flex-shrink: 0;
+        margin-left: auto;
+    }
+    .jd-cookie-banner__btn {
+        border: none;
+        border-radius: 50px;
+        padding: 0.5rem 1.1rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+    .jd-cookie-banner__btn--ghost {
+        background: transparent;
+        color: rgba(255, 255, 255, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+    .jd-cookie-banner__btn--ghost:hover {
+        color: #fff;
+        border-color: rgba(255, 255, 255, 0.5);
+    }
+    .jd-cookie-banner__btn--accent {
+        background: var(--jd-teal, #18bc9c);
+        color: #0d2b25;
+    }
+    .jd-cookie-banner__btn--accent:hover {
+        filter: brightness(1.08);
+    }
+</style>
+
+<script>
+    (function () {
+        var CONSENT_KEY = 'jd_cookie_consent';
+        var GA_ID = 'G-EHEWNK4WD2';
+
+        function loadGoogleAnalytics() {
+            var s1 = document.createElement('script');
+            s1.async = true;
+            s1.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+            document.head.appendChild(s1);
+
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', GA_ID);
+        }
+
+        function showBanner() {
+            var banner = document.getElementById('jd-cookie-banner');
+            if (banner) {
+                banner.hidden = false;
+            }
+        }
+
+        function hideBanner() {
+            var banner = document.getElementById('jd-cookie-banner');
+            if (banner) {
+                banner.hidden = true;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var consent = localStorage.getItem(CONSENT_KEY);
+
+            if (consent === 'accepted') {
+                loadGoogleAnalytics();
+            } else if (consent === 'refused') {
+                // rien a faire, l'utilisateur a deja refuse
+            } else {
+                showBanner();
+            }
+
+            var acceptBtn = document.getElementById('jd-cookie-accept');
+            var refuseBtn = document.getElementById('jd-cookie-refuse');
+
+            if (acceptBtn) {
+                acceptBtn.addEventListener('click', function () {
+                    localStorage.setItem(CONSENT_KEY, 'accepted');
+                    hideBanner();
+                    loadGoogleAnalytics();
+                });
+            }
+            if (refuseBtn) {
+                refuseBtn.addEventListener('click', function () {
+                    localStorage.setItem(CONSENT_KEY, 'refused');
+                    hideBanner();
+                });
+            }
+        });
+
+        // Permet de rouvrir le bandeau depuis un lien "Gerer les cookies"
+        window.jdReopenCookieBanner = function (event) {
+            if (event) {
+                event.preventDefault();
+            }
+            localStorage.removeItem(CONSENT_KEY);
+            showBanner();
+        };
+    })();
 </script>
