@@ -9,10 +9,10 @@
 
         <div class="row g-0 justify-content-center mb-2">
             <div class="col-12 col-md-10 col-lg-8 text-center">
-                <div class="jd-card__icon jd-card__icon--center mx-auto mb-3">
-                    <twig:ux:icon name="{{ category.renderIconStringWithoutParentheses }}" style="width:22px; height:22px;"/>
+                <div class="jd-card__icon jd-card__icon--category mx-auto mb-3">
+                    <twig:ux:icon name="{{ category.renderIconStringWithoutParentheses }}" style="width:40px; height:40px;"/>
                 </div>
-                <h1 class="h2 fw-bold text-dark mb-0">{{ h1 }}</h1>
+                <h1 class="h2 fw-bold text-dark mb-0">{{ category.name }}</h1>
             </div>
         </div>
 

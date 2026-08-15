@@ -208,6 +208,11 @@
     height: 48px;
     border-radius: 50%;
 }
+.jd-card__icon--category {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+}
 
 @media (max-width: 991.98px) {
     .jd-hero__stats {
