@@ -28,13 +28,17 @@ final class CvController extends AbstractController
     ];
 
     #[Route('/liste-des-cv', name: 'cv_liste', methods: ['GET'])]
-    public function index(): Response
+    public function index(CvService $cvService): Response
     {
-        $listCv = self::AUTHORIZED_CVS;
+        $viewCounts = [];
+        foreach (self::AUTHORIZED_CVS as $cvName => $data) {
+            $viewCounts[$cvName] = $cvService->getViewCount($cvName);
+        }
 
         // 1. On passe le tableau complet des CV autorisés à la vue d'index
         return $this->render('cv/index.html.twig', [
             'cv_list' => self::AUTHORIZED_CVS,
+            'view_counts' => $viewCounts,
         ]);
     }
 

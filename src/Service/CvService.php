@@ -67,4 +67,12 @@ class CvService
         // Si la vue a déjà été comptée pour cette session, retourner le compte actuel
         return $currentViews;
     }
+
+    /**
+     * Récupère le nombre de vues actuel d'un CV, sans incrémenter le compteur.
+     */
+    public function getViewCount(string $cvName): int
+    {
+        return $this->repository->findOneBy(['name' => $cvName])?->getNumberOfView() ?? 0;
+    }
 }

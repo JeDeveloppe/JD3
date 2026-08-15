@@ -17,7 +17,7 @@
     }
     .cv-card {
         border: none;
-        border-radius: 1.25 striped;
+        border-radius: 1.25rem;
         transition: all 0.3s cubic-bezier(.25,.8,.25,1);
         background: rgba(255, 255, 255, 0.9);
         backdrop-filter: blur(10px);
@@ -119,6 +119,11 @@
                             <a href="{{ path('cv_show', {'cvName': key}) }}" class="btn {{ data.color|replace({'btn-': 'btn-outline-'})|default('btn-outline-primary') }} btn-custom w-100 mb-2">
                                 <i class="bi bi-eye me-2"></i> Consulter en ligne
                             </a>
+                            {% if view_counts[key] is defined and view_counts[key] > 0 %}
+                                <p class="text-center text-muted small mb-0">
+                                    <i class="bi bi-graph-up me-1"></i>Déjà consulté {{ view_counts[key] }} fois
+                                </p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
