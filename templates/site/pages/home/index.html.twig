@@ -49,23 +49,14 @@
                 </div>
 
                 <div class="col-12 col-lg-6">
-                    <div class="jd-terminal">
+                    <div class="jd-terminal" role="button" tabindex="0" data-bs-toggle="modal" data-bs-target="#jdTerminalModal" aria-label="Ouvrir le terminal interactif">
                         <div class="jd-terminal__bar">
                             <span class="jd-terminal-dot jd-terminal-dot--red"></span>
                             <span class="jd-terminal-dot jd-terminal-dot--yellow"></span>
                             <span class="jd-terminal-dot jd-terminal-dot--green"></span>
                             <span class="jd-terminal__title">rene@je-developpe — zsh</span>
                         </div>
-                        <div class="jd-terminal__body" id="jd-live-terminal"
-                             data-whoami="{{ h1 }}"
-                             data-home-route="{{ path('site_home') }}"
-                             data-knowledges-route="{{ path('site_my_knowledges') }}"
-                             data-projects-route="{{ path('site_my_projects') }}"
-                             data-trainings-route="{{ path('site_my_trainings') }}"
-                             data-blog-route="{{ path('site_my_categories') }}"
-                             data-contact-route="{{ path('site_contact') }}"
-                             data-linkedin-url="http://www.linkedin.com/in/wetta-rene-jd"
-                             data-github-url="https://github.com/JeDeveloppe">
+                        <div class="jd-terminal__body">
                             <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span> whoami</p>
                             <p class="jd-terminal-line jd-terminal-line--indent">{{ h1 }}</p>
                             <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span> cat pourquoi.txt</p>
@@ -75,22 +66,51 @@
                                 loop: true,
                                 cursorChar: '|'
                             }) }}></span></p>
-
-                            <div id="jd-live-terminal__output"></div>
-
-                            <p class="jd-terminal-line jd-live-terminal__prompt-line">
-                                <span class="jd-terminal-prompt">$</span>
-                                <input type="text" id="jd-live-terminal__input" class="jd-live-terminal__input" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Terminal interactif : tapez 'help' pour la liste des commandes">
-                            </p>
+                        </div>
+                        <div class="jd-terminal__open-hint">
+                            <i class="fa-solid fa-keyboard me-1"></i>Cliquez pour ouvrir le terminal interactif
                         </div>
                     </div>
-                    <p class="jd-live-terminal__hint text-white-50 small mt-2 mb-0">
-                        <i class="fa-solid fa-keyboard me-1"></i>Ce terminal est utilisable : tapez <code>help</code> pour voir les commandes.
-                    </p>
                 </div>
             </div>
         </div>
     </section>
+
+    {# Terminal interactif, ouvert depuis le hero #}
+    <div class="modal fade" id="jdTerminalModal" tabindex="-1" aria-labelledby="jdTerminalModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content jd-terminal-modal">
+                <div class="jd-terminal">
+                    <div class="jd-terminal__bar">
+                        <span class="jd-terminal-dot jd-terminal-dot--red" data-bs-dismiss="modal" role="button" aria-label="Fermer"></span>
+                        <span class="jd-terminal-dot jd-terminal-dot--yellow"></span>
+                        <span class="jd-terminal-dot jd-terminal-dot--green"></span>
+                        <span class="jd-terminal__title" id="jdTerminalModalLabel">rene@je-developpe — zsh</span>
+                    </div>
+                    <div class="jd-terminal__body jd-terminal__body--modal" id="jd-live-terminal"
+                         data-whoami="{{ h1 }}"
+                         data-home-route="{{ path('site_home') }}"
+                         data-knowledges-route="{{ path('site_my_knowledges') }}"
+                         data-projects-route="{{ path('site_my_projects') }}"
+                         data-trainings-route="{{ path('site_my_trainings') }}"
+                         data-blog-route="{{ path('site_my_categories') }}"
+                         data-contact-route="{{ path('site_contact') }}"
+                         data-linkedin-url="http://www.linkedin.com/in/wetta-rene-jd"
+                         data-github-url="https://github.com/JeDeveloppe">
+                        <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span> help</p>
+                        <p class="jd-terminal-line jd-terminal-line--indent">Tapez une commande, ou "help" pour la liste.</p>
+
+                        <div id="jd-live-terminal__output"></div>
+
+                        <p class="jd-terminal-line jd-live-terminal__prompt-line">
+                            <span class="jd-terminal-prompt">$</span>
+                            <input type="text" id="jd-live-terminal__input" class="jd-live-terminal__input" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Terminal interactif : tapez 'help' pour la liste des commandes">
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="container py-5">
         {# Call to action discret #}
@@ -251,6 +271,28 @@
             color: var(--jd-teal);
             padding: 0.1rem 0.4rem;
             border-radius: 0.3rem;
+        }
+
+        .jd-terminal[data-bs-toggle="modal"] {
+            cursor: pointer;
+        }
+        .jd-terminal__open-hint {
+            text-align: center;
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.55);
+            padding: 0.6rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .jd-terminal-modal {
+            background: transparent;
+            border: none;
+        }
+        .jd-terminal-modal .jd-terminal {
+            width: 100%;
+        }
+        .jd-terminal__body--modal {
+            max-height: 60vh;
+            overflow-y: auto;
         }
     </style>
 
@@ -416,6 +458,23 @@
             root.addEventListener('click', function () {
                 input.focus();
             });
+
+            var modalEl = document.getElementById('jdTerminalModal');
+            if (modalEl) {
+                modalEl.addEventListener('shown.bs.modal', function () {
+                    input.focus();
+                });
+            }
+
+            var trigger = document.querySelector('.jd-terminal[data-bs-toggle="modal"]');
+            if (trigger) {
+                trigger.addEventListener('keydown', function (event) {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        trigger.click();
+                    }
+                });
+            }
         });
     </script>
 {% endblock %}
