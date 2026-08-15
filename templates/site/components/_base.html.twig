@@ -7,7 +7,12 @@
     <title>{% block title %}Je Développe{% endblock %}</title>
 
     {# Meta Description for SEO #}
-    <meta name="description" content="{% block meta_description %}Je Développe, le petit site qui regroupe toutes mes diverses connaissances !{% endblock %}">
+    {% if meta is defined and meta.desctiption not empty %}
+        <meta name="description" content="{% meta_description %}">
+    {% else %}
+        <meta name="description" content="{% block meta_description %}Je Développe, le petit site qui regroupe toutes mes diverses connaissances !{% endblock %}">
+    {% endif %}
+    
 
     {# Favicon for multiple devices #}
     <link rel="icon" type="image/png" href="{{ asset('favicon/favicon-96x96.png') }}" sizes="96x96" />

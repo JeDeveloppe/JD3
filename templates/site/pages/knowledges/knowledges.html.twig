@@ -1,47 +1,88 @@
 {% extends "site/components/_base.html.twig" %}
-{% block title %}
-    {{ h1 }}
-{% endblock %}
-{% block body %}
-    <h1 class="col-12 text-center my-5">{{ h1 }}</h1>
 
-    <div class="row g-0 justify-content-center align-items-start mb-5">
-        
-        {# Le conteneur du graphique avec un positionnement "sticky" #}
-        <div class="col-12 col-lg-6 col-xl-5 mb-5 mb-lg-0 order-lg-1 sticky-lg-top" style="top: 20px;">
-            <div class="card shadow-sm h-100">
-                <div class="card-body p-4 d-flex justify-content-center align-items-center">
-                    {{ render_chart(chart, {'class': 'my-chart w-100 h-100'}) }}
-                </div>
-            </div>
-        </div>
-        
-        {# Le conteneur des technologies #}
-        <div class="col-12 col-lg-6 col-xl-5 d-flex flex-column g-3 order-lg-0">
-            {% for technologyFamily in technologiesFamilies %}
-                <div class="card mb-4 shadow-sm border-0">
-                    <div class="card-body p-4">
-                        <h2 class="card-title h3 text-primary">{{ technologyFamily.name }}</h2>
-                        <p class="card-text text-muted">{{ technologyFamily.description }}</p>
-                        <hr class="my-4">
-                        <ul class="list-group list-group-flush">
-                            {% for technology in technologyFamily.technologies|sort((b, a) => a.knowledgeRate <=> b.knowledgeRate) %}
-                                <li class="list-group-item d-flex flex-column flex-sm-row justify-content-between align-items-center">
-                                    <div class="mb-2 mb-sm-0 me-sm-2 text-center text-sm-start">
-                                        <twig:ux:icon name="{{ technology.renderIconStringWithoutParentheses }}" class="technologyIconeSize text-secondary me-2"/>{{ technology.name }}
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <div class="progress" style="height: 1.25rem;">
-                                            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: {{ technology.knowledgeRate }}%" aria-valuenow="{{ technology.knowledgeRate }}" aria-valuemin="0" aria-valuemax="100"></div>
+{% block title %}{{ h1 }}{% endblock %}
+
+{% block body %}
+    <div class="container py-5">
+        <h1 class="display-4 fw-bold text-center mb-5">{{ h1 }}</h1>
+
+        <div class="row g-4 justify-content-center align-items-start">
+            
+            {# --- COLONNE GAUCHE : TECHNOLOGIES --- #}
+            <div class="col-12 col-lg-7 order-1 order-lg-0">
+                {% for technologyFamily in technologiesFamilies %}
+                    <div class="card mb-4 shadow-sm border-0 rounded-4">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-primary bg-opacity-10 p-2 rounded-3 me-3">
+                                    <i class="fa-solid fa-layer-group text-primary"></i>
+                                </div>
+                                <h2 class="h4 mb-0 fw-bold">{{ technologyFamily.name }}</h2>
+                            </div>
+                            
+                            <p class="text-muted small mb-4">{{ technologyFamily.description }}</p>
+                            
+                            <div class="row g-3">
+                                {% for technology in technologyFamily.technologies|sort((b, a) => a.knowledgeRate <=> b.knowledgeRate) %}
+                                    <div class="col-12">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <span class="fw-semibold">
+                                                <twig:ux:icon name="{{ technology.renderIconStringWithoutParentheses }}" class="me-2 text-dark" style="width:20px; height:20px;"/>
+                                                {{ technology.name }}
+                                            </span>
+                                            <span class="badge bg-light text-dark border">{{ technology.knowledgeRate }}%</span>
+                                        </div>
+                                        <div class="progress rounded-pill" style="height: 6px;">
+                                            <div class="progress-bar bg-primary" 
+                                                 role="progressbar" 
+                                                 style="width: {{ technology.knowledgeRate }}%" 
+                                                 aria-valuenow="{{ technology.knowledgeRate }}" 
+                                                 aria-valuemin="0" 
+                                                 aria-valuemax="100">
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="ms-sm-2 fw-bold text-success">{{ technology.knowledgeRate }} %</div>
-                                </li>
-                            {% endfor %}
-                        </ul>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {# --- COLONNE DROITE : GRAPHIQUE (STICKY) --- #}
+            <div class="col-12 col-lg-5 order-0 order-lg-1 sticky-lg-top" style="top: 2rem; z-index: 10;">
+                <div class="card shadow border-0 rounded-4 overflow-hidden">
+                    <div class="card-header bg-white border-0 pt-4 pb-0 text-center">
+                        <h3 class="h5 fw-bold text-dark">Répartition des compétences</h3>
+                    </div>
+                    <div class="card-body p-4">
+                        <div style="min-height: 300px;" class="d-flex align-items-center">
+                            {{ render_chart(chart, {'class': 'w-100 h-100'}) }}
+                        </div>
                     </div>
                 </div>
-            {% endfor %}
+            </div>
+
         </div>
     </div>
+
+    <style>
+        /* Un petit effet pour rendre les barres de progression plus douces */
+        .progress {
+            background-color: #e9ecef;
+            overflow: visible;
+        }
+        .progress-bar {
+            transition: width 1.5s ease-in-out;
+            border-radius: 50px;
+            /* Petit éclat discret */
+            box-shadow: 0 0 10px rgba(13, 110, 253, 0.2);
+        }
+        /* Ajustement pour le mode sticky sur tablette/desktop */
+        @media (min-width: 992px) {
+            .sticky-lg-top {
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
 {% endblock %}

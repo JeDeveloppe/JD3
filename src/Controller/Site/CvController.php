@@ -2,7 +2,6 @@
 
 namespace App\Controller\Site;
 
-use Mpdf\Mpdf;
 use App\Service\CvService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

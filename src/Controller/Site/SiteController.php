@@ -2,11 +2,9 @@
 
 namespace App\Controller\Site;
 
-use App\Entity\Article;
 use App\Form\ArticleType;
 use App\Form\ContactType;
 use App\Service\MailerService;
-use App\Service\NinjasApiService;
 use App\Service\OpenWeatherService;
 use App\Repository\ArticleRepository;
 use App\Repository\ProjectRepository;
@@ -35,7 +33,6 @@ class SiteController extends AbstractController
         private TrainingRepository $trainingRepository,
         private MailerService $mailerService,
         private OpenWeatherService $openWeatherService,
-        private NinjasApiService $ninjasApiService,
         private ChartService $chartService
     )
     {}

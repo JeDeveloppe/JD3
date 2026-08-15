@@ -1,54 +1,108 @@
 {% extends "site/components/_base.html.twig" %}
-{% block title %}Contactez- moi !{% endblock %}
+
+{% block title %}Contactez-moi !{% endblock %}
+
 {% block body %}
+<div class="container my-5 py-md-5">
+    <div class="row g-5 justify-content-center">
+        
+        {# --- COLONNE INFOS : Pour humaniser le contact --- #}
+        <div class="col-12 col-lg-4">
+            <div class="pe-lg-4">
+                <h1 class="display-5 fw-bold text-dark mb-4">{{ h1 }}</h1>
+                <p class="text-muted fs-5 mb-5">
+                    Un projet en tête ou juste envie de discuter code ? Envoyez-moi un message, je réponds généralement en moins de 24h.
+                </p>
+                
+                <div class="d-flex align-items-center mb-4">
+                    <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3 text-primary">
+                        <i class="fa-solid fa-location-dot fa-lg"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-0 fw-bold">Localisation</h6>
+                        <span class="text-muted">Basé en France, disponible partout.</span>
+                    </div>
+                </div>
 
-    <div class="container my-5 py-5">
-        <div class="row g-0 justify-content-center">
-            <div class="col-12 col-md-10 col-lg-8 col-xl-7">
-                <div class="card shadow-lg p-4 p-md-5">
-                    <div class="card-body">
-                        <h1 class="card-title text-center text-primary fw-bold mb-4">{{ h1 }}</h1>
-                        <p class="card-text text-center text-muted mb-5">
-                            N'hésitez pas à me contacter pour toute question, demande ou projet. Je vous répondrai dans les plus brefs délais.
-                        </p>
-
-                        {{ form_start(form, {'attr': {'class': 'row g-4'}}) }}
-                            
-                            {# Champ Email avec form-floating pour un design moderne #}
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    {{ form_widget(form.email, {'attr': {'placeholder': 'Votre adresse e-mail'}}) }}
-                                    {{ form_label(form.email) }}
-                                </div>
-                                {{ form_errors(form.email) }}
-                            </div>
-
-                            {# Champ Sujet avec form-floating #}
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    {{ form_widget(form.sujet, {'attr': {'placeholder': 'Le sujet de votre message'}}) }}
-                                    {{ form_label(form.sujet) }}
-                                </div>
-                                {{ form_errors(form.sujet) }}
-                            </div>
-
-                            {# Champ Message avec form-floating #}
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    {{ form_widget(form.message, {'attr': {'placeholder': 'Votre message', 'style': 'height: 150px;'}}) }}
-                                    {{ form_label(form.message) }}
-                                </div>
-                                {{ form_errors(form.message) }}
-                            </div>
-
-                            <div class="col-12 text-center mt-5">
-                                <button type="submit" class="btn btn-primary btn-lg px-5 shadow-sm">Envoyer</button>
-                            </div>
-
-                        {{ form_end(form) }}
+                <div class="d-flex align-items-center mb-4">
+                    <div class="bg-success bg-opacity-10 p-3 rounded-circle me-3 text-success">
+                        <i class="fa-solid fa-code fa-lg"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-0 fw-bold">Statut</h6>
+                        <span class="text-muted">Ouvert aux nouvelles opportunités.</span>
                     </div>
                 </div>
             </div>
         </div>
+
+        {# --- COLONNE FORMULAIRE --- #}
+        <div class="col-12 col-lg-7">
+            <div class="card border-0 shadow-lg rounded-4 p-2 p-md-4">
+                <div class="card-body">
+                    {{ form_start(form, {'attr': {'class': 'row g-4', 'novalidate': 'novalidate'}}) }}
+                        
+                        <div class="col-md-6">
+                            <div class="form-floating mb-1">
+                                {{ form_widget(form.email, {'attr': {'class': 'form-control border-0 bg-light', 'placeholder': 'nom@exemple.com'}}) }}
+                                {{ form_label(form.email, 'Votre email') }}
+                            </div>
+                            <div class="small text-danger">{{ form_errors(form.email) }}</div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-floating mb-1">
+                                {{ form_widget(form.sujet, {'attr': {'class': 'form-control border-0 bg-light', 'placeholder': 'Sujet'}}) }}
+                                {{ form_label(form.sujet, 'Sujet du message') }}
+                            </div>
+                            <div class="small text-danger">{{ form_errors(form.sujet) }}</div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-floating mb-1">
+                                {{ form_widget(form.message, {'attr': {
+                                    'class': 'form-control border-0 bg-light', 
+                                    'placeholder': 'Votre message', 
+                                    'style': 'height: 180px;'
+                                }}) }}
+                                {{ form_label(form.message, 'Comment puis-je vous aider ?') }}
+                            </div>
+                            <div class="small text-danger">{{ form_errors(form.message) }}</div>
+                        </div>
+
+                        <div class="col-12 mt-4">
+                            <button type="submit" class="btn btn-primary w-100 py-3 fw-bold rounded-3 shadow">
+                                <i class="fa-regular fa-paper-plane me-2"></i> Envoyer le message
+                            </button>
+                        </div>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+
     </div>
+</div>
+
+<style>
+    /* Focus effect plus propre */
+    .form-control:focus {
+        background-color: #fff !important;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+        border: 1px solid #0d6efd !important;
+    }
+    /* Style pour les labels du form-floating */
+    .form-floating > label {
+        color: #6c757d;
+        padding-left: 1.2rem;
+    }
+    /* Transition sur le bouton */
+    .btn-primary {
+        transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba(13, 110, 253, 0.3) !important;
+    }
+</style>
 {% endblock %}
