@@ -49,81 +49,91 @@
     </section>
 
     <div class="container py-5">
-        <div class="row justify-content-center">
-            <div class="col-12 col-xl-10">
-                {% for project in projects %}
-                    <div class="card jd-card project-card mb-4 border-0 rounded-4 overflow-hidden">
-                        <div class="row g-0">
-                            {# Image avec un overlay au survol #}
-                            <div class="col-md-4 position-relative bg-light d-flex align-items-center justify-content-center border-end">
-                                <img class="img-fluid p-3"
-                                     src="{{ vich_uploader_asset(project, 'imageFile') | imagine_filter('projectImage') }}"
-                                     alt="{{ project.name }}"
-                                     style="max-height: 200px; object-fit: contain;">
+        <div class="row g-4">
+            {% for project in projects %}
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card jd-card project-card h-100 border-0 rounded-4 overflow-hidden">
+                        {# Image en vitrine, pleine largeur #}
+                        <div class="project-card__image bg-light position-relative">
+                            <img src="{{ vich_uploader_asset(project, 'imageFile') | imagine_filter('projectImage') }}"
+                                 alt="{{ project.name }}"
+                                 class="p-4">
+
+                            {% if project.endAt %}
+                                <span class="badge project-status project-status--done rounded-pill">
+                                    <i class="fa-solid fa-check me-1"></i>Terminé
+                                </span>
+                            {% else %}
+                                <span class="badge project-status project-status--wip rounded-pill">
+                                    <i class="fa-solid fa-hammer me-1"></i>En cours
+                                </span>
+                            {% endif %}
+                        </div>
+
+                        <div class="card-body p-4 d-flex flex-column">
+                            <h2 class="h5 fw-bold text-dark mb-2">{{ project.name }}</h2>
+
+                            <div class="project-description text-muted small mb-3">
+                                {{ project.description | raw }}
                             </div>
 
-                            <div class="col-md-8">
-                                <div class="card-body p-4">
-                                    <div class="d-flex justify-content-between align-items-start mb-2">
-                                        <h2 class="h4 fw-bold text-dark mb-0">{{ project.name }}</h2>
-                                        {% if project.endAt %}
-                                            <span class="badge project-status project-status--done rounded-pill">
-                                                <i class="fa-solid fa-check me-1"></i>Terminé
-                                            </span>
-                                        {% else %}
-                                            <span class="badge project-status project-status--wip rounded-pill">
-                                                <i class="fa-solid fa-hammer me-1"></i>En cours
-                                            </span>
-                                        {% endif %}
-                                    </div>
+                            {# Technologies sous forme de petits badges élégants #}
+                            <div class="d-flex flex-wrap gap-2 mb-3">
+                                {% for technology in project.technologies|sort((a, b) => a.orderOfAppearance <=> b.orderOfAppearance) %}
+                                    <span class="badge jd-badge d-flex align-items-center px-2 py-1">
+                                        <twig:ux:icon name="{{ technology.renderIconStringWithoutParentheses }}" class="me-1" style="width:14px; height:14px;"/>
+                                        {{ technology.name }}
+                                    </span>
+                                {% endfor %}
+                            </div>
 
-                                    <div class="project-description text-muted mb-4">
-                                        {{ project.description | raw }}
-                                    </div>
-
-                                    {# Technologies sous forme de petits badges élégants #}
-                                    <div class="d-flex flex-wrap gap-2 mb-4">
-                                        {% for technology in project.technologies|sort((a, b) => a.orderOfAppearance <=> b.orderOfAppearance) %}
-                                            <span class="badge jd-badge d-flex align-items-center px-2 py-1">
-                                                <twig:ux:icon name="{{ technology.renderIconStringWithoutParentheses }}" class="me-1" style="width:14px; height:14px;"/>
-                                                {{ technology.name }}
-                                            </span>
-                                        {% endfor %}
-                                    </div>
-
-                                    <div class="d-flex justify-content-between align-items-center bg-light p-3 rounded-3">
-                                        <div class="small text-muted">
-                                            <i class="fa-regular fa-calendar-check me-1"></i>
-                                            {{ project.startedAt|date("M Y") }} — {{ project.endAt ? project.endAt|date("M Y") : 'Travaux...' }}
-                                        </div>
-
-                                        {% if project.url and project.endAt %}
-                                            <a href="{{ project.url }}" target="_blank" class="btn btn-primary btn-sm rounded-pill px-4">
-                                                Voir le projet
-                                            </a>
-                                        {% else %}
-                                            <span class="btn btn-outline-secondary btn-sm rounded-pill px-4 disabled" aria-disabled="true">
-                                                Bientôt disponible
-                                            </span>
-                                        {% endif %}
-                                    </div>
+                            <div class="mt-auto pt-3 border-top d-flex flex-column gap-3">
+                                <div class="small text-muted">
+                                    <i class="fa-regular fa-calendar-check me-1"></i>
+                                    {{ project.startedAt|date("M Y") }} — {{ project.endAt ? project.endAt|date("M Y") : 'Travaux...' }}
                                 </div>
+
+                                {% if project.url and project.endAt %}
+                                    <a href="{{ project.url }}" target="_blank" class="btn btn-primary btn-sm rounded-pill w-100">
+                                        Voir le projet
+                                    </a>
+                                {% else %}
+                                    <span class="btn btn-outline-secondary btn-sm rounded-pill w-100 disabled" aria-disabled="true">
+                                        Bientôt disponible
+                                    </span>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
-                {% endfor %}
-
-                {# Pagination #}
-                <div class="mt-4">
-                    {{ knp_pagination_render(projects, 'site/components/_pagination.html.twig') }}
                 </div>
-            </div>
+            {% endfor %}
+        </div>
+
+        {# Pagination #}
+        <div class="mt-4">
+            {{ knp_pagination_render(projects, 'site/components/_pagination.html.twig') }}
         </div>
     </div>
 
     <style>
         .project-card {
             transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .project-card__image {
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .project-card__image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .project-card__image .project-status {
+            position: absolute;
+            top: 0.85rem;
+            right: 0.85rem;
         }
         .project-status--done {
             background: rgba(24, 188, 156, 0.12);
