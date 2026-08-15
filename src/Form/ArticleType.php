@@ -19,7 +19,7 @@ class ArticleType extends AbstractType
             ->add('search', TextType::class, [
                 'attr' => [
                     'placeholder' => 'Rechercher...',
-                    'class' => 'form-control border-2 rounded-2 custom_shadow'
+                    'class' => 'form-control border-0'
                 ],
                 'constraints' => [
                     new NotBlank(),
