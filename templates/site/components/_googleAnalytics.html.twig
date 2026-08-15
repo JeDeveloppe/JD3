@@ -77,6 +77,13 @@
         var GA_ID = 'G-EHEWNK4WD2';
 
         function loadGoogleAnalytics() {
+            // Le site navigue en Turbo (pas de rechargement complet entre les pages) :
+            // sans ce garde-fou, GA serait reinjecte a chaque navigation interne.
+            if (window.__jdGaLoaded) {
+                return;
+            }
+            window.__jdGaLoaded = true;
+
             var s1 = document.createElement('script');
             s1.async = true;
             s1.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
@@ -102,7 +109,9 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', function () {
+        // "turbo:load" se declenche au premier chargement ET a chaque navigation Turbo
+        // (contrairement a DOMContentLoaded qui ne se produit qu'une seule fois par document).
+        document.addEventListener('turbo:load', function () {
             var consent = localStorage.getItem(CONSENT_KEY);
 
             if (consent === 'accepted') {
