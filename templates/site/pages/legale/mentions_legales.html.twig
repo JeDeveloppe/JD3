@@ -10,14 +10,37 @@
             <div class="jd-hero__glow jd-hero__glow--navy"></div>
         </div>
 
-        <div class="container position-relative jd-hero__inner text-center text-lg-start">
-            <span class="jd-hero__eyebrow">
-                <i class="fa-solid fa-scale-balanced me-2"></i>Informations légales
-            </span>
-            <h1 class="jd-hero__title">Mentions légales</h1>
-            <p class="jd-hero__lead mx-auto mx-lg-0">
-                Dernière mise à jour le {{ legales.updatedAt | date('d/m/Y') }}.
-            </p>
+        <div class="container position-relative jd-hero__inner">
+            <div class="row align-items-center g-5">
+                <div class="col-12 col-lg-6 text-center text-lg-start">
+                    <span class="jd-hero__eyebrow">
+                        <i class="fa-solid fa-scale-balanced me-2"></i>Informations légales
+                    </span>
+                    <h1 class="jd-hero__title">Mentions légales</h1>
+                    <p class="jd-hero__lead mx-auto mx-lg-0">
+                        Dernière mise à jour le {{ legales.updatedAt | date('d/m/Y') }}.
+                    </p>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                    <div class="jd-terminal">
+                        <div class="jd-terminal__bar">
+                            <span class="jd-terminal-dot jd-terminal-dot--red"></span>
+                            <span class="jd-terminal-dot jd-terminal-dot--yellow"></span>
+                            <span class="jd-terminal-dot jd-terminal-dot--green"></span>
+                            <span class="jd-terminal__title">rene@je-developpe — legal</span>
+                        </div>
+                        <div class="jd-terminal__body">
+                            <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span> cat mentions-legales.txt</p>
+                            <p class="jd-terminal-line jd-terminal-line--indent">Propriétaire : {{ legales.companyName }}</p>
+                            <p class="jd-terminal-line jd-terminal-line--indent">Contact : {{ legales.emailCompany }}</p>
+                            <p class="jd-terminal-line jd-terminal-line--indent">Hébergeur : {{ legales.hostName }}</p>
+                            <p class="jd-terminal-line jd-terminal-line--indent">Webmaster : {{ legales.webmasterCompanyName }}</p>
+                            <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span> <span class="jd-terminal-cursor"></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 

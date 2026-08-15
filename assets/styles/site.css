@@ -164,6 +164,9 @@
     min-width: 2.5rem;
     text-align: right;
 }
+.jd-terminal-line--indent {
+    padding-left: 1.1rem;
+}
 .jd-terminal-cursor {
     display: inline-block;
     width: 7px;
