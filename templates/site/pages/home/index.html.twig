@@ -58,14 +58,12 @@
                             <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span> whoami</p>
                             <p class="jd-terminal-line jd-terminal-line--indent">{{ h1 }}</p>
                             <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span> cat pourquoi.txt</p>
-                            <p class="jd-terminal-line jd-terminal-line--indent">
-                                <span class="jd-terminal-typed" {{ stimulus_controller('symfony/ux-typed', {
-                                    strings: ['pour m\'entrainer et m\'améliorer ', 'pour tester mes connaissances... ','pour mettre en pratique mes connaissances ', 'pour vous dire que je suis autodidacte à 100%... '],
-                                    smartBackspace: true,
-                                    loop: true,
-                                    cursorChar: '|'
-                                }) }}></span>
-                            </p>
+                            <p class="jd-terminal-line"><span class="jd-terminal-typed" {{ stimulus_controller('symfony/ux-typed', {
+                                strings: ['pour m\'entrainer et m\'améliorer ', 'pour tester mes connaissances... ','pour mettre en pratique mes connaissances ', 'pour vous dire que je suis autodidacte à 100%... '],
+                                smartBackspace: true,
+                                loop: true,
+                                cursorChar: '|'
+                            }) }}></span></p>
                         </div>
                     </div>
                 </div>
