@@ -18,25 +18,6 @@
     {% endfor %}
     {% set avgRate = allTechs|length > 0 ? (totalRate / allTechs|length)|round : 0 %}
 
-    {# --- Commandes terminal "cohérentes" par techno, plutôt que la commande d'import d'icône --- #}
-    {% set terminalCommands = {
-        'Bootstrap': 'npm install bootstrap@5',
-        'Css3': 'sass --watch style.scss:style.css',
-        'Fillezilla': 'sftp jerome@je-developpe.fr',
-        'Git': 'git commit -m "feat: nouvelle fonctionnalité"',
-        'Html5': '<!DOCTYPE html>',
-        'Javascript': 'node --version',
-        'MongoDB': 'mongosh --eval "db.stats()"',
-        'MySql': 'mysql -u root -p JD3',
-        'Php': 'php bin/console cache:clear',
-        'Phpmyadmin': 'mysqldump JD3 > backup.sql',
-        'Sass': 'sass --watch style.scss:style.css',
-        'Symfony': 'symfony console make:controller',
-        'Vscode': 'code .',
-        'Vue-js': 'npm run dev',
-        'Wordpress': 'wp plugin list',
-    } %}
-
     <section class="knowledge-hero">
         <div class="knowledge-hero__glow knowledge-hero__glow--teal"></div>
         <div class="knowledge-hero__glow knowledge-hero__glow--navy"></div>
@@ -132,7 +113,7 @@
                                                 </div>
                                             </div>
                                             <p class="tech-row__cmd">
-                                                <i class="fa-solid fa-chevron-right me-1"></i>{{ terminalCommands[technology.name] ?? (technology.name|lower ~ ' --version') }}
+                                                <i class="fa-solid fa-chevron-right me-1"></i>{{ technology.skillCommand ?: (technology.name|lower ~ ' --version') }}
                                             </p>
                                         </div>
                                     </div>

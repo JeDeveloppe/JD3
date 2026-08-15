@@ -30,7 +30,11 @@ class TechnologyCrudController extends AbstractCrudController
             TextField::new('name', 'Nom:'),
             AssociationField::new('family', 'Famille:')->setRequired(true),
             TextField::new('description', 'Description:'),
-            TextField::new('commandLineInTerminal', 'Commande:'),
+            TextField::new('commandLineInTerminal', 'Commande d\'import de l\'icône:')
+                ->setHelp('Exécutée automatiquement à l\'enregistrement (symfony console ...). Ne pas modifier sauf pour changer l\'icône.'),
+            TextField::new('skillCommand', 'Commande affichée sur le site:')
+                ->setHelp('Commande terminal représentative de la compétence, affichée sur la page "Mes connaissances" (ex: symfony console make:controller).')
+                ->setRequired(false),
             TextField::new('renderIconStringWithoutParentheses', 'Icone:'),
             IntegerField::new('knowledgeRate', 'Niveau de maîtrise:')->setFormTypeOptions(['attr' => ['min' => 0, 'max' => 100]]),
             IntegerField::new('orderOfAppearance', 'Ordre d\'affichage:')->setFormTypeOptions(['attr' => ['min' => 0, 'max' => 100]]),

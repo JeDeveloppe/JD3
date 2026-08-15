@@ -31,6 +31,9 @@ class Technology
     #[ORM\Column(length: 255)]
     private ?string $commandLineInTerminal = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $skillCommand = null;
+
     #[ORM\Column(length: 255)]
     private ?string $renderIconStringWithoutParentheses = null;
 
@@ -112,6 +115,18 @@ class Technology
     public function setCommandLineInTerminal(string $commandLineInTerminal): static
     {
         $this->commandLineInTerminal = $commandLineInTerminal;
+
+        return $this;
+    }
+
+    public function getSkillCommand(): ?string
+    {
+        return $this->skillCommand;
+    }
+
+    public function setSkillCommand(?string $skillCommand): static
+    {
+        $this->skillCommand = $skillCommand;
 
         return $this;
     }
