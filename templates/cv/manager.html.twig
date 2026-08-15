@@ -113,6 +113,14 @@
             transition: opacity 0.8s ease-in-out;
         }
         .footer-message.visible { opacity: 1; }
+        .footer-message .btn-primary {
+            background-color: var(--cv-navy);
+            border-color: var(--cv-navy);
+        }
+        .footer-message .btn-primary:hover {
+            background-color: var(--cv-accent);
+            border-color: var(--cv-accent);
+        }
         .download-button-area {
             text-align: right;
             margin-top: 1.5rem;
@@ -423,15 +431,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="footer-message" id="footer-message-block">
-                    <p class="lead" id="visit-counter">
-                        Merci d'avoir consulté mon CV en ligne ! Vous êtes la
-                        <strong>
-                            {{ total_views }}
-                            <small><sup>ème</sup></small>
-                        </strong>
-                        personne à voir cette page.
-                    </p>
-                    <p class="h4 mt-3 text-primary fw-bold">
+                    <p class="h4 fw-bold" style="color: var(--cv-navy);">
                         "Passons des chiffres du CV aux résultats de demain. Contactez-moi pour planifier notre succès !"
                     </p>
                     <a href="mailto:wetta.rene@gmail.com" class="btn btn-primary btn-lg mt-3"><i class="bi bi-envelope"></i> Contacter René Wetta</a>
