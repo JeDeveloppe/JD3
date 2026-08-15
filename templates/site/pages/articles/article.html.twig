@@ -5,22 +5,22 @@
 {% block body %}
 
     <div class="container my-5">
-        <div class="row g-0 justify-content-center">
-            <h1 class="col-12 text-center display-4 fw-bold text-primary mb-3">{{ h1 }}</h1>
-            
-            {% include "site/components/_breadcrumb.html.twig" with {category: category, article: article} %}
+        {% include "site/components/_breadcrumb.html.twig" with {category: category, article: article} %}
+
+        <div class="row g-0 justify-content-center mb-4">
+            <h1 class="col-12 col-md-10 col-lg-8 fw-bold text-dark">{{ h1 }}</h1>
         </div>
-        
+
         <div class="row g-0 justify-content-center mb-5">
             <article class="col-12 col-md-10 col-lg-8">
-                <div class="card shadow-lg border-0 rounded-3">
+                <div class="card jd-card border-0 rounded-4">
                     <div class="card-body p-4 p-md-5">
                         <div class="article-content">
                             {{ article.description | raw }}
                         </div>
                     </div>
-                    <div class="card-footer bg-light d-flex justify-content-end align-items-center py-3">
-                        <div class="small text-muted fst-italic">Mise à jour le: <span class="fw-bold">{{ article.updatedAt | date("d/m/Y") }}</span></div>
+                    <div class="card-footer bg-transparent border-0 d-flex justify-content-end align-items-center py-3">
+                        <div class="small text-muted fst-italic">Mise à jour le : <span class="fw-bold">{{ article.updatedAt | date("d/m/Y") }}</span></div>
                     </div>
                 </div>
             </article>

@@ -203,6 +203,11 @@
     font-weight: 700;
     border: none;
 }
+.jd-card__icon--center {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
 
 @media (max-width: 991.98px) {
     .jd-hero__stats {
@@ -242,10 +247,13 @@
 }
 
 pre {
-    background-color: aquamarine;
+    background-color: #1b2530;
+    color: #18bc9c;
+    font-family: 'SFMono-Regular', Consolas, Menlo, monospace;
+    font-size: 0.9rem;
     width: 98%;
     margin-top: 15px;
-    border-radius: 5px;
+    border-radius: 0.6rem;
     padding-top: 15px;
     padding-bottom: 15px;
     padding-left: 15px;

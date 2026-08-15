@@ -2,41 +2,61 @@
 {% block title %}Mes articles pour ne plus chercher sur Google !{% endblock %}
 {% block body %}
 
-    <div class="container my-5">
-        <div class="row g-0 justify-content-center">
-            <h1 class="col-12 text-center display-4 fw-bold text-primary mb-3">{{ h1 }}</h1>
-            <p class="col-12 col-md-10 col-lg-8 text-center text-muted lead mb-5">{{ lead | raw }}</p>
+    {% set totalArticles = 0 %}
+    {% for category in categories %}
+        {% set totalArticles = totalArticles + category.articles|length %}
+    {% endfor %}
+
+    <section class="jd-hero">
+        <div class="jd-hero__glow jd-hero__glow--teal"></div>
+        <div class="jd-hero__clip">
+            <div class="jd-hero__glow jd-hero__glow--navy"></div>
         </div>
 
+        <div class="container position-relative jd-hero__inner text-center text-lg-start">
+            <span class="jd-hero__eyebrow">
+                <i class="fa-solid fa-book me-2"></i>Blog
+            </span>
+            <h1 class="jd-hero__title">{{ h1 }}</h1>
+            <p class="jd-hero__lead mx-auto mx-lg-0">{{ lead | raw }}</p>
+
+            <div class="jd-hero__stats justify-content-center justify-content-lg-start">
+                <div class="jd-stat">
+                    <span class="jd-stat__value">{{ totalArticles }}</span>
+                    <span class="jd-stat__label">Astuces</span>
+                </div>
+                <div class="jd-stat">
+                    <span class="jd-stat__value">{{ categories|length }}</span>
+                    <span class="jd-stat__label">Catégories</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container py-5">
         <div class="row g-4 justify-content-center">
             {% for key, category in categories %}
-                {# Adjust the columns for better responsiveness #}
                 <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-2 d-flex">
-                    <article class="card h-100 w-100 shadow-sm border-0 transition-300">
+                    <article class="card jd-card h-100 w-100 border-0 rounded-4">
                         <a href="{{ path('mapped_my_articles_from_category', {categorySlug: category.slug }) }}" class="stretched-link"></a>
-                        
+
                         <div class="card-body p-4 text-center">
-                            {# Display the icon with a distinct background #}
-                            <div class="bg-light p-3 mb-3 d-inline-flex justify-content-center align-items-center rounded-circle">
-                                <twig:ux:icon name="{{ category.renderIconStringWithoutParentheses }}" class="technologyIconeSize text-secondary fs-1"/>
+                            <div class="jd-card__icon jd-card__icon--center mx-auto mb-3">
+                                <twig:ux:icon name="{{ category.renderIconStringWithoutParentheses }}" style="width:24px; height:24px;"/>
                             </div>
-                            
-                            {# Category title #}
+
                             <h2 class="h5 fw-bold text-dark mb-2">{{ category.name }}</h2>
-                            
-                            {# Article count #}
-                            {% set articles = (category.articles | length) > 1 ? 'articles' : 'article' %}
-                            <p class="text-muted small mb-0">{{ category.articles | length }} {{ articles }}</p>
+
+                            {% set articlesLabel = (category.articles | length) > 1 ? 'articles' : 'article' %}
+                            <p class="text-muted small mb-0">{{ category.articles | length }} {{ articlesLabel }}</p>
                         </div>
-                        
-                        {# Card footer with updated date (with the fix) #}
-                        <div class="card-footer bg-light border-0 py-2">
+
+                        <div class="card-footer bg-transparent border-0 pb-3 text-center">
                             <small class="text-muted fst-italic">
-                                Mise à jour : 
                                 {% if lastArticles[category.name] is defined and lastArticles[category.name] is not null %}
-                                    <span class="fw-bold">{{ lastArticles[category.name].updatedAt | date("d/m/Y") }}</span>
+                                    Mis à jour le <span class="fw-bold">{{ lastArticles[category.name].updatedAt | date("d/m/Y") }}</span>
                                 {% else %}
-                                    bientôt...
+                                    Bientôt...
                                 {% endif %}
                             </small>
                         </div>
@@ -47,5 +67,4 @@
     </div>
 
     {{ knp_pagination_render(categories, 'site/components/_pagination.html.twig') }}
-
 {% endblock %}
