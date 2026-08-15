@@ -75,6 +75,30 @@
     (function () {
         var CONSENT_KEY = 'jd_cookie_consent';
         var GA_ID = 'G-EHEWNK4WD2';
+        var CONSENT_TTL_MS = 6 * 30 * 24 * 60 * 60 * 1000; // ~6 mois, recommandation CNIL
+
+        function readConsent() {
+            var raw = localStorage.getItem(CONSENT_KEY);
+            if (!raw) {
+                return null;
+            }
+            try {
+                var data = JSON.parse(raw);
+                if (Date.now() - data.timestamp > CONSENT_TTL_MS) {
+                    localStorage.removeItem(CONSENT_KEY);
+                    return null;
+                }
+                return data.value;
+            } catch (e) {
+                // ancien format (simple chaine, pre-expiration) : on redemande par precaution
+                localStorage.removeItem(CONSENT_KEY);
+                return null;
+            }
+        }
+
+        function writeConsent(value) {
+            localStorage.setItem(CONSENT_KEY, JSON.stringify({ value: value, timestamp: Date.now() }));
+        }
 
         function loadGoogleAnalytics() {
             // Le site navigue en Turbo (pas de rechargement complet entre les pages) :
@@ -112,12 +136,12 @@
         // "turbo:load" se declenche au premier chargement ET a chaque navigation Turbo
         // (contrairement a DOMContentLoaded qui ne se produit qu'une seule fois par document).
         document.addEventListener('turbo:load', function () {
-            var consent = localStorage.getItem(CONSENT_KEY);
+            var consent = readConsent();
 
             if (consent === 'accepted') {
                 loadGoogleAnalytics();
             } else if (consent === 'refused') {
-                // rien a faire, l'utilisateur a deja refuse
+                // rien a faire, l'utilisateur a deja refuse (choix encore valide, < 6 mois)
             } else {
                 showBanner();
             }
@@ -127,14 +151,14 @@
 
             if (acceptBtn) {
                 acceptBtn.addEventListener('click', function () {
-                    localStorage.setItem(CONSENT_KEY, 'accepted');
+                    writeConsent('accepted');
                     hideBanner();
                     loadGoogleAnalytics();
                 });
             }
             if (refuseBtn) {
                 refuseBtn.addEventListener('click', function () {
-                    localStorage.setItem(CONSENT_KEY, 'refused');
+                    writeConsent('refused');
                     hideBanner();
                 });
             }
