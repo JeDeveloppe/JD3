@@ -3,23 +3,77 @@
 {% block title %}{{ h1 }}{% endblock %}
 
 {% block body %}
-    {# Header : On utilise un gris très léger pour détacher le titre #}
-    <div class="bg-light border-bottom py-5 mb-5">
-        <div class="container text-center">
-            <h1 class="display-4 fw-bold text-dark mb-3">{{ h1 }}</h1>
-            <p class="lead text-muted mx-auto col-md-8">
-                J'ai créé ce petit site 
-                <span class="text-primary fw-semibold" {{ stimulus_controller('symfony/ux-typed', {
-                    strings: ['pour m\'entrainer et m\'améliorer ', 'pour tester mes connaissances... ','pour mettre en pratique mes connaissances ', 'pour vous dire que je suis autodidacte à 100%... '],
-                    smartBackspace: true,
-                    loop: true,
-                    cursorChar: '|'
-                }) }}></span>
-            </p>
-        </div>
-    </div>
 
-    <div class="container mb-5">
+    <section class="jd-hero">
+        <div class="jd-hero__glow jd-hero__glow--teal"></div>
+        <div class="jd-hero__glow jd-hero__glow--navy"></div>
+
+        <div class="container position-relative jd-hero__inner">
+            <div class="row align-items-center g-5">
+                <div class="col-12 col-lg-6">
+                    <span class="jd-hero__eyebrow">
+                        <i class="fa-solid fa-code me-2"></i>Portfolio &amp; compétences
+                    </span>
+                    <h1 class="jd-hero__title">{{ h1 }}</h1>
+                    <p class="jd-hero__lead">
+                        J'ai créé ce petit site pour partager ce que j'apprends et ce que je construis, en toute transparence.
+                    </p>
+
+                    <div class="jd-hero__stats">
+                        {% if yearsOfExperience is not null %}
+                            <div class="jd-stat">
+                                <span class="jd-stat__value">{{ yearsOfExperience }}</span>
+                                <span class="jd-stat__label">Ans de pratique</span>
+                            </div>
+                        {% endif %}
+                        <div class="jd-stat">
+                            <span class="jd-stat__value">{{ projectsCount }}</span>
+                            <span class="jd-stat__label">Projets réalisés</span>
+                        </div>
+                        <div class="jd-stat">
+                            <span class="jd-stat__value">{{ technologiesCount }}</span>
+                            <span class="jd-stat__label">Technologies</span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-3 mt-4">
+                        <a href="{{ path('site_my_projects') }}" class="btn btn-light rounded-pill px-4 fw-semibold">
+                            Voir mes réalisations
+                        </a>
+                        <a href="{{ path('site_contact') }}" class="btn btn-outline-light rounded-pill px-4">
+                            <i class="fa-solid fa-envelope-open-text me-2"></i>Me contacter
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-6">
+                    <div class="jd-terminal">
+                        <div class="jd-terminal__bar">
+                            <span class="jd-terminal-dot jd-terminal-dot--red"></span>
+                            <span class="jd-terminal-dot jd-terminal-dot--yellow"></span>
+                            <span class="jd-terminal-dot jd-terminal-dot--green"></span>
+                            <span class="jd-terminal__title">jerome@je-developpe — zsh</span>
+                        </div>
+                        <div class="jd-terminal__body">
+                            <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span> whoami</p>
+                            <p class="jd-terminal-line jd-terminal-line--indent">{{ h1 }}</p>
+                            <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span> cat pourquoi.txt</p>
+                            <p class="jd-terminal-line jd-terminal-line--indent">
+                                <span class="jd-terminal-typed" {{ stimulus_controller('symfony/ux-typed', {
+                                    strings: ['pour m\'entrainer et m\'améliorer ', 'pour tester mes connaissances... ','pour mettre en pratique mes connaissances ', 'pour vous dire que je suis autodidacte à 100%... '],
+                                    smartBackspace: true,
+                                    loop: true,
+                                    cursorChar: '|'
+                                }) }}></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container py-5">
         {# Call to action discret #}
         <div class="row justify-content-center mb-5">
             <div class="col-12 col-md-auto">
@@ -36,7 +90,7 @@
         <div class="row g-4 justify-content-center">
             <div class="col-12 text-center mb-2">
                 <h2 class="h3 fw-light text-secondary">
-                    <i class="fa-solid fa-cloud-sun-rain me-2 text-primary"></i> 
+                    <i class="fa-solid fa-cloud-sun-rain me-2 text-primary"></i>
                     Données OpenWeather
                 </h2>
             </div>
@@ -44,19 +98,19 @@
             {% if citiesDatas is not empty %}
                 {% for city in citiesDatas %}
                     <div class="col-12 col-md-6 col-lg-4">
-                        <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden">
+                        <div class="card jd-card h-100 border-0 rounded-4 overflow-hidden">
                             {# Header de carte avec un petit badge pour le pays ou le statut #}
                             <div class="card-header bg-white border-0 pt-4 pb-0 text-center">
                                 <h3 class="h4 fw-bold text-uppercase tracking-wider mb-0">{{ city.name }}</h3>
                                 <hr class="mx-auto w-25 border-primary border-2 opacity-100">
                             </div>
-                            
+
                             <div class="card-body px-4 pb-4">
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item d-flex justify-content-between align-items-center bg-transparent px-0 py-3">
                                         <span><i class="fa-solid fa-temperature-three-quarters text-danger me-2"></i> Températures</span>
                                         <div class="fw-bold">
-                                            <span class="text-info">{{ city.temp_min }}°</span> / 
+                                            <span class="text-info">{{ city.temp_min }}°</span> /
                                             <span class="text-danger">{{ city.temp_max }}°</span>
                                         </div>
                                     </li>
@@ -73,7 +127,7 @@
                                         <span class="fw-bold small">{{ city.pressure }} hPa</span>
                                     </li>
                                 </ul>
-                                
+
                                 <div class="row g-0 mt-3 pt-3 border-top text-center text-muted small">
                                     <div class="col-6 border-end">
                                         <i class="fa-solid fa-sun-up d-block mb-1 text-warning"></i>
@@ -98,4 +152,14 @@
             {% endif %}
         </div>
     </div>
+
+    <style>
+        .jd-terminal-line--indent {
+            padding-left: 1.1rem;
+        }
+        .jd-terminal-typed {
+            color: var(--jd-teal);
+            font-weight: 600;
+        }
+    </style>
 {% endblock %}

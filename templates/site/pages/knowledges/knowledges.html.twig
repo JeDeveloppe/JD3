@@ -30,56 +30,56 @@
         {% endfor %}
     {% endfor %}
 
-    <section class="knowledge-hero">
-        <div class="knowledge-hero__glow knowledge-hero__glow--teal"></div>
-        <div class="knowledge-hero__glow knowledge-hero__glow--navy"></div>
+    <section class="jd-hero">
+        <div class="jd-hero__glow jd-hero__glow--teal"></div>
+        <div class="jd-hero__glow jd-hero__glow--navy"></div>
 
-        <div class="container position-relative knowledge-hero__inner">
+        <div class="container position-relative jd-hero__inner">
             <div class="row align-items-center g-5">
                 <div class="col-12 col-lg-6">
-                    <span class="knowledge-hero__eyebrow">
+                    <span class="jd-hero__eyebrow">
                         <i class="fa-solid fa-terminal me-2"></i>Stack &amp; compétences
                     </span>
-                    <h1 class="knowledge-hero__title">{{ h1 }}</h1>
-                    <p class="knowledge-hero__lead">
+                    <h1 class="jd-hero__title">{{ h1 }}</h1>
+                    <p class="jd-hero__lead">
                         {{ allTechs|length }} technologies pratiquées à travers {{ technologiesFamilies|length }} familles,
                         avec une maîtrise moyenne de {{ avgRate }}%.
                     </p>
 
-                    <div class="knowledge-hero__stats">
-                        <div class="knowledge-stat">
-                            <span class="knowledge-stat__value">{{ allTechs|length }}</span>
-                            <span class="knowledge-stat__label">Technologies</span>
+                    <div class="jd-hero__stats">
+                        <div class="jd-stat">
+                            <span class="jd-stat__value">{{ allTechs|length }}</span>
+                            <span class="jd-stat__label">Technologies</span>
                         </div>
-                        <div class="knowledge-stat">
-                            <span class="knowledge-stat__value">{{ technologiesFamilies|length }}</span>
-                            <span class="knowledge-stat__label">Familles</span>
+                        <div class="jd-stat">
+                            <span class="jd-stat__value">{{ technologiesFamilies|length }}</span>
+                            <span class="jd-stat__label">Familles</span>
                         </div>
-                        <div class="knowledge-stat">
-                            <span class="knowledge-stat__value">{{ avgRate }}<small>%</small></span>
-                            <span class="knowledge-stat__label">Maîtrise moy.</span>
+                        <div class="jd-stat">
+                            <span class="jd-stat__value">{{ avgRate }}<small>%</small></span>
+                            <span class="jd-stat__label">Maîtrise moy.</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-12 col-lg-6">
-                    <div class="terminal-window">
-                        <div class="terminal-window__bar">
-                            <span class="terminal-dot terminal-dot--red"></span>
-                            <span class="terminal-dot terminal-dot--yellow"></span>
-                            <span class="terminal-dot terminal-dot--green"></span>
-                            <span class="terminal-window__title">jerome@je-developpe — zsh</span>
+                    <div class="jd-terminal">
+                        <div class="jd-terminal__bar">
+                            <span class="jd-terminal-dot jd-terminal-dot--red"></span>
+                            <span class="jd-terminal-dot jd-terminal-dot--yellow"></span>
+                            <span class="jd-terminal-dot jd-terminal-dot--green"></span>
+                            <span class="jd-terminal__title">jerome@je-developpe — zsh</span>
                         </div>
-                        <div class="terminal-window__body">
-                            <p class="terminal-line"><span class="terminal-prompt">$</span> top-skills --sort=knowledge --limit=5</p>
+                        <div class="jd-terminal__body">
+                            <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span> top-skills --sort=knowledge --limit=5</p>
                             {% for tech in topTechs %}
-                                <p class="terminal-line terminal-line--result">
-                                    <span class="terminal-result-name">{{ tech.name }}</span>
-                                    <span class="terminal-bar">{% for i in 1..(tech.knowledgeRate // 10) %}█{% endfor %}{% for i in 1..(10 - tech.knowledgeRate // 10) %}░{% endfor %}</span>
-                                    <span class="terminal-result-rate">{{ tech.knowledgeRate }}%</span>
+                                <p class="jd-terminal-line jd-terminal-line--result">
+                                    <span class="jd-terminal-result-name">{{ tech.name }}</span>
+                                    <span class="jd-terminal-bar">{% for i in 1..(tech.knowledgeRate // 10) %}█{% endfor %}{% for i in 1..(10 - tech.knowledgeRate // 10) %}░{% endfor %}</span>
+                                    <span class="jd-terminal-result-rate">{{ tech.knowledgeRate }}%</span>
                                 </p>
                             {% endfor %}
-                            <p class="terminal-line"><span class="terminal-prompt">$</span> <span class="terminal-cursor"></span></p>
+                            <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span> <span class="jd-terminal-cursor"></span></p>
                         </div>
                     </div>
                 </div>
@@ -94,10 +94,10 @@
             <div class="col-12 col-lg-7 order-1 order-lg-0">
                 {% for technologyFamily in technologiesFamilies %}
                     {% if technologyFamily.technologies|filter(t => t.isUsed)|length > 0 %}
-                    <div class="card knowledge-card mb-4 border-0 rounded-4">
+                    <div class="card jd-card mb-4 border-0 rounded-4">
                         <div class="card-body p-4">
                             <div class="d-flex align-items-center mb-3">
-                                <div class="knowledge-card__icon me-3">
+                                <div class="jd-card__icon me-3">
                                     <i class="fa-solid fa-layer-group"></i>
                                 </div>
                                 <h2 class="h4 mb-0 fw-bold">{{ technologyFamily.name }}</h2>
@@ -114,7 +114,7 @@
                                                     <twig:ux:icon name="{{ technology.renderIconStringWithoutParentheses }}" class="me-2 text-dark" style="width:20px; height:20px;"/>
                                                     {{ technology.name }}
                                                 </span>
-                                                <span class="badge knowledge-badge">{{ technology.knowledgeRate }}%</span>
+                                                <span class="badge jd-badge">{{ technology.knowledgeRate }}%</span>
                                             </div>
                                             <div class="progress knowledge-progress rounded-pill" style="height: 6px;">
                                                 <div class="progress-bar knowledge-progress-bar"
@@ -140,7 +140,7 @@
 
             {# --- COLONNE DROITE : GRAPHIQUE (STICKY) --- #}
             <div class="col-12 col-lg-5 order-0 order-lg-1 sticky-lg-top" style="top: 2rem; z-index: 10;">
-                <div class="card knowledge-card knowledge-card--chart border-0 rounded-4 overflow-hidden">
+                <div class="card jd-card jd-card--chart border-0 rounded-4 overflow-hidden">
                     <div class="card-header bg-transparent border-0 pt-4 pb-0 text-center">
                         <h3 class="h5 fw-bold mb-0">Niveau moyen par famille</h3>
                     </div>
@@ -173,198 +173,9 @@
     {% endif %}
 
     <style>
-        :root {
-            --jd-navy: #2c3e50;
-            --jd-teal: #18bc9c;
-            --jd-cyan: #3498db;
-        }
-
-        /* ---------- HERO ---------- */
-        .knowledge-hero {
-            position: relative;
-            overflow: hidden;
-            background: var(--jd-navy);
-            color: #fff;
-            isolation: isolate;
-        }
-        .knowledge-hero__inner {
-            padding-top: clamp(3.5rem, 6vw, 6rem);
-            padding-bottom: clamp(3.5rem, 6vw, 6rem);
-        }
-        .knowledge-hero__glow {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(70px);
-            opacity: 0.35;
-            z-index: -1;
-        }
-        .knowledge-hero__glow--teal {
-            width: 420px;
-            height: 420px;
-            background: var(--jd-teal);
-            top: -120px;
-            right: -80px;
-        }
-        .knowledge-hero__glow--navy {
-            width: 380px;
-            height: 380px;
-            background: var(--jd-cyan);
-            bottom: -160px;
-            left: -100px;
-            opacity: 0.22;
-        }
-        .knowledge-hero__eyebrow {
-            display: inline-flex;
-            align-items: center;
-            font-size: 0.8rem;
-            font-weight: 700;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            color: var(--jd-teal);
-            margin-bottom: 0.75rem;
-        }
-        .knowledge-hero__title {
-            font-weight: 800;
-            font-size: clamp(2.2rem, 4vw, 3rem);
-            line-height: 1.1;
-            margin-bottom: 1rem;
-        }
-        .knowledge-hero__lead {
-            color: rgba(255, 255, 255, 0.75);
-            font-size: 1.05rem;
-            max-width: 34rem;
-        }
-        .knowledge-hero__stats {
-            display: flex;
-            gap: 2.25rem;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-        }
-        .knowledge-stat__value {
-            display: block;
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--jd-teal);
-            line-height: 1;
-        }
-        .knowledge-stat__value small {
-            font-size: 1.1rem;
-            font-weight: 700;
-        }
-        .knowledge-stat__label {
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        /* ---------- TERMINAL ---------- */
-        .terminal-window {
-            background: #1b2530;
-            border-radius: 0.9rem;
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .terminal-window__bar {
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            padding: 0.65rem 0.9rem;
-            background: rgba(255, 255, 255, 0.04);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        }
-        .terminal-dot {
-            width: 11px;
-            height: 11px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-        .terminal-dot--red { background: #ff5f56; }
-        .terminal-dot--yellow { background: #ffbd2e; }
-        .terminal-dot--green { background: #27c93f; }
-        .terminal-window__title {
-            margin-left: auto;
-            margin-right: auto;
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.4);
-            font-family: 'SFMono-Regular', Consolas, Menlo, monospace;
-        }
-        .terminal-window__body {
-            padding: 1.25rem 1.25rem 1.5rem;
-            font-family: 'SFMono-Regular', Consolas, Menlo, monospace;
-            font-size: 0.85rem;
-        }
-        .terminal-line {
-            margin: 0 0 0.55rem;
-            color: rgba(255, 255, 255, 0.85);
-            white-space: pre-wrap;
-        }
-        .terminal-prompt {
-            color: var(--jd-teal);
-            font-weight: 700;
-            margin-right: 0.4rem;
-        }
-        .terminal-line--result {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            padding-left: 1.1rem;
-        }
-        .terminal-result-name {
-            color: #fff;
-            min-width: 6.5rem;
-        }
-        .terminal-bar {
-            color: var(--jd-teal);
-            letter-spacing: 1px;
-            flex: 1 1 auto;
-            overflow: hidden;
-        }
-        .terminal-result-rate {
-            color: rgba(255, 255, 255, 0.55);
-            min-width: 2.5rem;
-            text-align: right;
-        }
-        .terminal-cursor {
-            display: inline-block;
-            width: 7px;
-            height: 1rem;
-            background: var(--jd-teal);
-            vertical-align: middle;
-            animation: jd-blink 1s step-start infinite;
-        }
-        @keyframes jd-blink {
-            50% { opacity: 0; }
-        }
-
-        /* ---------- CARDS ---------- */
-        .knowledge-card {
-            background: #fff;
-            box-shadow: 0 10px 30px rgba(44, 62, 80, 0.07);
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
-        }
-        .knowledge-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 16px 36px rgba(44, 62, 80, 0.12);
-        }
-        .knowledge-card__icon {
-            width: 42px;
-            height: 42px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 0.75rem;
-            background: rgba(24, 188, 156, 0.12);
-            color: var(--jd-teal);
-            flex-shrink: 0;
-        }
-        .knowledge-card--chart {
+        /* ---------- CARD (variante graphique) ---------- */
+        .jd-card--chart {
             background: linear-gradient(180deg, #fff 0%, #f7fbfa 100%);
-        }
-        .knowledge-badge {
-            background: rgba(44, 62, 80, 0.06);
-            color: var(--jd-navy);
-            font-weight: 700;
-            border: none;
         }
 
         /* ---------- PROGRESS ---------- */
@@ -439,9 +250,6 @@
                 opacity: 1;
                 max-height: 2.5rem;
                 transform: none;
-            }
-            .knowledge-hero__stats {
-                gap: 1.5rem;
             }
         }
     </style>

@@ -46,10 +46,28 @@ class SiteController extends AbstractController
         $citiesDatas[] = $this->openWeatherService->getWeatherFromOneCity("Caen");
         $citiesDatas[] = $this->openWeatherService->getWeatherFromOneCity("Strasbourg");
 
+        $firstTrainings = $this->trainingRepository->findBy([], ['startedAt' => 'ASC'], 1);
+        $firstTraining = $firstTrainings[0] ?? null;
+        $yearsOfExperience = $firstTraining
+            ? (new \DateTimeImmutable())->diff($firstTraining->getStartedAt())->y
+            : null;
+
+        $technologiesCount = 0;
+        foreach ($this->technologyFamilyRepository->findAll() as $technologyFamily) {
+            foreach ($technologyFamily->getTechnologies() as $technology) {
+                if ($technology->isUsed()) {
+                    $technologiesCount++;
+                }
+            }
+        }
+
         return $this->render('site/pages/home/index.html.twig', [
             'h1' => 'Développeur web full stack',
             'citiesDatas' => $citiesDatas,
-            'metas' => $metas
+            'metas' => $metas,
+            'yearsOfExperience' => $yearsOfExperience,
+            'projectsCount' => $this->projectRepository->count(['isOnline' => true]),
+            'technologiesCount' => $technologiesCount,
         ]);
     }
 
