@@ -2,92 +2,136 @@
 {% block title %}Mes réalisations{% endblock %}
 
 {% block body %}
-<div class="container py-5">
-    <h1 class="display-4 fw-bold text-center mb-5">{{ h1 }}</h1>
 
-    <div class="row g-4 justify-content-center align-items-start">
-        
-        {# --- COLONNE GAUCHE : LISTE DES PROJETS --- #}
-        <div class="col-12 col-lg-8 order-1 order-lg-0">
-            {% for project in projects %}
-                <div class="card mb-5 shadow-sm border-0 rounded-4 overflow-hidden project-card">
-                    <div class="row g-0">
-                        {# Image avec un overlay au survol #}
-                        <div class="col-md-4 position-relative bg-light d-flex align-items-center justify-content-center border-end">
-                            <img class="img-fluid p-3" 
-                                 src="{{ vich_uploader_asset(project, 'imageFile') | imagine_filter('projectImage') }}" 
-                                 alt="{{ project.name }}"
-                                 style="max-height: 200px; object-fit: contain;">
-                        </div>
+    {% set liveCount = 0 %}
+    {% set allTechs = [] %}
+    {% for project in projects %}
+        {% if project.url and project.endAt %}
+            {% set liveCount = liveCount + 1 %}
+        {% endif %}
+        {% for technology in project.technologies %}
+            {% if technology not in allTechs %}
+                {% set allTechs = allTechs|merge([technology]) %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
 
-                        <div class="col-md-8">
-                            <div class="card-body p-4">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <h2 class="h4 fw-bold text-dark mb-0">{{ project.name }}</h2>
-                                    {% if project.endAt %}
-                                        <span class="badge bg-success bg-opacity-10 text-success rounded-pill">Terminé</span>
-                                    {% else %}
-                                        <span class="badge bg-warning bg-opacity-10 text-warning rounded-pill">En cours</span>
-                                    {% endif %}
-                                </div>
+    <section class="jd-hero">
+        <div class="jd-hero__glow jd-hero__glow--teal"></div>
+        <div class="jd-hero__clip">
+            <div class="jd-hero__glow jd-hero__glow--navy"></div>
+        </div>
 
-                                <div class="project-description text-muted mb-4">
-                                    {{ project.description | raw }}
-                                </div>
+        <div class="container position-relative jd-hero__inner">
+            <span class="jd-hero__eyebrow">
+                <i class="fa-solid fa-diagram-project me-2"></i>Portfolio
+            </span>
+            <h1 class="jd-hero__title">{{ h1 }}</h1>
+            <p class="jd-hero__lead">
+                Une collection de projets, personnels ou en production, à travers lesquels j'apprends en construisant.
+            </p>
 
-                                {# Technologies sous forme de petits badges élégants #}
-                                <div class="d-flex flex-wrap gap-2 mb-4">
-                                    {% for technology in project.technologies|sort((a, b) => a.orderOfAppearance <=> b.orderOfAppearance) %}
-                                        <span class="badge bg-light text-secondary border d-flex align-items-center px-2 py-1">
-                                            <twig:ux:icon name="{{ technology.renderIconStringWithoutParentheses }}" class="me-1" style="width:14px; height:14px;"/>
-                                            {{ technology.name }}
-                                        </span>
-                                    {% endfor %}
-                                </div>
+            <div class="jd-hero__stats">
+                <div class="jd-stat">
+                    <span class="jd-stat__value">{{ projects.getTotalItemCount() }}</span>
+                    <span class="jd-stat__label">Projets</span>
+                </div>
+                <div class="jd-stat">
+                    <span class="jd-stat__value">{{ liveCount }}</span>
+                    <span class="jd-stat__label">En ligne</span>
+                </div>
+                <div class="jd-stat">
+                    <span class="jd-stat__value">{{ allTechs|length }}</span>
+                    <span class="jd-stat__label">Technologies utilisées</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                                <div class="d-flex justify-content-between align-items-center bg-light p-3 rounded-3">
-                                    <div class="small text-muted">
-                                        <i class="fa-regular fa-calendar-check me-1"></i>
-                                        {{ project.startedAt|date("M Y") }} — {{ project.endAt ? project.endAt|date("M Y") : 'Travaux...' }}
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-xl-10">
+                {% for project in projects %}
+                    <div class="card jd-card project-card mb-4 border-0 rounded-4 overflow-hidden">
+                        <div class="row g-0">
+                            {# Image avec un overlay au survol #}
+                            <div class="col-md-4 position-relative bg-light d-flex align-items-center justify-content-center border-end">
+                                <img class="img-fluid p-3"
+                                     src="{{ vich_uploader_asset(project, 'imageFile') | imagine_filter('projectImage') }}"
+                                     alt="{{ project.name }}"
+                                     style="max-height: 200px; object-fit: contain;">
+                            </div>
+
+                            <div class="col-md-8">
+                                <div class="card-body p-4">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <h2 class="h4 fw-bold text-dark mb-0">{{ project.name }}</h2>
+                                        {% if project.endAt %}
+                                            <span class="badge project-status project-status--done rounded-pill">
+                                                <i class="fa-solid fa-check me-1"></i>Terminé
+                                            </span>
+                                        {% else %}
+                                            <span class="badge project-status project-status--wip rounded-pill">
+                                                <i class="fa-solid fa-hammer me-1"></i>En cours
+                                            </span>
+                                        {% endif %}
                                     </div>
-                                    
-                                    {% set isLive = project.url and project.endAt %}
-                                    <a href="{{ project.url }}" 
-                                       target="_blank" 
-                                       class="btn btn-primary btn-sm rounded-pill px-4 {% if not isLive %}disabled{% endif %}">
-                                        {{ isLive ? 'Voir le projet' : 'Bientôt disponible' }}
-                                    </a>
+
+                                    <div class="project-description text-muted mb-4">
+                                        {{ project.description | raw }}
+                                    </div>
+
+                                    {# Technologies sous forme de petits badges élégants #}
+                                    <div class="d-flex flex-wrap gap-2 mb-4">
+                                        {% for technology in project.technologies|sort((a, b) => a.orderOfAppearance <=> b.orderOfAppearance) %}
+                                            <span class="badge jd-badge d-flex align-items-center px-2 py-1">
+                                                <twig:ux:icon name="{{ technology.renderIconStringWithoutParentheses }}" class="me-1" style="width:14px; height:14px;"/>
+                                                {{ technology.name }}
+                                            </span>
+                                        {% endfor %}
+                                    </div>
+
+                                    <div class="d-flex justify-content-between align-items-center bg-light p-3 rounded-3">
+                                        <div class="small text-muted">
+                                            <i class="fa-regular fa-calendar-check me-1"></i>
+                                            {{ project.startedAt|date("M Y") }} — {{ project.endAt ? project.endAt|date("M Y") : 'Travaux...' }}
+                                        </div>
+
+                                        {% if project.url and project.endAt %}
+                                            <a href="{{ project.url }}" target="_blank" class="btn btn-primary btn-sm rounded-pill px-4">
+                                                Voir le projet
+                                            </a>
+                                        {% else %}
+                                            <span class="btn btn-outline-secondary btn-sm rounded-pill px-4 disabled" aria-disabled="true">
+                                                Bientôt disponible
+                                            </span>
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                {% endfor %}
+
+                {# Pagination #}
+                <div class="mt-4">
+                    {{ knp_pagination_render(projects, 'site/components/_pagination.html.twig') }}
                 </div>
-            {% endfor %}
-            
-            {# Pagination #}
-            <div class="mt-4">
-                {{ knp_pagination_render(projects, 'site/components/_pagination.html.twig') }}
             </div>
         </div>
     </div>
-</div>
 
-<style>
-    .project-card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .project-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 1rem 3rem rgba(0,0,0,0.1) !important;
-    }
-    .bg-opacity-10 {
-        --bs-bg-opacity: 0.1;
-    }
-    /* Adaptation pour le sticky */
-    @media (min-width: 992px) {
-        .sticky-lg-top {
-            margin-bottom: 2rem;
+    <style>
+        .project-card {
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
-    }
-</style>
+        .project-status--done {
+            background: rgba(24, 188, 156, 0.12);
+            color: var(--jd-teal);
+        }
+        .project-status--wip {
+            background: rgba(243, 156, 18, 0.12);
+            color: #b9770e;
+        }
+    </style>
 {% endblock %}

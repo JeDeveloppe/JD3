@@ -1,12 +1,13 @@
-<footer class="bg-light py-4 border-top">
-    <div class="container">
+<footer class="jd-footer py-4">
+    <div class="jd-hero__glow jd-hero__glow--teal jd-footer__glow"></div>
+    <div class="container position-relative">
         <div class="row g-3 align-items-center">
 
             {# Copyright and Clock Section #}
             <div class="col-12 col-md-4 text-center text-md-start">
                 {% set startedAt = 2020 %}
                 {% set now = 'now'|date('Y') %}
-                <small class="text-muted">
+                <small class="text-white-50">
                     {% if startedAt != now %}
                         &copy; {{ startedAt }} - {{ now }}
                     {% else %}
@@ -14,7 +15,7 @@
                     {% endif %}
                 </small>
                 <br>
-                <small class="text-muted" id="clock"></small>
+                <small class="clock" id="clock"></small>
             </div>
 
             {# Social Media Icons Section #}
@@ -28,7 +29,7 @@
             <div class="col-12 col-md-4 text-center text-md-end">
                 <ul class="nav justify-content-center justify-content-md-end">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="{{ path('site_mentions_legales') }}">Mentions légales</a>
+                        <a class="nav-link jd-footer__link" href="{{ path('site_mentions_legales') }}">Mentions légales</a>
                     </li>
                 </ul>
             </div>
@@ -39,7 +40,7 @@
             <div class="col-12 text-center text-md-end">
                 <ul class="list-inline mb-0">
                     <li class="list-inline-item me-1">
-                        <small class="text-muted">Développé avec :</small>
+                        <small class="text-white-50">Développé avec :</small>
                     </li>
                     <li class="list-inline-item">
                         <a href="https://symfony.com" target="_blank" rel="noopener noreferrer" title="Visitez Symfony" aria-label="Développé avec Symfony">

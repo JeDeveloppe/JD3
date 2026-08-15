@@ -331,3 +331,27 @@ pre:hover {
     background-color: var(--jd-teal);
     border-color: var(--jd-teal);
 }
+
+/* ---------- FOOTER (coherent avec la nav) ---------- */
+.jd-footer {
+    position: relative;
+    overflow: hidden;
+    background: var(--jd-navy);
+    isolation: isolate;
+}
+.jd-footer__glow {
+    width: 320px;
+    height: 320px;
+    top: -140px;
+    right: -60px;
+    background: var(--jd-teal);
+}
+.jd-footer .clock {
+    font-size: 0.8rem;
+}
+.jd-footer__link {
+    color: rgba(255, 255, 255, 0.75) !important;
+}
+.jd-footer__link:hover {
+    color: var(--jd-teal) !important;
+}
