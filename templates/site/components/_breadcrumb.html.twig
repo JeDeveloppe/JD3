@@ -1,26 +1,63 @@
+{# Donnees structurees SEO (Schema.org BreadcrumbList) : permet a Google d'afficher le fil d'Ariane dans les resultats de recherche #}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Articles",
+            "item": "{{ url('site_my_categories') }}"
+        }
+        {% if article is defined and article is not null %}
+            ,{
+                "@type": "ListItem",
+                "position": 2,
+                "name": {{ category.name|striptags|json_encode|raw }},
+                "item": "{{ url('mapped_my_articles_from_category', {categorySlug: category.slug}) }}"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": {{ article.name|striptags|json_encode|raw }},
+                "item": "{{ url('mapped_article_details', {categorySlug: category.slug, articleSlug: article.slug}) }}"
+            }
+        {% elseif category is defined and category is not null %}
+            ,{
+                "@type": "ListItem",
+                "position": 2,
+                "name": {{ category.name|striptags|json_encode|raw }},
+                "item": "{{ url('mapped_my_articles_from_category', {categorySlug: category.slug}) }}"
+            }
+        {% endif %}
+    ]
+}
+</script>
+
 <div class="row g-0 justify-content-center my-4">
     <div class="col-12 col-md-10 col-lg-8 px-3">
         <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-0">
+            <ol class="breadcrumb jd-breadcrumb mb-0">
                 <li class="breadcrumb-item">
-                    <a href="{{ path('site_my_categories') }}" class="text-decoration-none d-flex align-items-center">
-                        <i class="fa-solid fa-house me-2"></i> Articles
+                    <a href="{{ path('site_my_categories') }}" class="jd-breadcrumb__link">
+                        <i class="fa-solid fa-house me-2"></i>Articles
                     </a>
                 </li>
                 {% if article is defined and article is not null %}
                     <li class="breadcrumb-item">
-                        <a href="{{ path('mapped_my_articles_from_category', {categorySlug: category.slug }) }}" class="text-decoration-none">
+                        <a href="{{ path('mapped_my_articles_from_category', {categorySlug: category.slug }) }}" class="jd-breadcrumb__link">
                             {{ category.name }}
                         </a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">{{ article.name }}</li>
+                    <li class="breadcrumb-item active jd-breadcrumb__current" aria-current="page">{{ article.name }}</li>
                 {% elseif category is defined and category is not null %}
-                    <li class="breadcrumb-item active" aria-current="page">
+                    <li class="breadcrumb-item active jd-breadcrumb__current" aria-current="page">
                         {{ category.name }}
                     </li>
                     {% if is_granted('ROLE_SUPER_ADMIN') %}
                         <li class="breadcrumb-item d-flex align-items-center">
-                            <a class="btn btn-sm btn-outline-primary ms-2" target="_blank" href="{{ ea_url().setController('App\\Controller\\Admin\\ArticleCrudController').setAction('new').setEntityId(category.id)}}">
+                            <a class="btn btn-sm btn-outline-primary rounded-pill ms-2" target="_blank" href="{{ ea_url().setController('App\\Controller\\Admin\\ArticleCrudController').setAction('new').setEntityId(category.id)}}">
                                 <i class="fa-solid fa-plus me-1"></i> Ajouter
                             </a>
                         </li>
@@ -30,3 +67,24 @@
         </nav>
     </div>
 </div>
+
+<style>
+    .jd-breadcrumb {
+        --bs-breadcrumb-divider: '›';
+        font-size: 0.9rem;
+    }
+    .jd-breadcrumb__link {
+        display: inline-flex;
+        align-items: center;
+        color: #6c7a86;
+        text-decoration: none;
+        transition: color 0.15s ease;
+    }
+    .jd-breadcrumb__link:hover {
+        color: var(--jd-teal);
+    }
+    .jd-breadcrumb__current {
+        color: var(--jd-navy);
+        font-weight: 700;
+    }
+</style>
