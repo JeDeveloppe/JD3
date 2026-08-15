@@ -23,7 +23,7 @@ class ArticleType extends AbstractType
                 ],
                 'constraints' => [
                     new NotBlank(),
-                    new Length(['min' => 3]),
+                    new Length(min: 3),
                 ],
                 'invalid_message' => 'Minimum %num% caractères.',
                 'invalid_message_parameters' => ['%num%' => 3],
