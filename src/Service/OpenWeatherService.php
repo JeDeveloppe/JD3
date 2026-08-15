@@ -37,10 +37,6 @@ class OpenWeatherService
             'pressure' => $datas['main']['pressure'],
             'sunrise' => $this->getTimeFromTimestamp($datas['sys']['sunrise']),
             'sunset' => $this->getTimeFromTimestamp($datas['sys']['sunset']),
-            // Calcul astronomique natif PHP (date_sun_info), a comparer avec les valeurs OpenWeatherMap
-            // ci-dessus : l'API gratuite est connue pour etre imprecise de 15 a 30 minutes sur ce point.
-            'sunrise_php' => $this->getPhpSunTime($datas['coord']['lat'], $datas['coord']['lon'], 'sunrise'),
-            'sunset_php' => $this->getPhpSunTime($datas['coord']['lat'], $datas['coord']['lon'], 'sunset'),
         ];
 
         //?exemple of donnees
@@ -92,13 +88,6 @@ class OpenWeatherService
     private function getTimeFromTimestamp(int $timestamp)
     {
         return (new DateTimeImmutable('@' . $timestamp))->setTimezone(new DateTimeZone('Europe/Paris'))->format('H:i:s');
-    }
-
-    private function getPhpSunTime(float $lat, float $lon, string $type): string
-    {
-        $sunInfo = date_sun_info(time(), $lat, $lon);
-
-        return $this->getTimeFromTimestamp($sunInfo[$type]);
     }
 
 }
