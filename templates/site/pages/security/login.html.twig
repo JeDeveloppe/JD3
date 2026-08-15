@@ -3,7 +3,7 @@
 {% block title %}Se connecter{% endblock %}
 
 {% block body %}
-    <section class="jd-hero jd-login">
+    <section class="jd-hero">
         <div class="jd-hero__glow jd-hero__glow--teal"></div>
         <div class="jd-hero__clip">
             <div class="jd-hero__glow jd-hero__glow--navy"></div>
@@ -22,16 +22,11 @@
                         <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span> ssh admin@je-developpe.fr</p>
 
                         {% if app.user %}
-                            <p class="jd-terminal-line jd-login__notice">
-                                Déjà connecté en tant que <strong>{{ app.user.userIdentifier }}</strong>.
-                                <a href="{{ path('app_logout') }}" class="jd-login__link">Se déconnecter</a>
-                            </p>
+                            <p class="jd-terminal-line jd-login__notice">Déjà connecté en tant que <strong>{{ app.user.userIdentifier }}</strong>. <a href="{{ path('app_logout') }}" class="jd-login__link">Se déconnecter</a></p>
                         {% endif %}
 
                         {% if error %}
-                            <p class="jd-terminal-line jd-login__error">
-                                <i class="fa-solid fa-circle-xmark me-1"></i>{{ error.messageKey|trans(error.messageData, 'security') }}
-                            </p>
+                            <p class="jd-terminal-line jd-login__error"><i class="fa-solid fa-circle-xmark me-1"></i>{{ error.messageKey|trans(error.messageData, 'security') }}</p>
                         {% endif %}
 
                         <form method="post" class="jd-login__form">
@@ -54,11 +49,6 @@
     </section>
 
     <style>
-        .jd-login {
-            min-height: calc(100vh - 300px);
-            display: flex;
-            align-items: center;
-        }
         .jd-login__notice {
             color: rgba(255, 255, 255, 0.75);
             font-size: 0.85rem;
