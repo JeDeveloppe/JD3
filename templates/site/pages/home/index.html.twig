@@ -52,13 +52,13 @@
                             <span class="jd-terminal-dot jd-terminal-dot--red"></span>
                             <span class="jd-terminal-dot jd-terminal-dot--yellow"></span>
                             <span class="jd-terminal-dot jd-terminal-dot--green"></span>
-                            <span class="jd-terminal__title">jerome@je-developpe — zsh</span>
+                            <span class="jd-terminal__title">rene@je-developpe — zsh</span>
                         </div>
                         <div class="jd-terminal__body">
                             <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span> whoami</p>
                             <p class="jd-terminal-line jd-terminal-line--indent">{{ h1 }}</p>
                             <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span> cat pourquoi.txt</p>
-                            <p class="jd-terminal-line"><span class="jd-terminal-typed" {{ stimulus_controller('symfony/ux-typed', {
+                            <p class="jd-terminal-line jd-terminal-line--center"><span class="jd-terminal-typed" {{ stimulus_controller('symfony/ux-typed', {
                                 strings: ['pour m\'entrainer et m\'améliorer ', 'pour tester mes connaissances... ','pour mettre en pratique mes connaissances ', 'pour vous dire que je suis autodidacte à 100%... '],
                                 smartBackspace: true,
                                 loop: true,
@@ -154,6 +154,10 @@
     <style>
         .jd-terminal-line--indent {
             padding-left: 1.1rem;
+        }
+        .jd-terminal-line--center {
+            text-align: center;
+            margin-top: 0.75rem;
         }
         .jd-terminal-typed {
             color: var(--jd-teal);
