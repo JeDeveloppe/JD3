@@ -58,8 +58,10 @@ class CvService
             $this->em->flush();
 
             // 6. Optionnel: envoyer une alerte par email (si vous avez un service mail configuré)
-            $this->mailerService->sendCvViewAlert($currentViews + 1, $cvName);
-            
+            // TEMPORAIREMENT DESACTIVE le temps du restylage du CV manager (branche amelioration-cv-manager)
+            // -> reactiver avant de merger/deployer
+            // $this->mailerService->sendCvViewAlert($currentViews + 1, $cvName);
+
             // Retourner le nouveau nombre de vues
             return $currentViews + 1;
         }
