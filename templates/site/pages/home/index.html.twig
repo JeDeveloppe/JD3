@@ -56,7 +56,16 @@
                             <span class="jd-terminal-dot jd-terminal-dot--green"></span>
                             <span class="jd-terminal__title">rene@je-developpe — zsh</span>
                         </div>
-                        <div class="jd-terminal__body">
+                        <div class="jd-terminal__body" id="jd-live-terminal"
+                             data-whoami="{{ h1 }}"
+                             data-home-route="{{ path('site_home') }}"
+                             data-knowledges-route="{{ path('site_my_knowledges') }}"
+                             data-projects-route="{{ path('site_my_projects') }}"
+                             data-trainings-route="{{ path('site_my_trainings') }}"
+                             data-blog-route="{{ path('site_my_categories') }}"
+                             data-contact-route="{{ path('site_contact') }}"
+                             data-linkedin-url="http://www.linkedin.com/in/wetta-rene-jd"
+                             data-github-url="https://github.com/JeDeveloppe">
                             <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span> whoami</p>
                             <p class="jd-terminal-line jd-terminal-line--indent">{{ h1 }}</p>
                             <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span> cat pourquoi.txt</p>
@@ -66,8 +75,18 @@
                                 loop: true,
                                 cursorChar: '|'
                             }) }}></span></p>
+
+                            <div id="jd-live-terminal__output"></div>
+
+                            <p class="jd-terminal-line jd-live-terminal__prompt-line">
+                                <span class="jd-terminal-prompt">$</span>
+                                <input type="text" id="jd-live-terminal__input" class="jd-live-terminal__input" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Terminal interactif : tapez 'help' pour la liste des commandes">
+                            </p>
                         </div>
                     </div>
+                    <p class="jd-live-terminal__hint text-white-50 small mt-2 mb-0">
+                        <i class="fa-solid fa-keyboard me-1"></i>Ce terminal est utilisable : tapez <code>help</code> pour voir les commandes.
+                    </p>
                 </div>
             </div>
         </div>
@@ -205,5 +224,198 @@
             color: var(--bs-secondary-color, #6c757d);
             margin-top: -0.5rem;
         }
+
+        .jd-live-terminal__prompt-line {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .jd-live-terminal__input {
+            flex: 1 1 auto;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: inherit;
+            font: inherit;
+            padding: 0;
+            min-width: 0;
+        }
+        .jd-live-terminal__input::placeholder {
+            color: rgba(255, 255, 255, 0.35);
+        }
+        #jd-live-terminal__output .jd-terminal-line {
+            word-break: break-word;
+        }
+        .jd-live-terminal__hint code {
+            background: rgba(255, 255, 255, 0.12);
+            color: var(--jd-teal);
+            padding: 0.1rem 0.4rem;
+            border-radius: 0.3rem;
+        }
     </style>
+
+    <script>
+        document.addEventListener('turbo:load', function () {
+            var root = document.getElementById('jd-live-terminal');
+            if (!root || root.dataset.jdBound === '1') {
+                return;
+            }
+            root.dataset.jdBound = '1';
+
+            var output = document.getElementById('jd-live-terminal__output');
+            var input = document.getElementById('jd-live-terminal__input');
+            var history = [];
+            var historyIndex = -1;
+
+            var routes = {
+                accueil: root.dataset.homeRoute,
+                home: root.dataset.homeRoute,
+                connaissances: root.dataset.knowledgesRoute,
+                'mes-connaissances': root.dataset.knowledgesRoute,
+                realisations: root.dataset.projectsRoute,
+                'mes-realisations': root.dataset.projectsRoute,
+                projets: root.dataset.projectsRoute,
+                formations: root.dataset.trainingsRoute,
+                'mes-formations': root.dataset.trainingsRoute,
+                blog: root.dataset.blogRoute,
+                contact: root.dataset.contactRoute
+            };
+
+            function printLine(text, variant) {
+                var p = document.createElement('p');
+                p.className = 'jd-terminal-line' + (variant ? ' ' + variant : '');
+                p.textContent = text;
+                output.appendChild(p);
+            }
+
+            function printCommandEcho(cmd) {
+                var p = document.createElement('p');
+                p.className = 'jd-terminal-line';
+                var prompt = document.createElement('span');
+                prompt.className = 'jd-terminal-prompt';
+                prompt.textContent = '$';
+                p.appendChild(prompt);
+                p.appendChild(document.createTextNode(' ' + cmd));
+                output.appendChild(p);
+            }
+
+            function navigate(url) {
+                if (!url) {
+                    return;
+                }
+                if (window.Turbo) {
+                    window.Turbo.visit(url);
+                } else {
+                    window.location.href = url;
+                }
+            }
+
+            function runCommand(raw) {
+                var trimmed = raw.trim();
+                if (trimmed === '') {
+                    return;
+                }
+
+                printCommandEcho(trimmed);
+                history.push(trimmed);
+                historyIndex = history.length;
+
+                var parts = trimmed.split(/\s+/);
+                var cmd = parts[0].toLowerCase();
+                var arg = (parts[1] || '').toLowerCase();
+
+                switch (cmd) {
+                    case 'help':
+                        printLine('Commandes disponibles :', 'jd-terminal-line--indent');
+                        printLine('help                 affiche cette aide', 'jd-terminal-line--indent');
+                        printLine('whoami               qui suis-je', 'jd-terminal-line--indent');
+                        printLine('ls                   liste les pages du site', 'jd-terminal-line--indent');
+                        printLine('cd <page>            navigue vers une page (ex: cd projets)', 'jd-terminal-line--indent');
+                        printLine('cat pourquoi.txt     pourquoi ce site existe', 'jd-terminal-line--indent');
+                        printLine('open linkedin|github ouvre mon profil', 'jd-terminal-line--indent');
+                        printLine('contact              raccourci vers la page contact', 'jd-terminal-line--indent');
+                        printLine('clear                efface ce terminal', 'jd-terminal-line--indent');
+                        break;
+
+                    case 'whoami':
+                        printLine(root.dataset.whoami, 'jd-terminal-line--indent');
+                        break;
+
+                    case 'ls':
+                        printLine('connaissances/  realisations/  formations/  blog/  contact/', 'jd-terminal-line--indent');
+                        break;
+
+                    case 'cd':
+                        var target = arg.replace(/^\/+|\/+$/g, '');
+                        if (target === '' || target === '..') {
+                            navigate(root.dataset.homeRoute);
+                        } else if (routes[target]) {
+                            navigate(routes[target]);
+                        } else {
+                            printLine('zsh: no such page: ' + arg, 'jd-terminal-line--indent');
+                        }
+                        break;
+
+                    case 'contact':
+                        navigate(root.dataset.contactRoute);
+                        break;
+
+                    case 'cat':
+                        if (arg === 'pourquoi.txt' || arg === 'about.txt') {
+                            printLine("pour m'entrainer, tester et mettre en pratique mes connaissances — je suis autodidacte à 100%.", 'jd-terminal-line--indent');
+                        } else {
+                            printLine('cat: ' + (arg || 'fichier') + ': fichier introuvable', 'jd-terminal-line--indent');
+                        }
+                        break;
+
+                    case 'open':
+                        if (arg === 'linkedin') {
+                            window.open(root.dataset.linkedinUrl, '_blank', 'noopener');
+                        } else if (arg === 'github') {
+                            window.open(root.dataset.githubUrl, '_blank', 'noopener');
+                        } else {
+                            printLine('usage: open linkedin|github', 'jd-terminal-line--indent');
+                        }
+                        break;
+
+                    case 'sudo':
+                        printLine("Permission refusée : vous n'êtes pas root ici 😄", 'jd-terminal-line--indent');
+                        break;
+
+                    case 'clear':
+                        output.innerHTML = '';
+                        break;
+
+                    default:
+                        printLine('zsh: commande introuvable : ' + cmd + ' (tapez "help")', 'jd-terminal-line--indent');
+                }
+            }
+
+            input.addEventListener('keydown', function (event) {
+                if (event.key === 'Enter') {
+                    runCommand(input.value);
+                    input.value = '';
+                } else if (event.key === 'ArrowUp') {
+                    if (history.length > 0 && historyIndex > 0) {
+                        historyIndex--;
+                        input.value = history[historyIndex];
+                    }
+                    event.preventDefault();
+                } else if (event.key === 'ArrowDown') {
+                    if (historyIndex < history.length - 1) {
+                        historyIndex++;
+                        input.value = history[historyIndex];
+                    } else {
+                        historyIndex = history.length;
+                        input.value = '';
+                    }
+                    event.preventDefault();
+                }
+            });
+
+            root.addEventListener('click', function () {
+                input.focus();
+            });
+        });
+    </script>
 {% endblock %}
