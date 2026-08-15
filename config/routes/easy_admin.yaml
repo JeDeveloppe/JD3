@@ -1,0 +1,3 @@
+_easyadmin:
+    resource: .
+    type: easyadmin.routes

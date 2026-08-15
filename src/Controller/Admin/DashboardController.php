@@ -2,23 +2,23 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Category;
-use App\Entity\LegalInformation;
-use App\Entity\Project;
-use App\Entity\Technology;
-use App\Entity\TechnologyFamily;
-use App\Entity\Training;
-use App\Entity\Article;
-use App\Entity\Cv;
+use App\Controller\Admin\CategoryCrudController;
+use App\Controller\Admin\LegalInformationCrudController;
+use App\Controller\Admin\ProjectCrudController;
+use App\Controller\Admin\TechnologyCrudController;
+use App\Controller\Admin\TechnologyFamilyCrudController;
+use App\Controller\Admin\TrainingCrudController;
+use App\Controller\Admin\ArticleCrudController;
+use App\Controller\Admin\CvCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
 
+#[AdminDashboard(routePath: '/admin', routeName: 'admin')]
 class DashboardController extends AbstractDashboardController
 {
-    #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
 
@@ -37,21 +37,21 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToRoute('Site', 'fa-solid fa-earth-europe', 'site_home');
 
         yield MenuItem::section('Blog');
-        yield MenuItem::linkToCrud('Les catégories', 'fas fa-list', Category::class);
-        yield MenuItem::linkToCrud('Les articles', 'fas fa-list', Article::class);
+        yield MenuItem::linkTo(CategoryCrudController::class, 'Les catégories', 'fas fa-list');
+        yield MenuItem::linkTo(ArticleCrudController::class, 'Les articles', 'fas fa-list');
 
         yield MenuItem::section('Projets');
-        yield MenuItem::linkToCrud('Les projets', 'fas fa-list', Project::class);
-        yield MenuItem::linkToCrud('Les technologies', 'fas fa-list', Technology::class);
+        yield MenuItem::linkTo(ProjectCrudController::class, 'Les projets', 'fas fa-list');
+        yield MenuItem::linkTo(TechnologyCrudController::class, 'Les technologies', 'fas fa-list');
 
         yield MenuItem::section('Formations');
-        yield MenuItem::linkToCrud('Les formations', 'fas fa-list', Training::class);
+        yield MenuItem::linkTo(TrainingCrudController::class, 'Les formations', 'fas fa-list');
 
         yield MenuItem::section('Paramètres du site');
-        yield MenuItem::linkToCrud('Les familles technologiques', 'fas fa-list', TechnologyFamily::class);
-        yield MenuItem::linkToCrud('Les infos légales', 'fas fa-list', LegalInformation::class);
+        yield MenuItem::linkTo(TechnologyFamilyCrudController::class, 'Les familles technologiques', 'fas fa-list');
+        yield MenuItem::linkTo(LegalInformationCrudController::class, 'Les infos légales', 'fas fa-list');
 
         yield MenuItem::section('CV');
-        yield MenuItem::linkToCrud('Les vues du CV', 'fas fa-list', Cv::class);
+        yield MenuItem::linkTo(CvCrudController::class, 'Les vues du CV', 'fas fa-list');
     }
 }
