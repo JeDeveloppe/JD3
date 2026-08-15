@@ -47,8 +47,13 @@ class ChartService
             'datasets' => [
                 [
                     'label' => '',
-                    'backgroundColor' => '#3b868f',
-                    'borderColor' => '#333333',
+                    'backgroundColor' => 'rgba(24, 188, 156, 0.25)',
+                    'borderColor' => '#18bc9c',
+                    'borderWidth' => 2,
+                    'pointBackgroundColor' => '#2c3e50',
+                    'pointBorderColor' => '#fff',
+                    'pointRadius' => 4,
+                    'pointHoverRadius' => 6,
                     'data' => $datas,
                 ],
             ],
@@ -57,24 +62,42 @@ class ChartService
         $chart->setOptions([
             'plugins' => [
                 'datalabels' => [
-                    'display' => true, 
+                    'display' => true,
                     'anchor' => 'end',
                     'align' => 'top',
-                    'color' => 'red',
+                    'color' => '#2c3e50',
                     'font' => [
                         'weight' => 'bold',
+                        'size' => 10,
                     ],
                 ],
                 'legend' => [
                     'display' => false,
                 ],
             ],
-        //     'scales' => [
-        //         'y' => [
-        //             'suggestedMin' => 0,
-        //             'suggestedMax' => 100,
-        //         ],
-        //     ],
+            'scales' => [
+                'r' => [
+                    'beginAtZero' => true,
+                    'suggestedMax' => 100,
+                    'ticks' => [
+                        'display' => false,
+                        'stepSize' => 25,
+                    ],
+                    'grid' => [
+                        'color' => 'rgba(44, 62, 80, 0.1)',
+                    ],
+                    'angleLines' => [
+                        'color' => 'rgba(44, 62, 80, 0.12)',
+                    ],
+                    'pointLabels' => [
+                        'font' => [
+                            'size' => 11,
+                            'weight' => '600',
+                        ],
+                        'color' => '#2c3e50',
+                    ],
+                ],
+            ],
         ]);
 
         return $chart;
