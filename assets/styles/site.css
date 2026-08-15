@@ -16,7 +16,6 @@
 /* ---------- HERO ---------- */
 .jd-hero {
     position: relative;
-    overflow: hidden;
     background: var(--jd-navy);
     color: #fff;
     isolation: isolate;
@@ -25,19 +24,25 @@
     padding-top: clamp(3.5rem, 6vw, 6rem);
     padding-bottom: clamp(3.5rem, 6vw, 6rem);
 }
+.jd-hero__clip {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: -1;
+}
 .jd-hero__glow {
     position: absolute;
     border-radius: 50%;
     filter: blur(70px);
     opacity: 0.35;
-    z-index: -1;
 }
 .jd-hero__glow--teal {
     width: 420px;
     height: 420px;
     background: var(--jd-teal);
-    top: -120px;
+    top: -170px;
     right: -80px;
+    z-index: -1;
 }
 .jd-hero__glow--navy {
     width: 380px;
@@ -311,15 +316,4 @@ pre:hover {
     100% {
         transform: translate(-50%, 0);
     }
-}
-
-/* Léger accent teal en haut à droite de la nav, cohérent avec les glows du hero */
-.jd-navbar-glow {
-    background-image: radial-gradient(
-        circle at top right,
-        rgba(24, 188, 156, 0.28) 0%,
-        rgba(24, 188, 156, 0.14) 25%,
-        rgba(24, 188, 156, 0.05) 45%,
-        transparent 70%
-    );
 }
