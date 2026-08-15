@@ -317,3 +317,16 @@ pre:hover {
         transform: translate(-50%, 0);
     }
 }
+
+/* Accent teal sur les liens de la nav, cohérent avec le glow */
+.navbar .nav-link:hover,
+.navbar .nav-link:focus,
+.navbar .nav-link.active,
+.navbar .dropdown-item:hover,
+.navbar .dropdown-item:focus {
+    color: var(--jd-teal) !important;
+}
+.navbar .btn-outline-light:hover {
+    background-color: var(--jd-teal);
+    border-color: var(--jd-teal);
+}
