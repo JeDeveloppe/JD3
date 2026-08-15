@@ -37,6 +37,11 @@
         <div class="row justify-content-center">
             <div class="col-12 col-lg-9 col-xl-8">
                 <div class="jd-timeline">
+                    <div class="jd-timeline__item jd-timeline__item--now">
+                        <div class="jd-timeline__marker jd-timeline__marker--now"></div>
+                        <span class="text-muted small fst-italic">Aujourd'hui, et ça continue...</span>
+                    </div>
+
                     {% for training in trainings %}
                         {% set ongoing = training.endAt is null %}
                         <div class="jd-timeline__item {% if ongoing %}jd-timeline__item--ongoing{% endif %}">
@@ -68,11 +73,6 @@
                             </div>
                         </div>
                     {% endfor %}
-
-                    <div class="jd-timeline__item jd-timeline__item--now">
-                        <div class="jd-timeline__marker jd-timeline__marker--now"></div>
-                        <span class="text-muted small fst-italic">Et ça continue...</span>
-                    </div>
                 </div>
             </div>
         </div>
@@ -137,7 +137,6 @@
             margin-top: 0;
         }
         .jd-timeline__item--now {
-            margin-bottom: 0;
             padding-top: 0.15rem;
         }
         .jd-timeline__marker--now {
