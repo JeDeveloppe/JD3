@@ -1,36 +1,149 @@
 {% extends "site/components/_base.html.twig" %}
-{% block title %}{{  h1 }}{% endblock %}
+{% block title %}{{ h1 }}{% endblock %}
 {% block body %}
 
-    <h1 class="col-12 text-center my-5">{{ h1 }}</h1>
+    <section class="jd-hero">
+        <div class="jd-hero__glow jd-hero__glow--teal"></div>
+        <div class="jd-hero__clip">
+            <div class="jd-hero__glow jd-hero__glow--navy"></div>
+        </div>
 
-    <div class="row g-0 justify-content-center mb-5">
-        {% for training in trainings %}
-            <div class="col-12 col-md-10 col-lg-8 col-xl-7">
-                <div class="card my-5 shadow-sm rounded-3">
-                    <div class="card-body p-4">
-                        <h2 class="card-title display-6 fw-bold text-primary">{{ training.name | raw }}</h2>
-                        <h3 class="card-subtitle lead mb-3 text-muted">{{ training.diplomeName | raw }}</h3>
-                        
-                        {# Content wrapper with better styling #}
-                        <div class="bg-light p-3 border rounded-2 mb-4">
-                            {{ training.description | raw }}
-                        </div>
-                        
-                        {# Date information at the bottom of the card #}
-                        <div class="row g-0 justify-content-end">
-                            <div class="col-12 text-end small text-muted">
-                                <span>Début: <span class="fw-bold">{{ training.startedAt | date("d/m/Y") }}</span></span>
-                                <span class="mx-2">-</span>
-                                <span>Fin: <span class="fw-bold">{{ training.endAt ? training.endAt | date("d/m/Y") : "Toujours en cours..." }}</span></span>
+        <div class="container position-relative jd-hero__inner text-center text-lg-start">
+            <span class="jd-hero__eyebrow">
+                <i class="fa-solid fa-road me-2"></i>Parcours
+            </span>
+            <h1 class="jd-hero__title">{{ h1 }}</h1>
+            <p class="jd-hero__lead mx-auto mx-lg-0">
+                Autodidacte à 100% : pas d'école d'ingé, pas de bootcamp long — de la documentation, des tutoriels,
+                des projets réels et beaucoup de nuits blanches devant un terminal.
+            </p>
+
+            {% if yearsOfSelfLearning is not null %}
+                <div class="jd-hero__stats justify-content-center justify-content-lg-start">
+                    <div class="jd-stat">
+                        <span class="jd-stat__value">{{ yearsOfSelfLearning }}</span>
+                        <span class="jd-stat__label">Ans d'apprentissage continu</span>
+                    </div>
+                    <div class="jd-stat">
+                        <span class="jd-stat__value">100<small>%</small></span>
+                        <span class="jd-stat__label">Autodidacte</span>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-9 col-xl-8">
+                <div class="jd-timeline">
+                    {% for training in trainings %}
+                        {% set ongoing = training.endAt is null %}
+                        <div class="jd-timeline__item {% if ongoing %}jd-timeline__item--ongoing{% endif %}">
+                            <div class="jd-timeline__marker"></div>
+
+                            <div class="card jd-card border-0 rounded-4">
+                                <div class="card-body p-4">
+                                    <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-1">
+                                        <h2 class="h5 fw-bold text-dark mb-0">{{ training.name | raw }}</h2>
+                                        {% if ongoing %}
+                                            <span class="badge jd-timeline__badge rounded-pill">
+                                                <span class="jd-timeline__pulse"></span>Toujours en cours
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                    <h3 class="text-muted small mb-3">{{ training.diplomeName | raw }}</h3>
+
+                                    <div class="jd-timeline__desc text-muted small mb-3">
+                                        {{ training.description | raw }}
+                                    </div>
+
+                                    <div class="small text-muted">
+                                        <i class="fa-regular fa-calendar-check me-1"></i>
+                                        {{ training.startedAt|format_date(pattern="MMM yyyy", locale="fr") }}
+                                        —
+                                        {{ ongoing ? "aujourd'hui" : training.endAt|format_date(pattern="MMM yyyy", locale="fr") }}
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                    {% endfor %}
+
+                    <div class="jd-timeline__item jd-timeline__item--now">
+                        <div class="jd-timeline__marker jd-timeline__marker--now"></div>
+                        <span class="text-muted small fst-italic">Et ça continue...</span>
                     </div>
                 </div>
             </div>
-        {% endfor %}
+        </div>
+
+        {{ knp_pagination_render(trainings, 'site/components/_pagination.html.twig') }}
     </div>
 
-    {{ knp_pagination_render(trainings, 'site/components/_pagination.html.twig') }}
-
+    <style>
+        .jd-timeline {
+            position: relative;
+            padding-left: 2.25rem;
+        }
+        .jd-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.4rem;
+            top: 0.4rem;
+            bottom: 0.4rem;
+            width: 2px;
+            background: linear-gradient(180deg, var(--jd-teal), rgba(44, 62, 80, 0.12));
+        }
+        .jd-timeline__item {
+            position: relative;
+            margin-bottom: 1.75rem;
+        }
+        .jd-timeline__marker {
+            position: absolute;
+            left: -2.25rem;
+            top: 1.6rem;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--jd-navy);
+            border: 2px solid #fff;
+            box-shadow: 0 0 0 2px rgba(44, 62, 80, 0.15);
+        }
+        .jd-timeline__item--ongoing .jd-timeline__marker {
+            background: var(--jd-teal);
+            box-shadow: 0 0 0 2px rgba(24, 188, 156, 0.25);
+        }
+        .jd-timeline__badge {
+            background: rgba(24, 188, 156, 0.12);
+            color: var(--jd-teal);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.72rem;
+            font-weight: 700;
+        }
+        .jd-timeline__pulse {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--jd-teal);
+            animation: jd-pulse 1.6s ease-in-out infinite;
+        }
+        @keyframes jd-pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.4); }
+        }
+        .jd-timeline__desc :first-child {
+            margin-top: 0;
+        }
+        .jd-timeline__item--now {
+            margin-bottom: 0;
+            padding-top: 0.15rem;
+        }
+        .jd-timeline__marker--now {
+            background: transparent;
+            border: 2px dashed rgba(44, 62, 80, 0.3);
+            box-shadow: none;
+        }
+    </style>
 {% endblock %}

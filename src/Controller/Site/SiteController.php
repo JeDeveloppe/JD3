@@ -130,12 +130,19 @@ class SiteController extends AbstractController
             8 /*limit per page*/
         );
 
-        $metas['description'] = ''; //TODO
+        $firstTrainings = $this->trainingRepository->findBy(['isOnline' => true], ['startedAt' => 'ASC'], 1);
+        $firstTraining = $firstTrainings[0] ?? null;
+        $yearsOfSelfLearning = $firstTraining
+            ? (new \DateTimeImmutable())->diff($firstTraining->getStartedAt())->y
+            : null;
+
+        $metas['description'] = 'Autodidacte à 100%, un parcours d\'apprentissage en continu depuis ' . ($firstTraining ? $firstTraining->getStartedAt()->format('Y') : '');
 
         return $this->render('site/pages/trainings/trainings.html.twig', [
             'trainings' => $trainings,
             'h1' => 'Mes formations',
-            'metas' => $metas
+            'metas' => $metas,
+            'yearsOfSelfLearning' => $yearsOfSelfLearning,
         ]);
     }
 
