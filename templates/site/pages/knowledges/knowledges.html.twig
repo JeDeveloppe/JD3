@@ -65,7 +65,7 @@
                 </div>
 
                 <div class="col-12 col-lg-6">
-                    <div class="jd-terminal">
+                    <div class="jd-terminal" role="button" tabindex="0" data-bs-toggle="modal" data-bs-target="#jdTerminalModal" aria-label="Ouvrir le terminal interactif">
                         <div class="jd-terminal__bar">
                             <span class="jd-terminal-dot jd-terminal-dot--red"></span>
                             <span class="jd-terminal-dot jd-terminal-dot--yellow"></span>
@@ -83,11 +83,16 @@
                             {% endfor %}
                             <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span> <span class="jd-terminal-cursor"></span></p>
                         </div>
+                        <div class="jd-terminal__open-hint">
+                            <i class="fa-solid fa-keyboard me-1"></i>Cliquez pour ouvrir le terminal interactif
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    {% include 'site/components/_terminal_modal.html.twig' %}
 
     <div class="container py-5">
         <div class="row g-4 justify-content-center align-items-start">

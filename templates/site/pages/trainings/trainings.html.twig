@@ -8,30 +8,55 @@
             <div class="jd-hero__glow jd-hero__glow--navy"></div>
         </div>
 
-        <div class="container position-relative jd-hero__inner text-center text-lg-start">
-            <span class="jd-hero__eyebrow">
-                <i class="fa-solid fa-road me-2"></i>Parcours
-            </span>
-            <h1 class="jd-hero__title">{{ h1 }}</h1>
-            <p class="jd-hero__lead mx-auto mx-lg-0">
-                Autodidacte à 100% : pas d'école d'ingé, pas de bootcamp long — de la documentation, des tutoriels,
-                des projets réels et beaucoup de nuits blanches devant un terminal.
-            </p>
+        <div class="container position-relative jd-hero__inner">
+            <div class="row align-items-center g-5">
+                <div class="col-12 col-lg-6 text-center text-lg-start">
+                    <span class="jd-hero__eyebrow">
+                        <i class="fa-solid fa-road me-2"></i>Parcours
+                    </span>
+                    <h1 class="jd-hero__title">{{ h1 }}</h1>
+                    <p class="jd-hero__lead mx-auto mx-lg-0">
+                        Autodidacte à 100% : pas d'école d'ingé, pas de bootcamp long — de la documentation, des tutoriels,
+                        des projets réels et beaucoup de nuits blanches devant un terminal.
+                    </p>
 
-            {% if yearsOfSelfLearning is not null %}
-                <div class="jd-hero__stats justify-content-center justify-content-lg-start">
-                    <div class="jd-stat">
-                        <span class="jd-stat__value">{{ yearsOfSelfLearning }}</span>
-                        <span class="jd-stat__label">Ans d'apprentissage continu</span>
-                    </div>
-                    <div class="jd-stat">
-                        <span class="jd-stat__value">100<small>%</small></span>
-                        <span class="jd-stat__label">Autodidacte</span>
+                    {% if yearsOfSelfLearning is not null %}
+                        <div class="jd-hero__stats justify-content-center justify-content-lg-start">
+                            <div class="jd-stat">
+                                <span class="jd-stat__value">{{ yearsOfSelfLearning }}</span>
+                                <span class="jd-stat__label">Ans d'apprentissage continu</span>
+                            </div>
+                            <div class="jd-stat">
+                                <span class="jd-stat__value">100<small>%</small></span>
+                                <span class="jd-stat__label">Autodidacte</span>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="col-12 col-lg-6">
+                    <div class="jd-terminal" role="button" tabindex="0" data-bs-toggle="modal" data-bs-target="#jdTerminalModal" aria-label="Ouvrir le terminal interactif">
+                        <div class="jd-terminal__bar">
+                            <span class="jd-terminal-dot jd-terminal-dot--red"></span>
+                            <span class="jd-terminal-dot jd-terminal-dot--yellow"></span>
+                            <span class="jd-terminal-dot jd-terminal-dot--green"></span>
+                            <span class="jd-terminal__title">rene@je-developpe — zsh</span>
+                        </div>
+                        <div class="jd-terminal__body">
+                            <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span> tail -f parcours.log</p>
+                            <p class="jd-terminal-line jd-terminal-line--indent">{{ trainings.getTotalItemCount() }} formations recensées, toujours en cours d'apprentissage...</p>
+                            <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span> <span class="jd-terminal-cursor"></span></p>
+                        </div>
+                        <div class="jd-terminal__open-hint">
+                            <i class="fa-solid fa-keyboard me-1"></i>Cliquez pour ouvrir le terminal interactif
+                        </div>
                     </div>
                 </div>
-            {% endif %}
+            </div>
         </div>
     </section>
+
+    {% include 'site/components/_terminal_modal.html.twig' %}
 
     <div class="container py-5">
         <div class="row justify-content-center">

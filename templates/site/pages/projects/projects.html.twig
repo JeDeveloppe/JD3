@@ -23,30 +23,55 @@
         </div>
 
         <div class="container position-relative jd-hero__inner">
-            <span class="jd-hero__eyebrow">
-                <i class="fa-solid fa-diagram-project me-2"></i>Portfolio
-            </span>
-            <h1 class="jd-hero__title">{{ h1 }}</h1>
-            <p class="jd-hero__lead">
-                Une collection de projets, personnels ou en production, à travers lesquels j'apprends en construisant.
-            </p>
+            <div class="row align-items-center g-5">
+                <div class="col-12 col-lg-6">
+                    <span class="jd-hero__eyebrow">
+                        <i class="fa-solid fa-diagram-project me-2"></i>Portfolio
+                    </span>
+                    <h1 class="jd-hero__title">{{ h1 }}</h1>
+                    <p class="jd-hero__lead">
+                        Une collection de projets, personnels ou en production, à travers lesquels j'apprends en construisant.
+                    </p>
 
-            <div class="jd-hero__stats">
-                <div class="jd-stat">
-                    <span class="jd-stat__value">{{ projects.getTotalItemCount() }}</span>
-                    <span class="jd-stat__label">Projets</span>
+                    <div class="jd-hero__stats">
+                        <div class="jd-stat">
+                            <span class="jd-stat__value">{{ projects.getTotalItemCount() }}</span>
+                            <span class="jd-stat__label">Projets</span>
+                        </div>
+                        <div class="jd-stat">
+                            <span class="jd-stat__value">{{ liveCount }}</span>
+                            <span class="jd-stat__label">En ligne</span>
+                        </div>
+                        <div class="jd-stat">
+                            <span class="jd-stat__value">{{ allTechs|length }}</span>
+                            <span class="jd-stat__label">Technologies utilisées</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="jd-stat">
-                    <span class="jd-stat__value">{{ liveCount }}</span>
-                    <span class="jd-stat__label">En ligne</span>
-                </div>
-                <div class="jd-stat">
-                    <span class="jd-stat__value">{{ allTechs|length }}</span>
-                    <span class="jd-stat__label">Technologies utilisées</span>
+
+                <div class="col-12 col-lg-6">
+                    <div class="jd-terminal" role="button" tabindex="0" data-bs-toggle="modal" data-bs-target="#jdTerminalModal" aria-label="Ouvrir le terminal interactif">
+                        <div class="jd-terminal__bar">
+                            <span class="jd-terminal-dot jd-terminal-dot--red"></span>
+                            <span class="jd-terminal-dot jd-terminal-dot--yellow"></span>
+                            <span class="jd-terminal-dot jd-terminal-dot--green"></span>
+                            <span class="jd-terminal__title">rene@je-developpe — zsh</span>
+                        </div>
+                        <div class="jd-terminal__body">
+                            <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span> ls ./projets --stat</p>
+                            <p class="jd-terminal-line jd-terminal-line--indent">{{ projects.getTotalItemCount() }} projets, {{ liveCount }} en ligne, {{ allTechs|length }} technologies</p>
+                            <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span> <span class="jd-terminal-cursor"></span></p>
+                        </div>
+                        <div class="jd-terminal__open-hint">
+                            <i class="fa-solid fa-keyboard me-1"></i>Cliquez pour ouvrir le terminal interactif
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+
+    {% include 'site/components/_terminal_modal.html.twig' %}
 
     <div class="container py-5">
         <div class="row g-4">

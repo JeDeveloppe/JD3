@@ -10,7 +10,7 @@
                     <span class="jd-terminal__title" id="jdTerminalModalLabel">rene@je-developpe — zsh</span>
                 </div>
                 <div class="jd-terminal__body jd-terminal__body--modal" id="jd-live-terminal"
-                     data-whoami="{{ h1 }}"
+                     data-whoami="{{ h1|default('Développeur web full stack') }}"
                      data-home-route="{{ path('site_home') }}"
                      data-knowledges-route="{{ path('site_my_knowledges') }}"
                      data-projects-route="{{ path('site_my_projects') }}"

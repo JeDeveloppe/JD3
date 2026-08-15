@@ -3,6 +3,20 @@
 {% block title %}Erreur {{ status_code }}{% endblock %}
 
 {% block body %}
+    {% set requestPath = app.request is defined and app.request is not null ? app.request.pathinfo : '?' %}
+    {% set zshMessages = {
+        400: 'bad request: syntaxe invalide',
+        401: 'permission denied: authentification requise',
+        403: 'permission denied: ' ~ requestPath,
+        404: 'command not found: ' ~ requestPath,
+        419: 'session expired',
+        429: 'too many requests: ralentissez un peu',
+        500: 'segmentation fault (core dumped)',
+        502: 'bad gateway: le serveur en amont ne répond pas',
+        503: 'service temporarily unavailable',
+    } %}
+    {% set zshMessage = zshMessages[status_code] is defined ? zshMessages[status_code] : (status_text|lower ~ ' (erreur ' ~ status_code ~ ')') %}
+
     <section class="jd-hero">
         <div class="jd-hero__glow jd-hero__glow--teal"></div>
         <div class="jd-hero__clip">
@@ -16,7 +30,7 @@
                 </span>
                 <h1 class="jd-hero__title text-center mb-4">{{ status_text }}</h1>
 
-                <div class="jd-terminal">
+                <div class="jd-terminal" role="button" tabindex="0" data-bs-toggle="modal" data-bs-target="#jdTerminalModal" aria-label="Ouvrir le terminal interactif">
                     <div class="jd-terminal__bar">
                         <span class="jd-terminal-dot jd-terminal-dot--red"></span>
                         <span class="jd-terminal-dot jd-terminal-dot--yellow"></span>
@@ -24,9 +38,12 @@
                         <span class="jd-terminal__title">rene@je-developpe — zsh</span>
                     </div>
                     <div class="jd-terminal__body text-center">
-                        <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span> cd {{ app.request is defined and app.request is not null ? app.request.pathinfo : '?' }}</p>
-                        <p class="jd-terminal-line" style="color: #ff8a80;">zsh: {{ status_text|lower }} (erreur {{ status_code }})</p>
+                        <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span> cd {{ requestPath }}</p>
+                        <p class="jd-terminal-line" style="color: #ff8a80;">zsh: {{ zshMessage }}</p>
                         <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span> <span class="jd-terminal-cursor"></span></p>
+                    </div>
+                    <div class="jd-terminal__open-hint">
+                        <i class="fa-solid fa-keyboard me-1"></i>Cliquez pour ouvrir le terminal interactif
                     </div>
                 </div>
 
@@ -41,4 +58,6 @@
             </div>
         </div>
     </section>
+
+    {% include 'site/components/_terminal_modal.html.twig' %}
 {% endblock %}
