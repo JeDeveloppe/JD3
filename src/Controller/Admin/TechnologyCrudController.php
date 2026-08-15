@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
@@ -38,6 +39,8 @@ class TechnologyCrudController extends AbstractCrudController
             TextField::new('renderIconStringWithoutParentheses', 'Icone:'),
             IntegerField::new('knowledgeRate', 'Niveau de maîtrise:')->setFormTypeOptions(['attr' => ['min' => 0, 'max' => 100]]),
             IntegerField::new('orderOfAppearance', 'Ordre d\'affichage:')->setFormTypeOptions(['attr' => ['min' => 0, 'max' => 100]]),
+            BooleanField::new('isVisible', 'Afficher sur le site public ?')
+                ->setHelp('Désactive pour exclure cette techno de la page « Mes connaissances » (liste, stats et graphique), sans la supprimer.'),
         ];
     }
     

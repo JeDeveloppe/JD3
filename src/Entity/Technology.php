@@ -34,6 +34,9 @@ class Technology
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $skillCommand = null;
 
+    #[ORM\Column]
+    private bool $isVisible = true;
+
     #[ORM\Column(length: 255)]
     private ?string $renderIconStringWithoutParentheses = null;
 
@@ -127,6 +130,18 @@ class Technology
     public function setSkillCommand(?string $skillCommand): static
     {
         $this->skillCommand = $skillCommand;
+
+        return $this;
+    }
+
+    public function isVisible(): bool
+    {
+        return $this->isVisible;
+    }
+
+    public function setIsVisible(bool $isVisible): static
+    {
+        $this->isVisible = $isVisible;
 
         return $this;
     }
