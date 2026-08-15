@@ -3,46 +3,118 @@
 {% block title %}Se connecter{% endblock %}
 
 {% block body %}
-    <div class="container d-flex justify-content-center align-items-center my-5">
-        <div class="card shadow p-4 p-md-5 col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
-            <div class="card-body">
-                <h1 class="card-title text-center text-primary fw-bold mb-4">Se connecter</h1>
-                <p class="card-text text-center text-muted mb-4">
-                    Connectez-vous pour accéder à votre espace personnel.
-                </p>
+    <section class="jd-hero jd-login">
+        <div class="jd-hero__glow jd-hero__glow--teal"></div>
+        <div class="jd-hero__clip">
+            <div class="jd-hero__glow jd-hero__glow--navy"></div>
+        </div>
 
-                <form method="post">
-                    {% if error %}
-                        <div class="alert alert-danger" role="alert">
-                            {{ error.messageKey|trans(error.messageData, 'security') }}
-                        </div>
-                    {% endif %}
-
-                    {% if app.user %}
-                        <div class="alert alert-info mb-3">
-                            Déjà connecté en tant que <span class="fw-bold">{{ app.user.userIdentifier }}</span>. <a href="{{ path('app_logout') }}">Déconnexion</a>
-                        </div>
-                    {% endif %}
-
-                    <div class="form-floating mb-3">
-                        <input type="email" value="{{ last_username }}" name="_username" id="inputEmail" class="form-control" autocomplete="email" required autofocus placeholder="Adresse e-mail">
-                        <label for="inputEmail">Adresse e-mail</label>
+        <div class="container position-relative jd-hero__inner d-flex justify-content-center">
+            <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+                <div class="jd-terminal">
+                    <div class="jd-terminal__bar">
+                        <span class="jd-terminal-dot jd-terminal-dot--red"></span>
+                        <span class="jd-terminal-dot jd-terminal-dot--yellow"></span>
+                        <span class="jd-terminal-dot jd-terminal-dot--green"></span>
+                        <span class="jd-terminal__title">rene@je-developpe — login</span>
                     </div>
+                    <div class="jd-terminal__body">
+                        <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span> ssh admin@je-developpe.fr</p>
 
-                    <div class="form-floating mb-3">
-                        <input type="password" name="_password" id="inputPassword" class="form-control" autocomplete="current-password" required placeholder="Mot de passe">
-                        <label for="inputPassword">Mot de passe</label>
+                        {% if app.user %}
+                            <p class="jd-terminal-line jd-login__notice">
+                                Déjà connecté en tant que <strong>{{ app.user.userIdentifier }}</strong>.
+                                <a href="{{ path('app_logout') }}" class="jd-login__link">Se déconnecter</a>
+                            </p>
+                        {% endif %}
+
+                        {% if error %}
+                            <p class="jd-terminal-line jd-login__error">
+                                <i class="fa-solid fa-circle-xmark me-1"></i>{{ error.messageKey|trans(error.messageData, 'security') }}
+                            </p>
+                        {% endif %}
+
+                        <form method="post" class="jd-login__form">
+                            <label class="jd-login__label" for="inputEmail"><span class="jd-terminal-prompt">$</span> login:</label>
+                            <input type="email" value="{{ last_username }}" name="_username" id="inputEmail" class="jd-login__input" autocomplete="email" required autofocus placeholder="adresse e-mail">
+
+                            <label class="jd-login__label" for="inputPassword"><span class="jd-terminal-prompt">$</span> password:</label>
+                            <input type="password" name="_password" id="inputPassword" class="jd-login__input" autocomplete="current-password" required placeholder="••••••••">
+
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                            <button class="jd-login__submit" type="submit">
+                                <span class="jd-terminal-prompt">$</span> se connecter<span class="jd-terminal-cursor ms-1"></span>
+                            </button>
+                        </form>
                     </div>
-
-                    <div class="d-grid gap-2">
-                        <button class="btn btn-lg btn-primary mt-3" type="submit">
-                            Se connecter
-                        </button>
-                    </div>
-
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                </form>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <style>
+        .jd-login {
+            min-height: calc(100vh - 300px);
+            display: flex;
+            align-items: center;
+        }
+        .jd-login__notice {
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 0.85rem;
+        }
+        .jd-login__error {
+            color: #ff8a80;
+            font-size: 0.85rem;
+        }
+        .jd-login__link {
+            color: var(--jd-teal);
+        }
+        .jd-login__form {
+            margin-top: 1.25rem;
+        }
+        .jd-login__label {
+            display: block;
+            color: rgba(255, 255, 255, 0.85);
+            margin: 1rem 0 0.4rem;
+        }
+        .jd-login__input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 0.5rem;
+            color: #fff;
+            font-family: 'SFMono-Regular', Consolas, Menlo, monospace;
+            font-size: 0.9rem;
+            padding: 0.6rem 0.85rem;
+        }
+        .jd-login__input:focus {
+            outline: none;
+            border-color: var(--jd-teal);
+            box-shadow: 0 0 0 3px rgba(24, 188, 156, 0.2);
+        }
+        .jd-login__input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+        .jd-login__submit {
+            width: 100%;
+            margin-top: 1.5rem;
+            background: var(--jd-teal);
+            border: none;
+            border-radius: 0.5rem;
+            color: #0d2b25;
+            font-family: 'SFMono-Regular', Consolas, Menlo, monospace;
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 0.65rem 0.85rem;
+            text-align: left;
+            transition: filter 0.15s ease;
+        }
+        .jd-login__submit:hover {
+            filter: brightness(1.1);
+        }
+        .jd-login__submit .jd-terminal-prompt {
+            color: #0d2b25;
+        }
+    </style>
 {% endblock %}
