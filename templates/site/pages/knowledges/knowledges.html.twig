@@ -22,7 +22,7 @@
         <div class="knowledge-hero__glow knowledge-hero__glow--teal"></div>
         <div class="knowledge-hero__glow knowledge-hero__glow--navy"></div>
 
-        <div class="container position-relative py-5">
+        <div class="container position-relative knowledge-hero__inner">
             <div class="row align-items-center g-5">
                 <div class="col-12 col-lg-6">
                     <span class="knowledge-hero__eyebrow">
@@ -157,6 +157,10 @@
             background: var(--jd-navy);
             color: #fff;
             isolation: isolate;
+        }
+        .knowledge-hero__inner {
+            padding-top: clamp(3.5rem, 6vw, 6rem);
+            padding-bottom: clamp(3.5rem, 6vw, 6rem);
         }
         .knowledge-hero__glow {
             position: absolute;
