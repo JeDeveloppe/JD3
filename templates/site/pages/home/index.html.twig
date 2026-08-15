@@ -96,52 +96,59 @@
             </div>
 
             {% if citiesDatas is not empty %}
-                {% for city in citiesDatas %}
-                    <div class="col-12 col-md-6 col-lg-4">
-                        <div class="card jd-card h-100 border-0 rounded-4 overflow-hidden">
-                            {# Header de carte avec un petit badge pour le pays ou le statut #}
-                            <div class="card-header bg-white border-0 pt-4 pb-0 text-center">
-                                <h3 class="h4 fw-bold text-uppercase tracking-wider mb-0">{{ city.name }}</h3>
-                                <hr class="mx-auto w-25 border-primary border-2 opacity-100">
-                            </div>
-
-                            <div class="card-body px-4 pb-4">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center bg-transparent px-0 py-3">
-                                        <span><i class="fa-solid fa-temperature-three-quarters text-danger me-2"></i> Températures</span>
-                                        <div class="fw-bold">
-                                            <span class="text-info">{{ city.temp_min }}°</span> /
-                                            <span class="text-danger">{{ city.temp_max }}°</span>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center bg-transparent px-0 py-3">
-                                        <span><i class="fa-solid fa-droplet text-info me-2"></i> Humidité</span>
-                                        <span class="fw-bold">{{ city.humidity }} %</span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center bg-transparent px-0 py-3">
-                                        <span><i class="fa-solid fa-wind text-secondary me-2"></i> Vent</span>
-                                        <span class="fw-bold">{{ city.wind }} <small class="text-muted">m/s</small></span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center bg-transparent px-0 py-3">
-                                        <span><i class="fa-solid fa-gauge text-warning me-2"></i> Pression</span>
-                                        <span class="fw-bold small">{{ city.pressure }} hPa</span>
-                                    </li>
-                                </ul>
-
-                                <div class="row g-0 mt-3 pt-3 border-top text-center text-muted small">
-                                    <div class="col-6 border-end">
-                                        <i class="fa-solid fa-sun-up d-block mb-1 text-warning"></i>
-                                        {{ city.sunrise }}
+                <div class="col-12">
+                    <div class="jd-weather-scroll">
+                        {% for city in citiesDatas %}
+                            <div class="jd-weather-scroll__item">
+                                <div class="card jd-card h-100 border-0 rounded-4 overflow-hidden">
+                                    {# Header de carte avec un petit badge pour le pays ou le statut #}
+                                    <div class="card-header bg-white border-0 pt-4 pb-0 text-center">
+                                        <h3 class="h4 fw-bold text-uppercase tracking-wider mb-0">{{ city.name }}</h3>
+                                        <hr class="mx-auto w-25 border-primary border-2 opacity-100">
                                     </div>
-                                    <div class="col-6">
-                                        <i class="fa-solid fa-sun-down d-block mb-1 text-secondary"></i>
-                                        {{ city.sunset }}
+
+                                    <div class="card-body px-4 pb-4">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item d-flex justify-content-between align-items-center bg-transparent px-0 py-3">
+                                                <span><i class="fa-solid fa-temperature-three-quarters text-danger me-2"></i> Températures</span>
+                                                <div class="fw-bold">
+                                                    <span class="text-info">{{ city.temp_min }}°</span> /
+                                                    <span class="text-danger">{{ city.temp_max }}°</span>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center bg-transparent px-0 py-3">
+                                                <span><i class="fa-solid fa-droplet text-info me-2"></i> Humidité</span>
+                                                <span class="fw-bold">{{ city.humidity }} %</span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center bg-transparent px-0 py-3">
+                                                <span><i class="fa-solid fa-wind text-secondary me-2"></i> Vent</span>
+                                                <span class="fw-bold">{{ city.wind }} <small class="text-muted">m/s</small></span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center bg-transparent px-0 py-3">
+                                                <span><i class="fa-solid fa-gauge text-warning me-2"></i> Pression</span>
+                                                <span class="fw-bold small">{{ city.pressure }} hPa</span>
+                                            </li>
+                                        </ul>
+
+                                        <div class="row g-0 mt-3 pt-3 border-top text-center text-muted small">
+                                            <div class="col-6 border-end">
+                                                <span class="d-block mb-1 fs-5">🌅</span>
+                                                {{ city.sunrise }}
+                                            </div>
+                                            <div class="col-6">
+                                                <span class="d-block mb-1 fs-5">🌇</span>
+                                                {{ city.sunset }}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        {% endfor %}
                     </div>
-                {% endfor %}
+                    <div class="jd-weather-scroll__hint d-md-none">
+                        <i class="fa-solid fa-arrows-left-right me-1"></i>Faites glisser pour voir les autres villes
+                    </div>
+                </div>
             {% else %}
                 <div class="col-md-6">
                     <div class="card border-danger bg-light text-center p-5">
@@ -161,6 +168,42 @@
         .jd-terminal-typed {
             color: var(--jd-teal);
             font-weight: 600;
+        }
+
+        .jd-weather-scroll {
+            display: flex;
+            gap: 1.25rem;
+            overflow-x: auto;
+            scroll-snap-type: x proximity;
+            padding: 0.25rem 0.25rem 1rem;
+            scrollbar-width: thin;
+            scrollbar-color: var(--jd-teal, #18bc9c) transparent;
+        }
+        .jd-weather-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+        .jd-weather-scroll::-webkit-scrollbar-thumb {
+            background-color: var(--jd-teal, #18bc9c);
+            border-radius: 999px;
+        }
+        .jd-weather-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .jd-weather-scroll__item {
+            flex: 0 0 auto;
+            scroll-snap-align: start;
+            width: 260px;
+        }
+        @media (min-width: 768px) {
+            .jd-weather-scroll__item {
+                width: 300px;
+            }
+        }
+        .jd-weather-scroll__hint {
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--bs-secondary-color, #6c757d);
+            margin-top: -0.5rem;
         }
     </style>
 {% endblock %}

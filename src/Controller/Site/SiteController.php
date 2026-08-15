@@ -45,6 +45,8 @@ class SiteController extends AbstractController
         $citiesDatas = [];
         $citiesDatas[] = $this->openWeatherService->getWeatherFromOneCity("Caen");
         $citiesDatas[] = $this->openWeatherService->getWeatherFromOneCity("Strasbourg");
+        $citiesDatas[] = $this->openWeatherService->getWeatherFromOneCity("Ajaccio");
+        $citiesDatas[] = $this->openWeatherService->getWeatherFromOneCity("La Rochelle");
 
         $firstTrainings = $this->trainingRepository->findBy([], ['startedAt' => 'ASC'], 1);
         $firstTraining = $firstTrainings[0] ?? null;
