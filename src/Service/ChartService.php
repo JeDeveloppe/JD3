@@ -14,30 +14,36 @@ class ChartService
 
     public function generateRadarChart(array $technologiesFamilies): Chart
     {
-        $labels = [];
-        $datas = [];
-        $technologyData = [];
+        $familyData = [];
 
         foreach ($technologiesFamilies as $technologyFamily) {
             $technologies = $technologyFamily->getTechnologies();
 
-            foreach ($technologies as $technology) {
-                $technologyData[] = [
-                        'name' => $technology->getName(),
-                        'knowledgeRate' => $technology->getKnowledgeRate(),
-                    ];
+            if (0 === count($technologies)) {
+                continue;
             }
+
+            $total = 0;
+            foreach ($technologies as $technology) {
+                $total += $technology->getKnowledgeRate();
+            }
+
+            $familyData[] = [
+                'name' => $technologyFamily->getName(),
+                'averageRate' => (int) round($total / count($technologies)),
+            ];
         }
 
-        //? Maintenant, triez le tableau $technologyData par 'knowledgeRate' en ASC
-        usort($technologyData, function($a, $b) {
-            return $a['knowledgeRate'] <=> $b['knowledgeRate'];
+        //? Triez les familles par niveau moyen ASC, pour un polygone plus lisible
+        usort($familyData, function ($a, $b) {
+            return $a['averageRate'] <=> $b['averageRate'];
         });
 
-        //? Ensuite, extrayez les valeurs 'name' et 'knowledgeRate' de chaque élément du tableau
-        foreach($technologyData as $data) {
+        $labels = [];
+        $datas = [];
+        foreach ($familyData as $data) {
             $labels[] = $data['name'];
-            $datas[] = $data['knowledgeRate'];
+            $datas[] = $data['averageRate'];
         }
 
         $chart = $this->chartBuilder->createChart(Chart::TYPE_RADAR);
