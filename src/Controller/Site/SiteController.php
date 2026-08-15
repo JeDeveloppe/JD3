@@ -40,7 +40,7 @@ class SiteController extends AbstractController
     #[Route('/', name: 'site_home')]
     public function index(): Response
     {
-        $metas['description'] = ''; //TODO
+        $metas['description'] = 'Développeur web full stack autodidacte : découvrez mes projets, mes compétences techniques et ce que j\'apprends au quotidien.';
 
         $citiesDatas = [];
         $citiesDatas[] = $this->openWeatherService->getWeatherFromOneCity("Caen");
@@ -225,7 +225,8 @@ class SiteController extends AbstractController
             throw $this->createNotFoundException('Cet article n\'existe pas.');
         }
 
-        $metas['description'] = ''; //TODO
+        $excerpt = preg_replace('/\s+/', ' ', strip_tags(str_replace('<', ' <', $article->getDescription() ?? '')));
+        $metas['description'] = mb_strimwidth(trim($excerpt), 0, 155, '…');
 
         return $this->render('site/pages/articles/article.html.twig', [
             'category' => $category,
@@ -259,7 +260,7 @@ class SiteController extends AbstractController
 
         $metas['title'] = 'Mes connaissances';
 
-        $metas['description'] = '';   //TODO
+        $metas['description'] = 'Un aperçu concret de mes compétences techniques : langages, frameworks et outils que je pratique, présentés sous forme de terminal interactif.';
 
 
         return $this->render('site/pages/knowledges/knowledges.html.twig', [
