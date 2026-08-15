@@ -7,8 +7,8 @@
     <title>{% block title %}Je Développe{% endblock %}</title>
 
     {# Meta Description for SEO #}
-    {% if meta is defined and meta.desctiption not empty %}
-        <meta name="description" content="{% meta_description %}">
+    {% if metas is defined and metas.description is defined and metas.description is not empty %}
+        <meta name="description" content="{{ metas.description }}">
     {% else %}
         <meta name="description" content="{% block meta_description %}Je Développe, le petit site qui regroupe toutes mes diverses connaissances !{% endblock %}">
     {% endif %}
