@@ -4,18 +4,24 @@
 
 {% block body %}
 
-    <div class="container my-5 py-3">
-        <div class="row g-0 justify-content-center">
-            <div class="col-12 col-lg-10 col-xl-8 text-center">
-                <span class="jd-hero__eyebrow text-uppercase" style="color: var(--jd-teal);">
-                    <i class="fa-solid fa-scale-balanced me-2"></i>Informations légales
-                </span>
-                <h1 class="display-5 fw-bold text-dark mb-2">Mentions légales</h1>
-                <p class="text-muted small">Dernière mise à jour : <span class="fw-bold">{{ legales.updatedAt | date('d/m/Y') }}</span></p>
-                <hr class="my-5" style="max-width: 8rem; border-top: 2px solid rgba(44, 62, 80, 0.1);">
-            </div>
+    <section class="jd-hero">
+        <div class="jd-hero__glow jd-hero__glow--teal"></div>
+        <div class="jd-hero__clip">
+            <div class="jd-hero__glow jd-hero__glow--navy"></div>
         </div>
 
+        <div class="container position-relative jd-hero__inner text-center text-lg-start">
+            <span class="jd-hero__eyebrow">
+                <i class="fa-solid fa-scale-balanced me-2"></i>Informations légales
+            </span>
+            <h1 class="jd-hero__title">Mentions légales</h1>
+            <p class="jd-hero__lead mx-auto mx-lg-0">
+                Dernière mise à jour le {{ legales.updatedAt | date('d/m/Y') }}.
+            </p>
+        </div>
+    </section>
+
+    <div class="container my-5 py-3">
         <div class="row g-0 justify-content-center">
             <div class="col-12 col-lg-10 col-xl-8 mb-4">
                 <div class="card jd-card border-0 rounded-4 p-4">
