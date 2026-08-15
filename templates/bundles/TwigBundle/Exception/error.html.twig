@@ -23,11 +23,11 @@
                         <span class="jd-terminal-dot jd-terminal-dot--green"></span>
                         <span class="jd-terminal__title">rene@je-developpe — zsh</span>
                     </div>
-                    <div class="jd-terminal__body">
+                    <div class="jd-terminal__body text-center">
                         <p class="jd-terminal-line">
                             <span class="jd-terminal-prompt">$</span> cd {{ app.request is defined and app.request is not null ? app.request.pathinfo : '?' }}
                         </p>
-                        <p class="jd-terminal-line jd-terminal-line--indent" style="color: #ff8a80;">
+                        <p class="jd-terminal-line" style="color: #ff8a80;">
                             zsh: {{ status_text|lower }} (erreur {{ status_code }})
                         </p>
                         <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span> <span class="jd-terminal-cursor"></span></p>
