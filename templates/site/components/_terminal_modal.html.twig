@@ -102,6 +102,16 @@
             contact: root.dataset.contactRoute
         };
 
+        var extraRoutes = {};
+        var pageTrigger = document.querySelector('.jd-terminal[data-bs-toggle="modal"]');
+        if (pageTrigger && pageTrigger.dataset.extraRoutes) {
+            try {
+                extraRoutes = JSON.parse(pageTrigger.dataset.extraRoutes);
+            } catch (e) {
+                extraRoutes = {};
+            }
+        }
+
         function printLine(text, variant) {
             var p = document.createElement('p');
             p.className = 'jd-terminal-line' + (variant ? ' ' + variant : '');
@@ -156,6 +166,12 @@
                     printLine('open linkedin|github ouvre mon profil', 'jd-terminal-line--indent');
                     printLine('contact              raccourci vers la page contact', 'jd-terminal-line--indent');
                     printLine('clear                efface ce terminal', 'jd-terminal-line--indent');
+                    if (Object.keys(extraRoutes).length > 0) {
+                        printLine('Raccourcis de cette page :', 'jd-terminal-line--indent');
+                        Object.keys(extraRoutes).forEach(function (key) {
+                            printLine('cd ' + key + '  ouvre ' + extraRoutes[key], 'jd-terminal-line--indent');
+                        });
+                    }
                     break;
 
                 case 'whoami':
@@ -163,7 +179,11 @@
                     break;
 
                 case 'ls':
-                    printLine('connaissances/  realisations/  formations/  blog/  contact/', 'jd-terminal-line--indent');
+                    printLine(
+                        'connaissances/  realisations/  formations/  blog/  contact/'
+                        + (Object.keys(extraRoutes).length > 0 ? '  ' + Object.keys(extraRoutes).map(function (k) { return k + '/'; }).join('  ') : ''),
+                        'jd-terminal-line--indent'
+                    );
                     break;
 
                 case 'cd':
@@ -172,6 +192,9 @@
                         navigate(root.dataset.homeRoute);
                     } else if (routes[target]) {
                         navigate(routes[target]);
+                    } else if (extraRoutes[target]) {
+                        printLine('Ouverture de ' + extraRoutes[target] + ' dans un nouvel onglet...', 'jd-terminal-line--indent');
+                        window.open(extraRoutes[target], '_blank', 'noopener');
                     } else {
                         printLine('zsh: no such page: ' + arg, 'jd-terminal-line--indent');
                     }
@@ -245,12 +268,11 @@
             });
         }
 
-        var trigger = document.querySelector('.jd-terminal[data-bs-toggle="modal"]');
-        if (trigger) {
-            trigger.addEventListener('keydown', function (event) {
+        if (pageTrigger) {
+            pageTrigger.addEventListener('keydown', function (event) {
                 if (event.key === 'Enter' || event.key === ' ') {
                     event.preventDefault();
-                    trigger.click();
+                    pageTrigger.click();
                 }
             });
         }

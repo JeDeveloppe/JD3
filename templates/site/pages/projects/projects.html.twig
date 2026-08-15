@@ -5,9 +5,12 @@
 
     {% set liveCount = 0 %}
     {% set allTechs = [] %}
+    {% set projectRoutes = {} %}
     {% for project in projects %}
         {% if project.url and project.endAt %}
             {% set liveCount = liveCount + 1 %}
+            {% set slug = project.name|lower|replace({' ': '', "'": '', 'é': 'e', 'è': 'e', 'ê': 'e', 'ë': 'e', 'à': 'a', 'â': 'a', 'ô': 'o', 'î': 'i', 'ï': 'i', 'ù': 'u', 'û': 'u', 'ç': 'c'}) %}
+            {% set projectRoutes = projectRoutes|merge({(slug): project.url}) %}
         {% endif %}
         {% for technology in project.technologies %}
             {% if technology not in allTechs %}
@@ -50,7 +53,7 @@
                 </div>
 
                 <div class="col-12 col-lg-6">
-                    <div class="jd-terminal" role="button" tabindex="0" data-bs-toggle="modal" data-bs-target="#jdTerminalModal" aria-label="Ouvrir le terminal interactif">
+                    <div class="jd-terminal" role="button" tabindex="0" data-bs-toggle="modal" data-bs-target="#jdTerminalModal" aria-label="Ouvrir le terminal interactif" data-extra-routes="{{ projectRoutes|json_encode|e('html_attr') }}">
                         <div class="jd-terminal__bar">
                             <span class="jd-terminal-dot jd-terminal-dot--red"></span>
                             <span class="jd-terminal-dot jd-terminal-dot--yellow"></span>
