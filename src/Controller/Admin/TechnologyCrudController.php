@@ -39,8 +39,8 @@ class TechnologyCrudController extends AbstractCrudController
             TextField::new('renderIconStringWithoutParentheses', 'Icone:'),
             IntegerField::new('knowledgeRate', 'Niveau de maîtrise:')->setFormTypeOptions(['attr' => ['min' => 0, 'max' => 100]]),
             IntegerField::new('orderOfAppearance', 'Ordre d\'affichage:')->setFormTypeOptions(['attr' => ['min' => 0, 'max' => 100]]),
-            BooleanField::new('isVisible', 'Afficher sur le site public ?')
-                ->setHelp('Désactive pour exclure cette techno de la page « Mes connaissances » (liste, stats et graphique), sans la supprimer.'),
+            BooleanField::new('isUsed', 'Compétence pratiquée ?')
+                ->setHelp('Désactive si tu connais cette techno sans la pratiquer : elle sort des stats/graphique et rejoint la section « aussi croisé » en bas de page.'),
         ];
     }
     

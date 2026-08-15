@@ -17,23 +17,23 @@ class ChartService
         $familyData = [];
 
         foreach ($technologiesFamilies as $technologyFamily) {
-            $visibleTechnologies = array_filter(
+            $usedTechnologies = array_filter(
                 $technologyFamily->getTechnologies()->toArray(),
-                fn ($technology) => $technology->isVisible()
+                fn ($technology) => $technology->isUsed()
             );
 
-            if (0 === count($visibleTechnologies)) {
+            if (0 === count($usedTechnologies)) {
                 continue;
             }
 
             $total = 0;
-            foreach ($visibleTechnologies as $technology) {
+            foreach ($usedTechnologies as $technology) {
                 $total += $technology->getKnowledgeRate();
             }
 
             $familyData[] = [
                 'name' => $technologyFamily->getName(),
-                'averageRate' => (int) round($total / count($visibleTechnologies)),
+                'averageRate' => (int) round($total / count($usedTechnologies)),
             ];
         }
 

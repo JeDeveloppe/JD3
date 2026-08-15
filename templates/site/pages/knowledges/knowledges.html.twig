@@ -8,7 +8,7 @@
     {% set allTechs = [] %}
     {% for family in technologiesFamilies %}
         {% for tech in family.technologies %}
-            {% if tech.isVisible %}
+            {% if tech.isUsed %}
                 {% set allTechs = allTechs|merge([tech]) %}
             {% endif %}
         {% endfor %}
@@ -20,11 +20,11 @@
     {% endfor %}
     {% set avgRate = allTechs|length > 0 ? (totalRate / allTechs|length)|round : 0 %}
 
-    {# --- Technos masquées : simple mention, aucun score/calcul --- #}
+    {# --- Technos non pratiquées : simple mention, aucun score/calcul --- #}
     {% set alsoSeenTechs = [] %}
     {% for family in technologiesFamilies %}
         {% for tech in family.technologies %}
-            {% if not tech.isVisible %}
+            {% if not tech.isUsed %}
                 {% set alsoSeenTechs = alsoSeenTechs|merge([tech]) %}
             {% endif %}
         {% endfor %}
@@ -93,7 +93,7 @@
             {# --- COLONNE GAUCHE : TECHNOLOGIES --- #}
             <div class="col-12 col-lg-7 order-1 order-lg-0">
                 {% for technologyFamily in technologiesFamilies %}
-                    {% if technologyFamily.technologies|filter(t => t.isVisible)|length > 0 %}
+                    {% if technologyFamily.technologies|filter(t => t.isUsed)|length > 0 %}
                     <div class="card knowledge-card mb-4 border-0 rounded-4">
                         <div class="card-body p-4">
                             <div class="d-flex align-items-center mb-3">
@@ -106,7 +106,7 @@
                             <p class="text-muted small mb-4">{{ technologyFamily.description }}</p>
 
                             <div class="row g-3">
-                                {% for technology in technologyFamily.technologies|filter(t => t.isVisible)|sort((b, a) => a.knowledgeRate <=> b.knowledgeRate) %}
+                                {% for technology in technologyFamily.technologies|filter(t => t.isUsed)|sort((b, a) => a.knowledgeRate <=> b.knowledgeRate) %}
                                     <div class="col-12">
                                         <div class="tech-row">
                                             <div class="d-flex justify-content-between align-items-center mb-1">

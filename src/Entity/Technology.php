@@ -35,7 +35,7 @@ class Technology
     private ?string $skillCommand = null;
 
     #[ORM\Column]
-    private bool $isVisible = true;
+    private bool $isUsed = true;
 
     #[ORM\Column(length: 255)]
     private ?string $renderIconStringWithoutParentheses = null;
@@ -134,14 +134,14 @@ class Technology
         return $this;
     }
 
-    public function isVisible(): bool
+    public function isUsed(): bool
     {
-        return $this->isVisible;
+        return $this->isUsed;
     }
 
-    public function setIsVisible(bool $isVisible): static
+    public function setIsUsed(bool $isUsed): static
     {
-        $this->isVisible = $isVisible;
+        $this->isUsed = $isUsed;
 
         return $this;
     }
