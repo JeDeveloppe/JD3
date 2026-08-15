@@ -281,6 +281,7 @@ pre:hover {
         position: absolute;
         top: 50%;
         left: 50%;
+        z-index: 1030;
         animation: floatation 30s ease-in-out infinite;
     }
     .navbar-brand img {
@@ -314,5 +315,11 @@ pre:hover {
 
 /* Léger accent teal en haut à droite de la nav, cohérent avec les glows du hero */
 .jd-navbar-glow {
-    background-image: radial-gradient(circle at top right, rgba(24, 188, 156, 0.35), transparent 55%);
+    background-image: radial-gradient(
+        circle at top right,
+        rgba(24, 188, 156, 0.28) 0%,
+        rgba(24, 188, 156, 0.14) 25%,
+        rgba(24, 188, 156, 0.05) 45%,
+        transparent 70%
+    );
 }
