@@ -358,16 +358,16 @@ pre:hover {
 .jd-claude-credit {
     display: inline-flex;
     align-items: center;
-    gap: 0.3rem;
-    font-size: 0.68rem;
-    color: rgba(255, 255, 255, 0.35);
+    gap: 0.35rem;
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.5);
     text-decoration: none;
     margin-top: 0.5rem;
 }
 .jd-claude-credit:hover {
-    color: rgba(255, 255, 255, 0.65);
+    color: rgba(255, 255, 255, 0.85);
 }
 .jd-claude-credit__icon {
-    width: 12px;
-    height: 12px;
+    width: 16px;
+    height: 16px;
 }
