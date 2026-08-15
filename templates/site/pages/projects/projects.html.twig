@@ -90,7 +90,7 @@
                             <div class="mt-auto pt-3 border-top d-flex flex-column gap-3">
                                 <div class="small text-muted">
                                     <i class="fa-regular fa-calendar-check me-1"></i>
-                                    {{ project.startedAt|date("M Y") }} — {{ project.endAt ? project.endAt|date("M Y") : 'Travaux...' }}
+                                    {{ project.startedAt|format_date(pattern="MMM yyyy", locale="fr") }} — {{ project.endAt ? project.endAt|format_date(pattern="MMM yyyy", locale="fr") : 'Travaux...' }}
                                 </div>
 
                                 {% if project.url and project.endAt %}
