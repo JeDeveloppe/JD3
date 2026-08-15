@@ -175,6 +175,7 @@
                     printLine('open linkedin|github ouvre mon profil', 'jd-terminal-line--indent');
                     printLine('contact              raccourci vers la page contact', 'jd-terminal-line--indent');
                     printLine('clear                efface ce terminal', 'jd-terminal-line--indent');
+                    printLine('exit                 nettoie et ferme le terminal', 'jd-terminal-line--indent');
                     if (Object.keys(extraRoutes).length > 0) {
                         printLine('Raccourcis de cette page :', 'jd-terminal-line--indent');
                         Object.keys(extraRoutes).forEach(function (key) {
@@ -237,6 +238,24 @@
 
                 case 'clear':
                     output.innerHTML = '';
+                    break;
+
+                case 'exit':
+                case 'quit':
+                    output.innerHTML = '';
+                    var modalToClose = document.getElementById('jdTerminalModal');
+                    if (modalToClose) {
+                        import('bootstrap').then(function (bs) {
+                            var instance = bs.Modal.getInstance(modalToClose) || new bs.Modal(modalToClose);
+                            instance.hide();
+                            // Bootstrap ignore hide() si appelé pendant l'animation d'ouverture : on retente une fois.
+                            setTimeout(function () {
+                                if (modalToClose.classList.contains('show')) {
+                                    instance.hide();
+                                }
+                            }, 650);
+                        });
+                    }
                     break;
 
                 default:
