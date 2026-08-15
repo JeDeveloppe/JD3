@@ -355,3 +355,19 @@ pre:hover {
 .jd-footer__link:hover {
     color: var(--jd-teal) !important;
 }
+.jd-claude-credit {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.68rem;
+    color: rgba(255, 255, 255, 0.35);
+    text-decoration: none;
+    margin-top: 0.5rem;
+}
+.jd-claude-credit:hover {
+    color: rgba(255, 255, 255, 0.65);
+}
+.jd-claude-credit__icon {
+    width: 12px;
+    height: 12px;
+}
