@@ -1,6 +1,9 @@
 twig:
     file_name_pattern: '*.twig'
 
+    globals:
+        tip_url: '%env(string:TIP_URL)%'
+
     form_themes:
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
         

@@ -56,18 +56,27 @@
                         </a>
                     </li>
                 </ul>
+                <div>
+                    <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" class="jd-claude-credit" title="Amélioré avec Claude">
+                        Amélioré avec Claude
+                        <twig:ux:icon name="material-icon-theme:claude" class="jd-claude-credit__icon" />
+                    </a>
+                </div>
             </div>
         </div>
 
-        {# Petit credit discret, coin bas-droit #}
-        <div class="row">
-            <div class="col-12 text-end">
-                <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" class="jd-claude-credit" title="Amélioré avec Claude">
-                    Amélioré avec Claude
-                    <twig:ux:icon name="material-icon-theme:claude" class="jd-claude-credit__icon" />
-                </a>
+        {# Pourboire / Offrez-moi un café #}
+        {% if tip_url %}
+            <div class="row mt-3">
+                <div class="col-12 text-center">
+                    <a href="{{ tip_url }}" target="_blank" rel="noopener noreferrer nofollow"
+                       class="btn btn-sm btn-outline-warning fw-semibold">☕ Offrez-moi un café</a>
+                    <div class="small text-white-50 mt-1">
+                        Ce site est gratuit. Un pourboire, si le cœur vous en dit, fait plaisir.
+                    </div>
+                </div>
             </div>
-        </div>
+        {% endif %}
     </div>
 </footer>
 
