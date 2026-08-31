@@ -21,7 +21,10 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-touch-icon.png') }}" />
     <meta name="apple-mobile-web-app-title" content="JeDév" />
     <link rel="manifest" href="{{ asset('favicon/site.webmanifest') }}" />
-    
+
+    {# Font Awesome 6 (free) — CDN public, sans compte ni restriction de domaine #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     {% block stylesheets %}{% endblock %}
 
     {% block javascripts %}
@@ -45,8 +48,6 @@
         {% include "./site/components/_footer.html.twig" %}
     {% endblock %}
 
-    <script src="https://kit.fontawesome.com/39dfe16fa3.js" crossorigin="anonymous" async></script>
-    
     {# BLOC ANALYTICS : Optionnel, si tu veux le désactiver sur certains CV #}
     {% block google_analytics %}
         {% include "site/components/_googleAnalytics.html.twig" %}
