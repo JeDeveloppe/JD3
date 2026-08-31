@@ -379,28 +379,92 @@ pre:hover {
     right: -60px;
     background: var(--jd-teal);
 }
+.jd-footer__terminal {
+    max-width: 620px;
+    margin: 0 auto;
+}
 .jd-footer .clock {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
 }
-.jd-footer__link {
-    color: rgba(255, 255, 255, 0.75) !important;
+.jd-footer__clock {
+    margin-left: auto;
 }
-.jd-footer__link:hover {
-    color: var(--jd-teal) !important;
+.jd-footer__terminal .jd-terminal__body {
+    padding: 1rem 1.25rem 1.15rem;
 }
-.jd-claude-credit {
+.jd-footer__terminal .jd-terminal-line {
+    margin-bottom: 0.4rem;
+}
+.jd-footer__cmd-out {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.15rem 0.9rem;
+    padding-left: 1.1rem;
+}
+.jd-footer__cmd-out a {
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: none;
+}
+.jd-footer__cmd-out a:hover {
+    color: var(--jd-teal);
+}
+.jd-footer__muted {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+/* bande discrète sous le terminal */
+.jd-footer__strip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.9rem 1.1rem;
+    margin-top: 1.15rem;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
+}
+.jd-footer__social-group {
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
-    font-size: 0.72rem;
-    color: rgba(255, 255, 255, 0.5);
+    gap: 0.7rem;
+}
+.jd-footer__social {
+    width: 20px;
+    height: 20px;
+    opacity: 0.65;
+    transition: opacity 0.2s ease;
+}
+.jd-footer__social:hover {
+    opacity: 1;
+}
+.jd-footer__tip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-weight: 600;
+    color: #ffc94d;
     text-decoration: none;
-    margin-top: 0.5rem;
+    border: 1px solid rgba(255, 201, 77, 0.35);
+    border-radius: 50rem;
+    padding: 0.1rem 0.6rem;
+    white-space: nowrap;
+    transition: background 0.2s ease;
 }
-.jd-claude-credit:hover {
-    color: rgba(255, 255, 255, 0.85);
+.jd-footer__tip:hover {
+    background: rgba(255, 201, 77, 0.12);
+    color: #ffd67a;
 }
-.jd-claude-credit__icon {
+.jd-footer__credits {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+.jd-footer__credit-icon {
     width: 16px;
     height: 16px;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+}
+.jd-footer__credit-icon:hover {
+    opacity: 1;
 }

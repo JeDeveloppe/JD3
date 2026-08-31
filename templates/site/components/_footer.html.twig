@@ -1,82 +1,78 @@
-<footer class="jd-footer py-4">
+{% set startedAt = 2020 %}
+{% set now = 'now'|date('Y') %}
+{% set copyrightYears = startedAt != now ? startedAt ~ '–' ~ now : now %}
+
+<footer class="jd-footer pt-5 pb-4">
     <div class="jd-hero__glow jd-hero__glow--teal jd-footer__glow"></div>
+
     <div class="container position-relative">
-        <div class="row g-3 align-items-center">
 
-            {# Copyright and Clock Section #}
-            <div class="col-12 col-md-4 text-center text-md-start">
-                {% set startedAt = 2020 %}
-                {% set now = 'now'|date('Y') %}
-                <small class="text-white-50">
-                    {% if startedAt != now %}
-                        &copy; {{ startedAt }} - {{ now }}
-                    {% else %}
-                        &copy; {{ now }}
-                    {% endif %}
-                </small>
-                <br>
-                <small class="clock" id="clock"></small>
+        {# ---- Terminal : navigation + légal, dans le thème du site ---- #}
+        <div class="jd-terminal jd-footer__terminal">
+            <div class="jd-terminal__bar">
+                <span class="jd-terminal-dot jd-terminal-dot--red"></span>
+                <span class="jd-terminal-dot jd-terminal-dot--yellow"></span>
+                <span class="jd-terminal-dot jd-terminal-dot--green"></span>
+                <span class="jd-terminal__title">user@jd — ~</span>
+                <span class="clock jd-footer__clock" id="clock" aria-label="Heure locale"></span>
             </div>
 
-            {# Social Media Icons Section #}
-            <div class="col-12 col-md-4 text-center">
-                <a href="http://www.linkedin.com/in/wetta-rene-jd" class="mx-2" target="_blank" rel="noopener noreferrer" aria-label="Mon profil LinkedIn"><twig:ux:icon name="skill-icons:linkedin" class="footerIconeSize" /></a>
-                <a href="https://github.com/JeDeveloppe" class="mx-2" target="_blank" rel="noopener noreferrer" aria-label="Mon profil GitHub"><twig:ux:icon name="skill-icons:github-dark" class="footerIconeSize" /></a>
-                <a href="https://www.facebook.com/JeDevloppe" class="mx-2" target="_blank" rel="noopener noreferrer" aria-label="Ma page Facebook"><twig:ux:icon name="devicon:facebook" class="footerIconeSize" /></a>
-            </div>
+            <div class="jd-terminal__body">
+                <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span>ls ~/je-developpe</p>
+                <nav class="jd-terminal-line jd-footer__cmd-out" aria-label="Navigation pied de page">
+                    <a href="{{ path('site_my_knowledges') }}">connaissances</a>
+                    <a href="{{ path('site_my_projects') }}">réalisations</a>
+                    <a href="{{ path('site_my_trainings') }}">formations</a>
+                    <a href="{{ path('cv_liste') }}">cv</a>
+                    <a href="{{ path('site_my_categories') }}">blog</a>
+                    <a href="{{ path('site_contact') }}">contact</a>
+                </nav>
 
-            {# Navigation Links #}
-            <div class="col-12 col-md-4 text-center text-md-end">
-                <ul class="nav justify-content-center justify-content-md-end">
-                    <li class="nav-item">
-                        <a class="nav-link jd-footer__link" href="{{ path('site_mentions_legales') }}">Mentions légales</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link jd-footer__link" href="#" onclick="window.jdReopenCookieBanner(event)">Gérer les cookies</a>
-                    </li>
-                </ul>
+                <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span>cat legal.txt</p>
+                <div class="jd-terminal-line jd-footer__cmd-out">
+                    <span class="jd-footer__muted">&copy; {{ copyrightYears }}</span>
+                    <a href="{{ path('site_mentions_legales') }}">mentions-légales</a>
+                    <a href="#" onclick="window.jdReopenCookieBanner(event)">gérer-les-cookies</a>
+                </div>
+
+                <p class="jd-terminal-line mb-0"><span class="jd-terminal-prompt">$</span><span class="jd-terminal-cursor"></span></p>
             </div>
         </div>
 
-        {# Development Stack Section #}
-        <div class="row mt-3">
-            <div class="col-12 text-center text-md-end">
-                <ul class="list-inline mb-0">
-                    <li class="list-inline-item me-1">
-                        <small class="text-white-50">Développé avec :</small>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="https://symfony.com" target="_blank" rel="noopener noreferrer" title="Visitez Symfony" aria-label="Développé avec Symfony">
-                            <twig:ux:icon name="skill-icons:symfony-dark" class="footerIconeDevBySize" />
-                        </a>
-                    </li>
-                    <li class="list-inline-item ms-1">
-                        <a href="https://www.servbay.com" target="_blank" rel="noopener noreferrer" title="Visitez ServBay - Votre environnement de développement local" aria-label="Développé avec ServBay">
-                            <img src="{{ asset('images/icon_blue@64.png') }}" alt="Logo de ServBay" class="footerIconeDevBySize" />
-                        </a>
-                    </li>
-                </ul>
-                <div>
-                    <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" class="jd-claude-credit" title="Amélioré avec Claude">
-                        Amélioré avec Claude
-                        <twig:ux:icon name="material-icon-theme:claude" class="jd-claude-credit__icon" />
-                    </a>
-                </div>
-            </div>
-        </div>
+        {# ---- Bande discrète : réseaux, pourboire, crédits ---- #}
+        <div class="jd-footer__strip">
+            <span class="jd-footer__social-group">
+                <a href="http://www.linkedin.com/in/wetta-rene-jd" target="_blank" rel="noopener noreferrer" aria-label="Mon profil LinkedIn">
+                    <twig:ux:icon name="skill-icons:linkedin" class="jd-footer__social" />
+                </a>
+                <a href="https://github.com/JeDeveloppe" target="_blank" rel="noopener noreferrer" aria-label="Mon profil GitHub">
+                    <twig:ux:icon name="skill-icons:github-dark" class="jd-footer__social" />
+                </a>
+                <a href="https://www.facebook.com/JeDevloppe" target="_blank" rel="noopener noreferrer" aria-label="Ma page Facebook">
+                    <twig:ux:icon name="devicon:facebook" class="jd-footer__social" />
+                </a>
+            </span>
 
-        {# Pourboire / Offrez-moi un café #}
-        {% if tip_url %}
-            <div class="row mt-3">
-                <div class="col-12 text-center">
-                    <a href="{{ tip_url }}" target="_blank" rel="noopener noreferrer nofollow"
-                       class="btn btn-sm btn-outline-warning fw-semibold">☕ Offrez-moi un café</a>
-                    <div class="small text-white-50 mt-1">
-                        Ce site est gratuit. Un pourboire, si le cœur vous en dit, fait plaisir.
-                    </div>
-                </div>
-            </div>
-        {% endif %}
+            {% if tip_url %}
+                <a href="{{ tip_url }}" target="_blank" rel="noopener noreferrer nofollow"
+                   class="jd-footer__tip" title="Ce site est gratuit. Un pourboire, si le cœur vous en dit, fait plaisir.">
+                    ☕ un café
+                </a>
+            {% endif %}
+
+            <span class="jd-footer__credits">
+                <span>fait avec</span>
+                <a href="https://symfony.com" target="_blank" rel="noopener noreferrer" title="Symfony" aria-label="Développé avec Symfony">
+                    <twig:ux:icon name="skill-icons:symfony-dark" class="jd-footer__credit-icon" />
+                </a>
+                <a href="https://www.servbay.com" target="_blank" rel="noopener noreferrer" title="ServBay" aria-label="Développé avec ServBay">
+                    <img src="{{ asset('images/icon_blue@64.png') }}" alt="ServBay" class="jd-footer__credit-icon" />
+                </a>
+                <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" title="Amélioré avec Claude" aria-label="Amélioré avec Claude">
+                    <twig:ux:icon name="material-icon-theme:claude" class="jd-footer__credit-icon" />
+                </a>
+            </span>
+        </div>
     </div>
 </footer>
 
