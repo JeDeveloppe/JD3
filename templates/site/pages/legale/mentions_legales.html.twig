@@ -28,14 +28,14 @@
                             <span class="jd-terminal-dot jd-terminal-dot--red"></span>
                             <span class="jd-terminal-dot jd-terminal-dot--yellow"></span>
                             <span class="jd-terminal-dot jd-terminal-dot--green"></span>
-                            <span class="jd-terminal__title">rene@je-developpe — legal</span>
+                            <span class="jd-terminal__title">user@jd — legal</span>
                         </div>
                         <div class="jd-terminal__body">
                             <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span> cat mentions-legales.txt</p>
-                            <p class="jd-terminal-line jd-terminal-line--indent">Propriétaire : {{ legales.companyName }}</p>
+                            <p class="jd-terminal-line jd-terminal-line--indent">Site : {{ legales.companyName }}</p>
+                            <p class="jd-terminal-line jd-terminal-line--indent">Éditeur : particulier (non professionnel)</p>
                             <p class="jd-terminal-line jd-terminal-line--indent">Contact : {{ legales.emailCompany }}</p>
                             <p class="jd-terminal-line jd-terminal-line--indent">Hébergeur : {{ legales.hostName }}</p>
-                            <p class="jd-terminal-line jd-terminal-line--indent">Webmaster : {{ legales.webmasterCompanyName }}</p>
                             <p class="jd-terminal-line"><span class="jd-terminal-prompt">$</span> <span class="jd-terminal-cursor"></span></p>
                         </div>
                         <div class="jd-terminal__open-hint">
@@ -54,13 +54,17 @@
             <div class="col-12 col-lg-10 col-xl-8 mb-4">
                 <div class="card jd-card border-0 rounded-4 p-4">
                     <h3 class="h5 fw-bold mb-3" style="color: var(--jd-navy);">Informations légales</h3>
-                    <p class="mb-0">
-                        <span class="fw-bolder">Propriétaire du site :</span> {{ legales.companyName }}<br />
+                    <p class="mb-2">
+                        <span class="fw-bolder">Nom du site :</span> {{ legales.companyName }}<br />
+                        <span class="fw-bolder">Éditeur :</span> particulier, publiant à titre non professionnel<br />
                         <span class="fw-bolder">Contact :</span> <a href="mailto:{{ legales.emailCompany }}" class="text-decoration-none">{{ legales.emailCompany }}</a><br />
-                        <span class="fw-bolder">Adresse :</span> {{ legales.streetCompany }} {{ legales.postalCodeCompany }} {{ legales.cityCompany }}<br />
-                        <span class="fw-bolder">Hébergeur du site :</span> {{ legales.hostName }} {{ legales.hostStreet }} {{ legales.hostPostalCode }} {{ legales.hostCity }}<br/>
-                        <span class="fw-bolder">Développement & webmaster :</span> {{ legales.webmasterCompanyName }}<br />
-                        <span class="fw-bolder">Webdesign :</span> {{ legales.webdesignerName }}
+                        <span class="fw-bolder">Hébergeur :</span> {{ legales.hostName }}, {{ legales.hostStreet }} {{ legales.hostPostalCode }} {{ legales.hostCity }} — {{ legales.hostPhone }}
+                    </p>
+                    <p class="text-secondary small mb-0">
+                        Site personnel édité à titre non professionnel, sans finalité commerciale.
+                        Conformément à l’article 6 III-2 de la LCEN, l’éditeur a choisi de ne pas rendre
+                        publiques ses coordonnées ; son identité complète est conservée par l’hébergeur et
+                        communiquée sur réquisition de l’autorité judiciaire.
                     </p>
                 </div>
             </div>
